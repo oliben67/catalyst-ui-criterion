@@ -2,5 +2,4 @@
 
 | ID | Title | Status |
 |---|---|---|
-
-*(none yet)*
+| [REQ-000001](REQ-000001-catalyst-core-parser-model-validator-watcher.md) | catalyst-core: parser, model, validator, watcher | done |

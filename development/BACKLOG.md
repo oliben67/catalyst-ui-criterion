@@ -22,4 +22,11 @@
 
 ## Roadmap
 
-*(none)*
+**catalyst-ui:**
+- `RM-000001` — Phase 1 — Core, no UI (Done, `REQ-000001`)
+- `RM-000002` — Phase 2 — VS Code chain inspector, read-only (Not triaged)
+- `RM-000003` — Phase 3 — Health board and editor affordances (Not triaged)
+- `RM-000004` — Phase 4 — Proposal loop, fix-only (Not triaged)
+- `RM-000005` — Phase 5 — Authoring composer (Not triaged)
+- `RM-000006` — Phase 6 — Electron host (Not triaged)
+- `RM-000007` — Phase 7 — Run monitor (Not triaged)

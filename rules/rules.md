@@ -8,6 +8,7 @@ Global index of every rule document and rule ID in this deployment. Per
 | Prefix | Document | Domains |
 |---|---|---|
 | `env` | [`dev-environment-rules.md`](dev-environment-rules.md) | `RUNTIME`, `LAYOUT`, `DEPS`, `STYLE`, `TEST`, `CI`, `DX` |
+| `core` | [`catalyst-core-rules.md`](catalyst-core-rules.md) | `CONTRACT` |
 
 ## Rule IDs
 
@@ -18,3 +19,4 @@ Global index of every rule document and rule ID in this deployment. Per
 - `env-TEST-001` — Vitest for core/UI; VS Code's own harness for the VS Code host
 - `env-CI-001` — GitHub Actions gate: lint, typecheck, test
 - `env-DX-001` — Pinned Node version, no devcontainer yet
+- `core-CONTRACT-001` — Typed chain model, global validation, watched changes

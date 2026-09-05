@@ -9,3 +9,4 @@
 | [`TEST`](env-TEST-testing.md) | rules/dev-environment-rules.md | 2026-09-05 |
 | [`CI`](env-CI-ci-cd.md) | rules/dev-environment-rules.md | 2026-09-05 |
 | [`DX`](env-DX-local-dev-environment.md) | rules/dev-environment-rules.md | 2026-09-05 |
+| [`CONTRACT`](core-CONTRACT-parser-model-validator-watcher.md) | rules/catalyst-core-rules.md | 2026-09-05 |
