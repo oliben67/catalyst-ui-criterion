@@ -15,4 +15,13 @@
 
 ## Repo sync (criterion, `Rules-of-Rules.md` §13)
 
-- repoed: false (not yet — opt-in, `/criterion create` to enable)
+- repoed: true
+- catalyst_repo: catalyst-ui-criterion
+- catalyst_repo_url: git@github.com:oliben67/catalyst-ui-criterion.git
+- created_by: Olivier Steck
+- criterion_branch: criterion (single-maintainer mode — sole admin,
+  matching catalyst's own deployment's precedent)
+
+Mirrored into `catalyst-ui.catalyst` at the project root
+(`Rules-of-Rules.md` §14) — this file is the source of record if the
+two ever disagree. Initial commit `2e1941b` pushed 2026-09-05.
