@@ -12,8 +12,8 @@ for ingest)
 | ID | Title | Status | Linked | Signed-off-by | Notes |
 |---|---|---|---|---|---|
 | `RM-000001` | Phase 1 — Core, no UI | Done | REQ-000001 | Olivier Steck | Parser, typed model, global validator, watcher, protocol types; ships as a CLI printing the validation report. Exit: synthetic 5× repo passes under 100ms in CI; protocol types published from core. |
-| `RM-000002` | Phase 2 — VS Code chain inspector, read-only | Not triaged | *(none)* | Olivier Steck | Sidebar tree of the four layers; one webview for node detail. Exit: used daily instead of grepping for IDs. |
-| `RM-000003` | Phase 3 — Health board and editor affordances | Not triaged | *(none)* | Olivier Steck | Validation report as a worklist; CodeLens/gutter marks; click-to-jump. Still read-only. Exit: an orphan appears on the board before it would've been noticed by hand. |
+| `RM-000002` | Phase 2 — VS Code chain inspector, read-only | Done | REQ-000002 | Olivier Steck | Sidebar tree of the four layers; one webview for node detail. Exit: used daily instead of grepping for IDs. |
+| `RM-000003` | Phase 3 — Health board and editor affordances | Done | REQ-000003 | Olivier Steck | Validation report as a worklist; CodeLens/gutter marks; click-to-jump. Still read-only. Exit: an orphan appears on the board before it would've been noticed by hand. |
 | `RM-000004` | Phase 4 — Proposal loop, fix-only | Not triaged | *(none)* | Olivier Steck | Proposal file format, "propose fix" from the health board, pending badges, reconciliation into applied/partial/stale. Exit: one orphan fixed end-to-end with no manual file edits. |
 | `RM-000005` | Phase 5 — Authoring composer | Not triaged | *(none)* | Olivier Steck | New work items and rules as structured intent compiled to a proposal. Exit: a work item created from the UI has a valid, never-reused ID and resolves all links on first parse. |
 | `RM-000006` | Phase 6 — Electron host | Not triaged | *(none)* | Olivier Steck | Mount the same UI package; add multi-project, persistent watch, and a graph view. Exit: shipped with no changes to `catalyst-ui`. |

@@ -9,6 +9,7 @@ Global index of every rule document and rule ID in this deployment. Per
 |---|---|---|
 | `env` | [`dev-environment-rules.md`](dev-environment-rules.md) | `RUNTIME`, `LAYOUT`, `DEPS`, `STYLE`, `TEST`, `CI`, `DX` |
 | `core` | [`catalyst-core-rules.md`](catalyst-core-rules.md) | `CONTRACT` |
+| `vscode` | [`catalyst-host-vscode-rules.md`](catalyst-host-vscode-rules.md) | `INSPECTOR`, `HEALTH` |
 
 ## Rule IDs
 
@@ -20,3 +21,5 @@ Global index of every rule document and rule ID in this deployment. Per
 - `env-CI-001` — GitHub Actions gate: lint, typecheck, test
 - `env-DX-001` — Pinned Node version, no devcontainer yet
 - `core-CONTRACT-001` — Typed chain model, global validation, watched changes
+- `vscode-INSPECTOR-001` — Read-only chain tree and node-detail webview
+- `vscode-HEALTH-001` — Diagnostics, click-to-jump, and CodeLens for corpus files
