@@ -11,7 +11,7 @@ repository).
 
 ## Contents
 
-- [`CONTRACT`](#contract) — `core-CONTRACT-001`
+- [`CONTRACT`](#contract) — `core-CONTRACT-001`, `core-CONTRACT-002`
 
 ## `CONTRACT`
 
@@ -42,6 +42,36 @@ exit zero; the built CLI run against this deployment's own real corpus
 reports 36 nodes, 0 errors; a synthetic 5× corpus (250 rules/domains/
 requirements) parses, models, and validates in under 100ms (roadmap
 Phase 1's own exit criterion).
+
+### `core-CONTRACT-002` Proposal parsing and reconciliation-state tracking
+
+✅ working. `catalyst-core` parses `proposals/*.md`
+(`PROP-NNNNNN`, this deployment's own uniform-layout artifact type —
+not a catalyst framework-wide concept) into a `Proposal` list: id,
+reconciliation `status` (`proposed` / `applying` / `applied` / `partial`
+/ `stale`), `intent`, `targets` (existing node ids), `expectations`, and
+`constraints`. Exposes `nextProposalId` (never-reused, same 6-digit
+scheme as every other artifact type) and `openProposalsByTarget`
+(every non-`applied` proposal grouped by each id it targets, for
+pending-state lookups). `catalyst-core` only parses and tracks —
+executing a proposal's expectations, and advancing its `status`, is an
+agent's job, never this package's or any host's. Included in
+`watchCorpus`'s `WatchUpdate` alongside the chain model and validation
+report, so proposal state refreshes the same way everything else does.
+Targeted by `REQ-000004`.
+
+Implemented: `packages/catalyst-core/src/proposals.ts` (`parseProposals`,
+`nextProposalId`, `openProposalsByTarget`), wired into `watcher.ts`'s
+`WatchUpdate`. Tested: `npm run lint`, `npm run format:check`, `npm run
+typecheck`, `npm test` (56 tests: `proposals.test.ts` plus a
+`proposal-loop.integration.test.ts` that seeds a real, validator-detected
+orphan and confirms a proposal targeting it is discoverable as open,
+then stops being flagged once its only proposal is `applied`) all exit
+zero. Verified end-to-end against this deployment's own real corpus:
+`parseProposals` resolves the real `proposals/` directory (currently
+holding no `PROP-` files yet — README/index/templates only — correctly
+returning an empty list rather than erroring), and `nextProposalId`
+correctly returns `PROP-000001` for that empty state.
 
 ## Known Bugs — Quick Index
 

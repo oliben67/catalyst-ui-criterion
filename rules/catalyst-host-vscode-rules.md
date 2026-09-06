@@ -11,6 +11,7 @@ this domain consumes but does not redefine.
 
 - [`INSPECTOR`](#inspector) — `vscode-INSPECTOR-001`
 - [`HEALTH`](#health) — `vscode-HEALTH-001`
+- [`PROPOSAL`](#proposal) — `vscode-PROPOSAL-001`, `vscode-PROPOSAL-002`
 
 ## `INSPECTOR`
 
@@ -97,6 +98,60 @@ comes from mutual prose citation rather than a structural field (a rule
 doesn't "target" a requirement just because its own text says
 "Targeted by `REQ-X`"); changed to direction-neutral "Links to / Linked
 from" before this was marked done.
+
+## `PROPOSAL`
+
+> **Domain:** `PROPOSAL` — see [domains/vscode-PROPOSAL-fix-and-authoring-proposals.md](domains/vscode-PROPOSAL-fix-and-authoring-proposals.md).
+
+### `vscode-PROPOSAL-001` Propose-fix code action and pending badges
+
+✅ working. Every catalyst diagnostic (`vscode-HEALTH-001`)
+gets a "Propose fix" Quick Fix (`CodeActionProvider`) that creates a new
+`proposals/PROP-NNNNNN.md` targeting the affected node, with a default
+`Expectations` sentence per issue kind — refused (no action offered) if
+an open, non-`applied` proposal already targets that node. The chain
+inspector tree and node-detail webview show a pending indicator, and the
+webview lists open proposals, for any node targeted by an open proposal
+(`catalyst-core`'s `openProposalsByTarget`). Creating a proposal is the
+only write this extension ever performs — governed files (rules,
+requirements, ...) are never touched by the UI. Targeted by
+`REQ-000004`.
+
+Implemented: `packages/catalyst-host-vscode/src/codeactions.ts`
+(`canProposeFix`, `defaultExpectationFor`, `buildProposeFixContent`) and
+`src/proposals.ts` (`buildProposalSection`, `renderProposalContent`,
+shared with `vscode-PROPOSAL-002`), wired into `extension.ts`'s
+`registerCodeActionsProvider` and the `catalyst.proposeFix` command;
+`ChainInspectorProvider` tracks `getPendingTargets`/`getAllProposals`
+and renders a `⏳` mark on any pending node plus a "Proposals (N)" tree
+section. Tested: `npm run lint`, `npm run format:check`, `npm run
+typecheck`, `npm test` (106 tests across all four packages) all exit
+zero; `extension.ts` itself stays thin, untested glue, same deliberate
+deferral as `vscode-INSPECTOR-001`/`vscode-HEALTH-001`.
+
+### `vscode-PROPOSAL-002` Authoring composer
+
+✅ working. A `catalyst.composeProposal` command gathers
+structured intent for a brand-new artifact (type, domain, targets,
+title, description) via a multi-step input, then compiles it into a
+proposal the same way `vscode-PROPOSAL-001` does — same file format,
+same pending-badge treatment, same "the UI only ever proposes" rule.
+Works for any rule-linked artifact type this deployment actually has
+(rule, requirement, bug, house-keeping); this deployment has no
+project-management plugin active, so it cannot create or verify a work
+item specifically. Targeted by `REQ-000005`.
+
+Implemented: `packages/catalyst-host-vscode/src/composer.ts`
+(`buildAuthoringProposalContent`, `ComposableArtifactType`), wired into
+`extension.ts`'s `catalyst.composeProposal` command (a `showQuickPick` +
+`showInputBox` sequence for type/domain/title/description/targets),
+reusing `proposals.ts`'s `renderProposalContent` — no second file
+format or pending-badge path. Tested: `npm run lint`, `npm run
+format:check`, `npm run typecheck`, `npm test` (106 tests) all exit
+zero; verified end-to-end via a scratchpad script generating a real
+proposal against this deployment's own corpus (a "Compose: Sample new
+rule" proposal targeting `core-CONTRACT-001`) confirming the rendered
+content matches `renderProposalContent`'s field-table/section format.
 
 ## Known Bugs — Quick Index
 

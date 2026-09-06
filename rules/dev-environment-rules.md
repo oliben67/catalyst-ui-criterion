@@ -86,17 +86,21 @@ output for now — `@vscode/test-electron` is declared as a
 devDependency and wires in once real `activate()` logic exists to
 integration-test against a launched VS Code instance (roadmap Phase 2);
 until then, launching a full VS Code instance to test an empty
-extension has nothing to verify. `catalyst-host-electron` has no test
-setup yet; deferred to when that package gets real code (roadmap Phase
-6). Test locations: `packages/<name>/src/**/*.test.ts` (Vitest
-packages), `packages/catalyst-host-vscode/src/test/**/*.test.ts` (Mocha
-suite). This resolves `Rules-of-Rules.md` §2's `{{TEST_LOCATIONS}}` for
-every rule created in this repository from now on. Implemented: each
-Vitest package's `vitest.config.ts`; `catalyst-host-vscode`'s Mocha
-setup (`src/test/extension.test.ts`, run via `npm run test` after a
-`pretest` build step). Tested, actually run and verified during this
-instantiation: `npm run lint`, `npm run format:check`, `npm run
-typecheck`, and `npm test` (3 suites, 3 tests) all exit zero.
+extension has nothing to verify. `catalyst-host-electron` also uses
+Vitest, same as `catalyst-core`/`catalyst-ui` — its own logic (project
+state, graph layout) is plain TypeScript with no Electron API surface
+to mock, so there was never a reason to reach for a different harness
+there (resolved now that roadmap Phase 6 gives that package real code;
+previously deferred). Test locations: `packages/<name>/src/**/*.test.ts`
+(Vitest packages), `packages/catalyst-host-vscode/src/test/**/*.test.ts`
+(Mocha suite). This resolves `Rules-of-Rules.md` §2's
+`{{TEST_LOCATIONS}}` for every rule created in this repository from now
+on. Implemented: each Vitest package's `vitest.config.ts`;
+`catalyst-host-vscode`'s Mocha setup (`src/test/extension.test.ts`, run
+via `npm run test` after a `pretest` build step). Tested, actually run
+and verified during this instantiation: `npm run lint`, `npm run
+format:check`, `npm run typecheck`, and `npm test` (3 suites, 3 tests)
+all exit zero.
 
 ## `CI`
 

@@ -12,3 +12,5 @@
 | [`CONTRACT`](core-CONTRACT-parser-model-validator-watcher.md) | rules/catalyst-core-rules.md | 2026-09-05 |
 | [`INSPECTOR`](vscode-INSPECTOR-chain-tree-and-node-detail-webview.md) | rules/catalyst-host-vscode-rules.md | 2026-09-05 |
 | [`HEALTH`](vscode-HEALTH-diagnostics-definitions-and-codelens.md) | rules/catalyst-host-vscode-rules.md | 2026-09-05 |
+| [`PROPOSAL`](vscode-PROPOSAL-fix-and-authoring-proposals.md) | rules/catalyst-host-vscode-rules.md | 2026-09-05 |
+| [`DESKTOP`](electron-DESKTOP-multi-project-host-and-graph-view.md) | rules/catalyst-host-electron-rules.md | 2026-09-05 |
