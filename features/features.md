@@ -8,3 +8,4 @@
 | [FEAT-000004](FEAT-000004-proposal-loop-fix-only.md) | Proposal loop, fix-only | shipped |
 | [FEAT-000005](FEAT-000005-authoring-composer.md) | Authoring composer | shipped |
 | [FEAT-000006](FEAT-000006-electron-host.md) | Electron host | shipped |
+| [FEAT-000007](FEAT-000007-run-monitor.md) | Run monitor | shipped |

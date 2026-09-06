@@ -12,6 +12,7 @@ this domain consumes but does not redefine.
 - [`INSPECTOR`](#inspector) — `vscode-INSPECTOR-001`
 - [`HEALTH`](#health) — `vscode-HEALTH-001`
 - [`PROPOSAL`](#proposal) — `vscode-PROPOSAL-001`, `vscode-PROPOSAL-002`
+- [`RUNMONITOR`](#runmonitor) — `vscode-RUNMONITOR-001`
 
 ## `INSPECTOR`
 
@@ -152,6 +153,39 @@ zero; verified end-to-end via a scratchpad script generating a real
 proposal against this deployment's own corpus (a "Compose: Sample new
 rule" proposal targeting `core-CONTRACT-001`) confirming the rendered
 content matches `renderProposalContent`'s field-table/section format.
+
+## `RUNMONITOR`
+
+> **Domain:** `RUNMONITOR` — see [domains/vscode-RUNMONITOR-live-checklist-and-ledger.md](domains/vscode-RUNMONITOR-live-checklist-and-ledger.md).
+
+### `vscode-RUNMONITOR-001` Live run checklist and ledger
+
+✅ working. The chain inspector tree gets a "Runs (N)"
+section, sibling to the existing proposals section, listing every
+`RUN-NNNNNN` `catalyst-core` parses (`core-CONTRACT-003`): each run
+expands to its checklist (one line per step, glyph rendered per its
+parsed status) and ledger. The section's own label carries a `⚠️`
+suffix whenever any run has drift (`hasDrift`), and any run currently
+`running` is visually distinguishable from `completed`/`failed` — this
+is what makes a drift event visible while the run is still in
+progress, not just after. Read-only, same as every other tree section:
+the extension never creates or edits a run file, only the external
+agent does. Targeted by `REQ-000007`.
+
+Implemented: `packages/catalyst-host-vscode/src/runmonitor.ts`
+(`buildRunSection`, `formatRunLabel`, `formatStepLabel`), wired into
+`extension.ts`'s `ChainInspectorProvider` as a new `run-section`/`run`/
+`run-step`/`run-ledger-entry` tree-item family, fed by `watchCorpus`'s
+new `runs` field. Tested: `npm run lint`, `npm run format:check`, `npm
+run typecheck`, `npm test` (119 tests total, 10 new in
+`runmonitor.test.ts`) all exit zero; `extension.ts` itself stays thin,
+untested glue, same deliberate deferral as every other domain in this
+document. Verified end-to-end: a simulated agent-authored `RUN-000001`
+file with a `⚠️` checklist line produced section label `Runs (1) ⚠️`
+and run label `RUN-000001 — running ⚠️` while the run's own `Status`
+was still `running` — the concrete form of "a drift event is visible
+in the UI before the run completes," this deployment's own roadmap
+exit criterion.
 
 ## Known Bugs — Quick Index
 

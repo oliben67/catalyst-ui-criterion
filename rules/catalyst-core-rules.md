@@ -11,7 +11,7 @@ repository).
 
 ## Contents
 
-- [`CONTRACT`](#contract) — `core-CONTRACT-001`, `core-CONTRACT-002`
+- [`CONTRACT`](#contract) — `core-CONTRACT-001`, `core-CONTRACT-002`, `core-CONTRACT-003`
 
 ## `CONTRACT`
 
@@ -72,6 +72,42 @@ zero. Verified end-to-end against this deployment's own real corpus:
 holding no `PROP-` files yet — README/index/templates only — correctly
 returning an empty list rather than erroring), and `nextProposalId`
 correctly returns `PROP-000001` for that empty state.
+
+### `core-CONTRACT-003` Run-state parsing
+
+✅ working. `catalyst-core` parses `runs/*.md`
+(`RUN-NNNNNN`, this deployment's own uniform-layout artifact type —
+not a catalyst framework-wide concept, and unlike `proposals/`, never
+created or edited by any host, only by the external agent running a
+task) into a `Run` list: id, `status` (`running` / `completed` /
+`failed`), `command`, `started`, a `steps` checklist (each a glyph-
+parsed `status` — `done` / `failed` / `pending` / `drift` — plus its
+text), and a free-text `ledger`. Exposes `hasDrift(run)` — `true` iff
+any step's status is `drift` — kept in `catalyst-core` rather than a
+host, same reasoning as `openProposalsByTarget`: any future host wants
+the identical definition. `catalyst-core` only parses; it never
+independently verifies a step's `drift` claim, the same way it never
+executes a proposal's `expectations`. Included in `watchCorpus`'s
+`WatchUpdate` alongside the chain model, validation report, and
+proposals, so a run's live edits refresh the same way everything else
+does. Targeted by `REQ-000007`.
+
+Implemented: `packages/catalyst-core/src/runs.ts` (`parseRuns`,
+`hasDrift`), `parser.ts`'s `sectionLines`/`bulletItems` promoted from
+`proposals.ts`-private to exported so both parsers share them, wired
+into `watcher.ts`'s `WatchUpdate`. Tested: `npm run lint`, `npm run
+format:check`, `npm run typecheck`, `npm test` (119 tests total, 7 new
+in `runs.test.ts`: empty `runs/`, a well-formed run's fields/checklist/
+ledger, an unrecognized checklist-line prefix skipped without throwing,
+an unrecognized `Status` value defaulting to `running`, sort-by-id, and
+`hasDrift` true/false) all exit zero. Verified end-to-end: against this
+deployment's own real corpus, `parseRuns` resolves the real (currently
+empty) `runs/` directory without error; a simulated agent-authored
+`RUN-000001` file (matching `templates/TEMPLATE-RUN-v1.md`'s shape,
+with a `⚠️` checklist line) parsed correctly into a `drift`-status step,
+and `hasDrift` correctly returned `true` while the run's own `Status`
+was still `running` — the concrete proof that a drift event is
+detectable before a run completes.
 
 ## Known Bugs — Quick Index
 

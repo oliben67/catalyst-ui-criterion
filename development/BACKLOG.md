@@ -1,4 +1,4 @@
-**Last refreshed:** 2026-09-06 by `/show-backlog`.
+**Last refreshed:** 2026-09-06 (later) by `/show-backlog`.
 
 ## Open bugs
 
@@ -29,4 +29,4 @@
 - `RM-000004` — Phase 4 — Proposal loop, fix-only (Done, `REQ-000004`)
 - `RM-000005` — Phase 5 — Authoring composer (Done, `REQ-000005`)
 - `RM-000006` — Phase 6 — Electron host (Done, `REQ-000006`)
-- `RM-000007` — Phase 7 — Run monitor (Not triaged)
+- `RM-000007` — Phase 7 — Run monitor (Done, `REQ-000007`)

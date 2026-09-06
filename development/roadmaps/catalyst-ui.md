@@ -17,7 +17,7 @@ for ingest)
 | `RM-000004` | Phase 4 — Proposal loop, fix-only | Done | REQ-000004 | Olivier Steck | Proposal file format, "propose fix" from the health board, pending badges, reconciliation into applied/partial/stale. Exit: one orphan fixed end-to-end with no manual file edits. |
 | `RM-000005` | Phase 5 — Authoring composer | Done | REQ-000005 | Olivier Steck | New work items and rules as structured intent compiled to a proposal. Exit: a work item created from the UI has a valid, never-reused ID and resolves all links on first parse. |
 | `RM-000006` | Phase 6 — Electron host | Done | REQ-000006 | Olivier Steck | Mount the same UI package; add multi-project, persistent watch, and a graph view. Exit: shipped with no changes to `catalyst-ui`. |
-| `RM-000007` | Phase 7 — Run monitor | Not triaged | *(none)* | Olivier Steck | Live checklist and ledger; depends on proposals existing and on agent-side run-state emission (not yet specified). Exit: a drift event is visible in the UI before the run completes. |
+| `RM-000007` | Phase 7 — Run monitor | Done | REQ-000007 | Olivier Steck | Live checklist and ledger; depends on proposals existing and on agent-side run-state emission (not yet specified). Exit: a drift event is visible in the UI before the run completes. |
 
 ## Status values
 

@@ -8,3 +8,4 @@
 | [REQ-000004](REQ-000004-proposal-loop-fix-only.md) | Proposal loop, fix-only | done |
 | [REQ-000005](REQ-000005-authoring-composer.md) | Authoring composer | done |
 | [REQ-000006](REQ-000006-electron-host.md) | Electron host | done |
+| [REQ-000007](REQ-000007-run-monitor.md) | Run monitor | done |
