@@ -15,3 +15,4 @@
 | [`PROPOSAL`](vscode-PROPOSAL-fix-and-authoring-proposals.md) | rules/catalyst-host-vscode-rules.md | 2026-09-05 |
 | [`DESKTOP`](electron-DESKTOP-multi-project-host-and-graph-view.md) | rules/catalyst-host-electron-rules.md | 2026-09-05 |
 | [`RUNMONITOR`](vscode-RUNMONITOR-live-checklist-and-ledger.md) | rules/catalyst-host-vscode-rules.md | 2026-09-06 |
+| [`ONBOARDING`](vscode-ONBOARDING-offer-to-install.md) | rules/catalyst-host-vscode-rules.md | 2026-09-06 |

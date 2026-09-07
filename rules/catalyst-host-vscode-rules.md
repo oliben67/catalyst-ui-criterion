@@ -13,6 +13,7 @@ this domain consumes but does not redefine.
 - [`HEALTH`](#health) — `vscode-HEALTH-001`
 - [`PROPOSAL`](#proposal) — `vscode-PROPOSAL-001`, `vscode-PROPOSAL-002`
 - [`RUNMONITOR`](#runmonitor) — `vscode-RUNMONITOR-001`
+- [`ONBOARDING`](#onboarding) — `vscode-ONBOARDING-001`
 
 ## `INSPECTOR`
 
@@ -20,43 +21,60 @@ this domain consumes but does not redefine.
 
 ### `vscode-INSPECTOR-001` Read-only chain tree and node-detail webview
 
-✅ working. The extension resolves which catalyst deployment to inspect
-from the opened project's own `<name>.catalyst` pointer file
-(`agent-source` field), watches it via `catalyst-core`'s `watchCorpus`,
-and exposes a sidebar `TreeDataProvider` grouping the chain model's nodes
-by layer: dev artifacts, rules, rules of rules (rules whose id starts
-`rr-`), domains, features (work items excluded — none active in this
-deployment). Selecting a node opens a `WebviewPanel` — `catalyst-ui`'s
+✅ working. The extension resolves a catalyst deployment independently
+for every open workspace folder — not just the first, in a multi-root
+workspace — from each folder's own `<name>.catalyst` pointer file
+(`agent-source` field), watches each resolved corpus independently via
+`catalyst-core`'s `watchCorpus`, and reacts live to folders being added
+to or removed from the workspace
+(`vscode.workspace.onDidChangeWorkspaceFolders`) without requiring a
+reload. Exposes a sidebar `TreeDataProvider`: with exactly one resolved
+deployment its root shows that deployment's five sections directly
+(dev artifacts, rules, rules of rules — rules whose id starts `rr-` —
+domains, features; work items excluded — none active in this
+deployment) — identical to the original single-folder UX; with more
+than one, the root instead shows one collapsible entry per deployment,
+named after its workspace folder, each expanding into its own five
+sections. Selecting a node opens a `WebviewPanel` — `catalyst-ui`'s
 bundled React surface — showing that node's own fields plus what it's
-justified by (upstream, via the chain model's resolved edges) and what
-it produces (downstream, via reverse edges). Read-only: no editing, no
-live-pushed webview updates (reopening the panel refreshes it). No
-catalyst deployment found for the opened project is a graceful empty
-state, not an error. Targeted by `REQ-000002`.
+justified by (upstream) and what it produces (downstream); the
+underlying command carries which deployment the node came from, since
+node ids are only unique within one corpus. Read-only: no editing, no
+live-pushed webview updates (reopening the panel refreshes it). A
+folder with no resolvable catalyst deployment is handled by
+`vscode-ONBOARDING-001` instead of staying silent. Targeted by
+`REQ-000002`, extended by `REQ-000008` for multi-root.
 
 Implemented: `packages/catalyst-core/src/discover.ts` (corpus
-resolution) plus `watchCorpus`'s extended `{ model, report }` callback
-and the `NodeDetailPayload` protocol type; `packages/catalyst-host-
-vscode/src/{tree,detail,extension}.ts` (sidebar tree, webview payload
-builder, real `activate()`); `packages/catalyst-ui/src/{NodeDetail.tsx,
-webview-entry.tsx}` (the mounted React surface, bundled via `esbuild`
-into `dist/webview.js`). Tested: `npm run lint`, `npm run format:check`,
-`npm run typecheck`, `npm test` (56 tests: Vitest for catalyst-core/
-catalyst-ui, Mocha for catalyst-host-vscode's `tree.ts`/`detail.ts`)
-all exit zero. `extension.ts` itself stays a thin, untested glue layer
-over the real `vscode` API — full `@vscode/test-electron` integration
-testing is deliberately deferred, the devDependency stays in place.
-Verified end-to-end against this deployment's own real corpus (not just
-fixtures): 40 nodes resolved and correctly grouped into all five
-sections; a real bug this caught and fixed — a node's own backtick-quoted
-`**ID**` field was read back as a self-reference, creating a self-loop
-in the chain model — is covered by a regression test in `catalyst-core`.
-Known, accepted characteristic (not a bug): a rule or feature whose own
-prose says "Targeted by `REQ-X`" creates a real mutual citation with
-that requirement's `Targets`/`Feature` field, so such a node can
-legitimately appear in both a requirement's upstream and downstream
-lists — already true of Phase 1's docs, just newly visible now that a
-node's neighbors are actually rendered.
+resolution) plus `watchCorpus`'s `{ model, report, proposals, runs }`
+callback and the `NodeDetailPayload` protocol type;
+`packages/catalyst-host-vscode/src/{tree,detail,extension}.ts` (sidebar
+tree, webview payload builder, real `activate()`); `packages/
+catalyst-ui/src/{NodeDetail.tsx, webview-entry.tsx}` (the mounted React
+surface, bundled via `esbuild` into `dist/webview.js`). Multi-root
+specifically: `extension.ts`'s `ChainInspectorProvider` keeps a
+`Map<corpusRoot, DeploymentView>` instead of one flat set of fields;
+`setupDeployment`/`teardownFolder` register and dispose one
+`WatcherHandle` plus one `DefinitionProvider`/`CodeLensProvider`/
+`CodeActionsProvider` set per resolved folder; `refreshDiagnosticsFor
+Deployment` tracks each deployment's own previously-reported files so
+one deployment's refresh never clears another's diagnostics (a real
+bug caught during design review before it shipped — the original
+single-folder code called a global `collection.clear()`, which would
+have wiped every other deployment's diagnostics the moment any one
+watcher fired). Tested: `npm run lint`, `npm run format:check`, `npm
+run typecheck`, `npm test` (124 tests total) all exit zero;
+`extension.ts` itself stays a thin, untested glue layer over the real
+`vscode` API, same deliberate deferral as always — no real multi-root
+Extension Host was launched this session, so the tree-grouping and
+live add/remove behavior is verified by design, typecheck (the
+discriminated `InspectorTreeItem` union catches most wiring mistakes at
+compile time), and the tested pure pieces it's built from, not an
+actual running instance. Known, accepted characteristic (not a bug): a
+rule or feature whose own prose says "Targeted by `REQ-X`" creates a
+real mutual citation with that requirement's `Targets`/`Feature` field,
+so such a node can legitimately appear in both a requirement's upstream
+and downstream lists.
 
 ## `HEALTH`
 
@@ -186,6 +204,42 @@ and run label `RUN-000001 — running ⚠️` while the run's own `Status`
 was still `running` — the concrete form of "a drift event is visible
 in the UI before the run completes," this deployment's own roadmap
 exit criterion.
+
+## `ONBOARDING`
+
+> **Domain:** `ONBOARDING` — see [domains/vscode-ONBOARDING-offer-to-install.md](domains/vscode-ONBOARDING-offer-to-install.md).
+
+### `vscode-ONBOARDING-001` Offer to install catalyst when no deployment is found
+
+✅ working. When a workspace folder has no resolvable
+`*.catalyst` pointer, the extension offers to help rather than staying
+silent: an information message with an "Install catalyst…" action (and
+a "Don't ask again" dismissal, remembered per folder). Since catalyst's
+own instantiation is an agent-driven procedure (`BOOTSTRAP.md` is
+written to be followed by a reasoning coding agent, not run as a
+deterministic script — per catalyst's own framework repository), this
+extension cannot perform the install itself; it copies a ready
+instantiation prompt to the clipboard instead, naming the framework
+repo location (auto-detected as a sibling directory containing
+`BOOTSTRAP.md`, else the `catalyst.frameworkPath` setting) and this
+project's own root, then tells the user to paste it into whichever
+coding agent they use. Never auto-runs anything — no CLI, extension,
+or agent is assumed to be installed. Targeted by `REQ-000008`.
+
+Implemented: `packages/catalyst-host-vscode/src/framework-discovery.ts`
+(`findSiblingFrameworkRepo`, `buildInstantiationPrompt` — pure, no
+`vscode` import, fully tested), `extension.ts`'s `offerToInstall`
+(the `showInformationMessage`/`showWarningMessage`/clipboard glue,
+dismissal tracked in `context.workspaceState`) and new `contributes.
+configuration` entry `catalyst.frameworkPath`. Tested: `npm run lint`,
+`npm run format:check`, `npm run typecheck`, `npm test` (124 tests
+total, 5 new in `framework-discovery.test.ts`: sibling found/not-found/
+ignores-itself/missing-parent, and the prompt's shape) all exit zero.
+Verified end-to-end against this machine's own real directory layout
+(not a fixture): `findSiblingFrameworkRepo` run against `catalyst-ui`'s
+real project root correctly found the real `catalyst` framework
+checkout cloned beside it and produced a well-formed instantiation
+prompt naming both real paths.
 
 ## Known Bugs — Quick Index
 

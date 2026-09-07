@@ -9,7 +9,7 @@ Global index of every rule document and rule ID in this deployment. Per
 |---|---|---|
 | `env` | [`dev-environment-rules.md`](dev-environment-rules.md) | `RUNTIME`, `LAYOUT`, `DEPS`, `STYLE`, `TEST`, `CI`, `DX` |
 | `core` | [`catalyst-core-rules.md`](catalyst-core-rules.md) | `CONTRACT` |
-| `vscode` | [`catalyst-host-vscode-rules.md`](catalyst-host-vscode-rules.md) | `INSPECTOR`, `HEALTH`, `PROPOSAL`, `RUNMONITOR` |
+| `vscode` | [`catalyst-host-vscode-rules.md`](catalyst-host-vscode-rules.md) | `INSPECTOR`, `HEALTH`, `PROPOSAL`, `RUNMONITOR`, `ONBOARDING` |
 | `electron` | [`catalyst-host-electron-rules.md`](catalyst-host-electron-rules.md) | `DESKTOP` |
 
 ## Rule IDs
@@ -29,4 +29,5 @@ Global index of every rule document and rule ID in this deployment. Per
 - `vscode-PROPOSAL-001` — Propose-fix code action and pending badges
 - `vscode-PROPOSAL-002` — Authoring composer
 - `vscode-RUNMONITOR-001` — Live run checklist and ledger
+- `vscode-ONBOARDING-001` — Offer to install catalyst when no deployment is found
 - `electron-DESKTOP-001` — Multi-project tracking, persistent watch, and graph view

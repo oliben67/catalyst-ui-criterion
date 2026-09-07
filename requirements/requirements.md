@@ -9,3 +9,4 @@
 | [REQ-000005](REQ-000005-authoring-composer.md) | Authoring composer | done |
 | [REQ-000006](REQ-000006-electron-host.md) | Electron host | done |
 | [REQ-000007](REQ-000007-run-monitor.md) | Run monitor | done |
+| [REQ-000008](REQ-000008-multi-root-and-install-offer.md) | Multi-root workspace support + install-offer | done |
