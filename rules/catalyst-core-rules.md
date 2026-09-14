@@ -11,7 +11,7 @@ repository).
 
 ## Contents
 
-- [`CONTRACT`](#contract) — `core-CONTRACT-001`, `core-CONTRACT-002`, `core-CONTRACT-003`
+- [`CONTRACT`](#contract) — `core-CONTRACT-001`, `core-CONTRACT-002`, `core-CONTRACT-003`, `core-CONTRACT-004`
 
 ## `CONTRACT`
 
@@ -108,6 +108,24 @@ with a `⚠️` checklist line) parsed correctly into a `drift`-status step,
 and `hasDrift` correctly returned `true` while the run's own `Status`
 was still `running` — the concrete proof that a drift event is
 detectable before a run completes.
+
+### `core-CONTRACT-004` Agent-command and slash-command discovery
+
+❌ not yet implemented. `catalyst-core` exposes three small,
+host-agnostic helpers every host needs identically: `resolveAgentCommand`
+(reads the opened project's own `*.catalyst` pointer's `agent` field —
+catalyst is agent-agnostic, so a deployment records which agent runs
+it rather than any host assuming Claude Code — and maps a known agent
+id to its actual CLI binary name, e.g. `claude-code` → `claude`, passing
+anything unrecognized through verbatim), `discoverSlashCommands` (reads
+`.claude/commands/*.md` deployed at the project root per `CLAUDE.md` /
+`CODE-OF-CONDUCT.md` §4, parsing each file's `description`/
+`argument-hint` frontmatter), and `composeSlashCommand` (formats a
+picked command plus optional arguments into the literal text sent to
+the agent, e.g. `/create-bug <title>`). None of the three touch a
+governed file or execute anything themselves — they only resolve what
+a host needs to know before it hands a composed line to a real agent
+process. Targeted by `REQ-000009`.
 
 ## Known Bugs — Quick Index
 

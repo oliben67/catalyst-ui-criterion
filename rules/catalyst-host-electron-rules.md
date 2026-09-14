@@ -11,6 +11,7 @@ neither amends the other.
 ## Contents
 
 - [`DESKTOP`](#desktop) — `electron-DESKTOP-001`
+- [`AGENTWINDOW`](#agentwindow) — `electron-AGENTWINDOW-001`
 
 ## `DESKTOP`
 
@@ -53,6 +54,26 @@ deployment's own real corpus: `computeGraphLayout` resolves 56 nodes
 and 37 edges with every position finite and no two nodes sharing a
 position; the renderer bundle (`esbuild`, 142.5kb) and the `tsc` build
 both succeed cleanly.
+
+## `AGENTWINDOW`
+
+> **Domain:** `AGENTWINDOW` — see [domains/electron-AGENTWINDOW-run-slash-commands.md](domains/electron-AGENTWINDOW-run-slash-commands.md).
+
+### `electron-AGENTWINDOW-001` Run catalyst slash commands via a per-project agent window
+
+❌ not yet implemented. A command picker (populated via
+`catalyst-core`'s `discoverSlashCommands` for the selected tracked
+project) sends the chosen, composed command
+(`composeSlashCommand`) to a spawned process running that project's
+own agent CLI (`resolveAgentCommand`, from its `*.catalyst` pointer's
+`agent` field), one process per tracked project, reused across
+multiple command runs the same way `electron-DESKTOP-001`'s
+`watchCorpus` instances are. Not a real pty terminal: `stdout`/
+`stderr` are piped to a scrolling output view in the renderer, with a
+free-text box for follow-up input written to the process's `stdin` —
+enough for the common case without taking on a native-module
+dependency (`node-pty`) this project's dependency footprint has
+avoided everywhere else. Targeted by `REQ-000009`.
 
 ## Known Bugs — Quick Index
 

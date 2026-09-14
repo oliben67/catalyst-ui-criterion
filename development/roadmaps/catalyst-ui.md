@@ -19,6 +19,7 @@ for ingest)
 | `RM-000006` | Phase 6 — Electron host | Done | REQ-000006 | Olivier Steck | Mount the same UI package; add multi-project, persistent watch, and a graph view. Exit: shipped with no changes to `catalyst-ui`. |
 | `RM-000007` | Phase 7 — Run monitor | Done | REQ-000007 | Olivier Steck | Live checklist and ledger; depends on proposals existing and on agent-side run-state emission (not yet specified). Exit: a drift event is visible in the UI before the run completes. |
 | `RM-000008` | VS Code multi-root workspace support + install-offer | Done | REQ-000008 | Olivier Steck | New scope beyond the original pasted roadmap (not one of its seven phases): `activate()` only ever inspected `workspaceFolders[0]`, so a multi-root workspace with 2+ catalyst deployments silently only showed one, and a folder with no `*.catalyst` pointer was silently ignored. Exit: 2+ deployments open in one workspace each get their own tree section; a folder with no deployment offers to copy a ready instantiation prompt to the clipboard. |
+| `RM-000009` | Agent window for running catalyst slash commands | In progress | REQ-000009 | Olivier Steck | New scope beyond the original pasted roadmap: run a discovered `.claude/commands/*.md` slash command through the deployment's own agent CLI from inside each host, rather than a manual copy-paste into an unrelated terminal. Exit: a command run from either host's UI lands in a per-project agent window/terminal, not a shared one that can cross-send into the wrong project's live session. |
 
 ## Status values
 

@@ -10,3 +10,4 @@
 | [FEAT-000006](FEAT-000006-electron-host.md) | Electron host | shipped |
 | [FEAT-000007](FEAT-000007-run-monitor.md) | Run monitor | shipped |
 | [FEAT-000008](FEAT-000008-multi-root-and-install-offer.md) | Multi-root workspace support + install-offer | shipped |
+| [FEAT-000009](FEAT-000009-agent-window-slash-commands.md) | Agent window for running catalyst slash commands | in-development |

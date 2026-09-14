@@ -10,3 +10,4 @@
 | [REQ-000006](REQ-000006-electron-host.md) | Electron host | done |
 | [REQ-000007](REQ-000007-run-monitor.md) | Run monitor | done |
 | [REQ-000008](REQ-000008-multi-root-and-install-offer.md) | Multi-root workspace support + install-offer | done |
+| [REQ-000009](REQ-000009-agent-window-slash-commands.md) | Agent window for running catalyst slash commands | in-progress |

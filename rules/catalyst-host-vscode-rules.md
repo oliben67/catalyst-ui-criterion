@@ -14,6 +14,7 @@ this domain consumes but does not redefine.
 - [`PROPOSAL`](#proposal) — `vscode-PROPOSAL-001`, `vscode-PROPOSAL-002`
 - [`RUNMONITOR`](#runmonitor) — `vscode-RUNMONITOR-001`
 - [`ONBOARDING`](#onboarding) — `vscode-ONBOARDING-001`
+- [`AGENT`](#agent) — `vscode-AGENT-001`
 
 ## `INSPECTOR`
 
@@ -240,6 +241,29 @@ Verified end-to-end against this machine's own real directory layout
 real project root correctly found the real `catalyst` framework
 checkout cloned beside it and produced a well-formed instantiation
 prompt naming both real paths.
+
+## `AGENT`
+
+> **Domain:** `AGENT` — see [domains/vscode-AGENT-run-slash-commands.md](domains/vscode-AGENT-run-slash-commands.md).
+
+### `vscode-AGENT-001` Run catalyst slash commands via a per-project agent terminal
+
+❌ not yet implemented. A `catalyst.runSlashCommand` command discovers
+the deployed `.claude/commands/*.md` slash commands for a workspace
+folder (`catalyst-core`'s `discoverSlashCommands`), lets the user pick
+which project (when more than one is open) and which command, prompts
+for arguments when the command declares an `argument-hint`, then sends
+the composed line (`composeSlashCommand`) to a `vscode.window.Terminal`
+running that project's own agent CLI (`resolveAgentCommand`, read from
+the `*.catalyst` pointer's `agent` field). One terminal per resolved
+folder, not a single shared one — reusing a stale terminal would send
+a different project's command into whatever agent process happens to
+still be running in it. The terminal is branded (the extension's own
+icon, named after the project, `cwd` set to the project root) and
+opens in the editor area beside the current view — the same surface
+`vscode-INSPECTOR-001`'s node-detail webview uses — rather than the
+generic bottom Terminal panel shared by every other tool. Targeted by
+`REQ-000009`.
 
 ## Known Bugs — Quick Index
 
