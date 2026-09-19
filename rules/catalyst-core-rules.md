@@ -29,15 +29,20 @@ orphaned artifacts, rules without meta-rule backing, ID reuse, and
 dangling references are inherently cross-cutting checks, not per-file
 ones; (3) a file watcher that debounces/coalesces changes in a
 150–200ms trailing window and uses single-flight cancellation, so a
-change landing mid-parse aborts and restarts rather than queuing.
-Targeted by `REQ-000001-UVqkd7cL`.
+change landing mid-parse aborts and restarts rather than queuing; (4)
+`STEP-NNNNNN` parsing (framework 0.29.0, `Rules-of-Rules.md` §21) — a
+step names exactly one parent requirement via its `Requirement` field,
+resolved into a graph edge and validated by the same generic
+dangling-reference/orphan checks every other typed cross-reference
+already gets. Targeted by `REQ-000001-UVqkd7cL`, extended by
+`REQ-000010-UVqkd7cL` for step parsing.
 
 Implemented: `packages/catalyst-core/src/{types,ids,parser,graph,validator,watcher,cli,index}.ts`,
 tests under `src/test/`. Protocol types (`ChainNode`, `ChainModel`,
 `ValidationReport`, ...) published from `index.ts`. Ships as a CLI —
 `catalyst-core <corpusRoot> [--watch] [--json]` — printing the
 validation report and exiting non-zero on error-severity issues.
-Tested: `npm run lint`, `npm run typecheck`, `npm test` (41 tests) all
+Tested: `npm run lint`, `npm run typecheck`, `npm test` (181 tests) all
 exit zero; the built CLI run against this deployment's own real corpus
 reports 36 nodes, 0 errors; a synthetic 5× corpus (250 rules/domains/
 requirements) parses, models, and validates in under 100ms (roadmap

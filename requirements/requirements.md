@@ -11,3 +11,4 @@
 | [REQ-000007-UVqkd7cL](REQ-000007-run-monitor.md) | Run monitor | done |
 | [REQ-000008-UVqkd7cL](REQ-000008-multi-root-and-install-offer.md) | Multi-root workspace support + install-offer | done |
 | [REQ-000009-UVqkd7cL](REQ-000009-agent-window-slash-commands.md) | Agent window for running catalyst slash commands | in-progress |
+| [REQ-000010-UVqkd7cL](REQ-000010-step-entity-parsing-and-display.md) | STEP- entity parsing and display | done |

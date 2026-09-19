@@ -30,21 +30,27 @@ workspace — from each folder's own `<name>.catalyst` pointer file
 to or removed from the workspace
 (`vscode.workspace.onDidChangeWorkspaceFolders`) without requiring a
 reload. Exposes a sidebar `TreeDataProvider`: with exactly one resolved
-deployment its root shows that deployment's five sections directly
+deployment its root shows that deployment's six sections directly
 (dev artifacts, rules, rules of rules — rules whose id starts `rr-` —
-domains, features; work items excluded — none active in this
+domains, features, steps; work items excluded — none active in this
 deployment) — identical to the original single-folder UX; with more
 than one, the root instead shows one collapsible entry per deployment,
-named after its workspace folder, each expanding into its own five
-sections. Selecting a node opens a `WebviewPanel` — `catalyst-ui`'s
-bundled React surface — showing that node's own fields plus what it's
-justified by (upstream) and what it produces (downstream); the
-underlying command carries which deployment the node came from, since
-node ids are only unique within one corpus. Read-only: no editing, no
-live-pushed webview updates (reopening the panel refreshes it). A
-folder with no resolvable catalyst deployment is handled by
-`vscode-ONBOARDING-000001-UVqkd7cL` instead of staying silent. Targeted by
-`REQ-000002-UVqkd7cL`, extended by `REQ-000008-UVqkd7cL` for multi-root.
+named after its workspace folder, each expanding into its own six
+sections. A requirement with at least one `STEP-NNNNNN` pointing at it
+(resolved via the chain model's reverse edges) becomes expandable,
+listing its own steps as children — the only node kind in this tree
+with children today. Selecting a node opens a `WebviewPanel` —
+`catalyst-ui`'s bundled React surface — showing that node's own fields
+plus what it's justified by (upstream) and what it produces
+(downstream, which is how a requirement's steps also surface in its own
+detail view); the underlying command carries which deployment the node
+came from, since node ids are only unique within one corpus. Read-only:
+no editing, no live-pushed webview updates (reopening the panel
+refreshes it). A folder with no resolvable catalyst deployment is
+handled by `vscode-ONBOARDING-000001-UVqkd7cL` instead of staying
+silent. Targeted by `REQ-000002-UVqkd7cL`, extended by
+`REQ-000008-UVqkd7cL` for multi-root and `REQ-000010-UVqkd7cL` for
+steps.
 
 Implemented: `packages/catalyst-core/src/discover.ts` (corpus
 resolution) plus `watchCorpus`'s `{ model, report, proposals, runs }`
@@ -63,8 +69,14 @@ one deployment's refresh never clears another's diagnostics (a real
 bug caught during design review before it shipped — the original
 single-folder code called a global `collection.clear()`, which would
 have wiped every other deployment's diagnostics the moment any one
-watcher fired). Tested: `npm run lint`, `npm run format:check`, `npm
-run typecheck`, `npm test` (124 tests total) all exit zero;
+watcher fired). Steps specifically: `ChainInspectorProvider`'s
+`hasStepChildren`/`stepChildrenFor` resolve a requirement's own steps
+from `model.reverseEdges` — the tree's only parent/child nesting
+between two real `ChainNode`s today — rendered through the same generic
+`"node"` tree-item shape every other kind already uses, no new
+`InspectorTreeItem` variant needed. Tested: `npm run lint`, `npm run
+format:check`, `npm run typecheck`, `npm test` (73 tests in this
+package, 294 across every workspace) all exit zero;
 `extension.ts` itself stays a thin, untested glue layer over the real
 `vscode` API, same deliberate deferral as always — no real multi-root
 Extension Host was launched this session, so the tree-grouping and
