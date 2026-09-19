@@ -1,4 +1,4 @@
-# `FEAT-000009` — Agent window for running catalyst slash commands
+# `FEAT-000009-UVqkd7cL` — Agent window for running catalyst slash commands
 
 A feature entry documents a new or future piece of functionality for the
 app — an idea, a roadmap item, a product direction. It is **not** a
@@ -8,13 +8,14 @@ feature requires — see `Requirement(s)` below.
 
 | Field | Value |
 |---|---|
-| **ID** | `FEAT-000009` |
+| **ID** | `FEAT-000009-UVqkd7cL` |
+| **Name** | `agent-window-slash-commands` |
 | **Filename** | `FEAT-000009-agent-window-slash-commands.md` |
 | **Status** | in-development |
 | **Opened** | 2026-09-08 |
 | **Area** | catalyst-core, catalyst-host-vscode, catalyst-host-electron |
-| **Roadmap** | `RM-000009` |
-| **Requirement(s)** | `REQ-000009` |
+| **Roadmap** | `RM-000009-UVqkd7cL` |
+| **Requirement(s)** | `REQ-000009-UVqkd7cL` |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description
@@ -52,4 +53,4 @@ None specific to this feature.
 
 ## Related
 
-`REQ-000009` implements this feature.
+`REQ-000009-UVqkd7cL` implements this feature.

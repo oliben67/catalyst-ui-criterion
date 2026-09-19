@@ -1,6 +1,7 @@
 # `CONTRACT` — Parser/model/validator/watcher contract
 
 **Document:** rules/catalyst-core-rules.md
+**Name:** parser-model-validator-watcher-contract
 **Defined:** 2026-09-05
 **Parent:** none
 **Sub-domains:** none

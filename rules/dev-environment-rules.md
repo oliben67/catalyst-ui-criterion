@@ -12,19 +12,19 @@ still-empty scaffold — that is this rule set's "tested" bar
 
 ## Contents
 
-- [`RUNTIME`](#runtime) — `env-RUNTIME-001`
-- [`LAYOUT`](#layout) — `env-LAYOUT-001`
-- [`DEPS`](#deps) — `env-DEPS-001`
-- [`STYLE`](#style) — `env-STYLE-001`
-- [`TEST`](#test) — `env-TEST-001`
-- [`CI`](#ci) — `env-CI-001`
-- [`DX`](#dx) — `env-DX-001`
+- [`RUNTIME`](#runtime) — `env-RUNTIME-000001-UVqkd7cL`
+- [`LAYOUT`](#layout) — `env-LAYOUT-000001-UVqkd7cL`
+- [`DEPS`](#deps) — `env-DEPS-000001-UVqkd7cL`
+- [`STYLE`](#style) — `env-STYLE-000001-UVqkd7cL`
+- [`TEST`](#test) — `env-TEST-000001-UVqkd7cL`
+- [`CI`](#ci) — `env-CI-000001-UVqkd7cL`
+- [`DX`](#dx) — `env-DX-000001-UVqkd7cL`
 
 ## `RUNTIME`
 
 > **Domain:** `RUNTIME` — see [domains/env-RUNTIME-language-and-runtime.md](domains/env-RUNTIME-language-and-runtime.md).
 
-### `env-RUNTIME-001` Language and runtime
+### `env-RUNTIME-000001-UVqkd7cL` Language and runtime
 
 ✅ working. Every package in this repository is TypeScript, compiled
 against Node.js 20 LTS, with `strict: true` in `tsconfig.json`.
@@ -37,7 +37,7 @@ scaffold.
 
 > **Domain:** `LAYOUT` — see [domains/env-LAYOUT-repo-and-module-layout.md](domains/env-LAYOUT-repo-and-module-layout.md).
 
-### `env-LAYOUT-001` npm workspaces monorepo
+### `env-LAYOUT-000001-UVqkd7cL` npm workspaces monorepo
 
 ✅ working. This repository is an npm-workspaces monorepo with four
 packages: `packages/catalyst-core` (parser/model/validator/watcher, no
@@ -52,7 +52,7 @@ listing `packages/*`; each package has its own `package.json`. Tested:
 
 > **Domain:** `DEPS` — see [domains/env-DEPS-dependency-policy.md](domains/env-DEPS-dependency-policy.md).
 
-### `env-DEPS-001` Locked, ordinary semver dependencies
+### `env-DEPS-000001-UVqkd7cL` Locked, ordinary semver dependencies
 
 ✅ working. Dependencies are added with ordinary semver ranges (`^` by
 default) and locked via a single root `package-lock.json`, committed.
@@ -65,7 +65,7 @@ lockfile with no errors.
 
 > **Domain:** `STYLE` — see [domains/env-STYLE-code-style.md](domains/env-STYLE-code-style.md).
 
-### `env-STYLE-001` ESLint + Prettier
+### `env-STYLE-000001-UVqkd7cL` ESLint + Prettier
 
 ✅ working. Linting via ESLint with `typescript-eslint`; formatting via
 Prettier; both run against every workspace from the root. Implemented:
@@ -76,7 +76,7 @@ and `npm run format:check` both exit zero against the empty scaffold.
 
 > **Domain:** `TEST` — see [domains/env-TEST-testing.md](domains/env-TEST-testing.md).
 
-### `env-TEST-001` Vitest for core/UI; VS Code's own harness for the VS Code host
+### `env-TEST-000001-UVqkd7cL` Vitest for core/UI; VS Code's own harness for the VS Code host
 
 ✅ working. `catalyst-core` and `catalyst-ui` use Vitest (fast,
 ESM-native, no DOM required for `catalyst-core`; `jsdom` environment
@@ -106,7 +106,7 @@ all exit zero.
 
 > **Domain:** `CI` — see [domains/env-CI-ci-cd.md](domains/env-CI-ci-cd.md).
 
-### `env-CI-001` GitHub Actions gate: lint, typecheck, test
+### `env-CI-000001-UVqkd7cL` GitHub Actions gate: lint, typecheck, test
 
 ✅ working. Every push and pull request runs lint, typecheck
 (`tsc --noEmit` across all workspaces), and test (`npm test`) via
@@ -119,7 +119,7 @@ to GitHub (outside this local scaffold pass).
 
 > **Domain:** `DX` — see [domains/env-DX-local-dev-environment.md](domains/env-DX-local-dev-environment.md).
 
-### `env-DX-001` Pinned Node version, no devcontainer yet
+### `env-DX-000001-UVqkd7cL` Pinned Node version, no devcontainer yet
 
 ✅ working. Node version is pinned via `.nvmrc` (`20`) so `nvm use`
 matches CI. No devcontainer/Docker Compose/Nix setup yet — revisit if

@@ -1,6 +1,7 @@
 # `AGENT` — Run slash commands via a per-project agent terminal
 
 **Document:** rules/catalyst-host-vscode-rules.md
+**Name:** run-slash-commands-via-a-per-project-agent-terminal
 **Defined:** 2026-09-08
 **Parent:** none
 **Sub-domains:** none
@@ -16,7 +17,7 @@ own agent CLI: discovering available commands, composing the picked
 one with its arguments, and sending it to a per-project `vscode.
 window.Terminal` branded as part of this extension rather than a
 generic one. Consumes `catalyst-core`'s `resolveAgentCommand`/
-`discoverSlashCommands`/`composeSlashCommand` (`core-CONTRACT-004`) —
+`discoverSlashCommands`/`composeSlashCommand` (`core-CONTRACT-000004-UVqkd7cL`) —
 does not redefine any of the three.
 
 ## Relationship to other domains

@@ -1,6 +1,7 @@
 # `STYLE` — Code style
 
 **Document:** rules/dev-environment-rules.md
+**Name:** code-style
 **Defined:** 2026-09-05
 **Parent:** none
 **Sub-domains:** none

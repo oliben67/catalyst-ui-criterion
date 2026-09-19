@@ -1,6 +1,7 @@
 # `DESKTOP` — Multi-project desktop host and graph view
 
 **Document:** rules/catalyst-host-electron-rules.md
+**Name:** multi-project-desktop-host-and-graph-view
 **Defined:** 2026-09-05
 **Parent:** none
 **Sub-domains:** none

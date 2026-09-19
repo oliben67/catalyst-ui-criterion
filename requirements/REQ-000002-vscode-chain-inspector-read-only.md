@@ -1,4 +1,4 @@
-# `REQ-000002` — VS Code chain inspector, read-only
+# `REQ-000002-UVqkd7cL` — VS Code chain inspector, read-only
 
 A requirement stands on its own: vetted against every existing rule
 document before being opened, always carries a `Domain`, and always
@@ -6,13 +6,15 @@ targets or proposes one or more rules.
 
 | Field | Value |
 |---|---|
-| **ID** | `REQ-000002` |
+| **ID** | `REQ-000002-UVqkd7cL` |
+| **Name** | `vscode-chain-inspector-read-only` |
 | **Filename** | `REQ-000002-vscode-chain-inspector-read-only.md` |
 | **Status** | done |
 | **Opened** | 2026-09-05 |
-| **Targets** | `vscode-INSPECTOR-001` |
+| **Targets** | `vscode-INSPECTOR-000001-UVqkd7cL` |
 | **Domain** | `INSPECTOR` |
-| **Feature** | `FEAT-000002` |
+| **Feature** | `FEAT-000002-UVqkd7cL` |
+| **Steps** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description
@@ -23,7 +25,7 @@ pointer file, watch it via `catalyst-core`'s `watchCorpus`, and expose a
 sidebar tree (grouped by layer) plus a node-detail webview mounting
 `catalyst-ui`'s shared React surface. Extends `catalyst-core` with the
 small pieces this needs (corpus discovery, a richer watcher callback,
-the node-detail protocol payload) without reopening `core-CONTRACT-001`,
+the node-detail protocol payload) without reopening `core-CONTRACT-000001-UVqkd7cL`,
 which is already closed.
 
 ## Acceptance
@@ -41,7 +43,7 @@ which is already closed.
 
 ## Notes
 
-Targets `vscode-INSPECTOR-001` only, even though part of the
+Targets `vscode-INSPECTOR-000001-UVqkd7cL` only, even though part of the
 implementation (corpus discovery) lands in `packages/catalyst-core` —
 that addition has no independent product meaning yet, so it isn't a
 second rule of its own.

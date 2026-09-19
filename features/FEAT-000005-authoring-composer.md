@@ -1,4 +1,4 @@
-# `FEAT-000005` — Authoring composer
+# `FEAT-000005-UVqkd7cL` — Authoring composer
 
 A feature entry documents a new or future piece of functionality for the
 app — an idea, a roadmap item, a product direction. It is **not** a
@@ -8,13 +8,14 @@ feature requires — see `Requirement(s)` below.
 
 | Field | Value |
 |---|---|
-| **ID** | `FEAT-000005` |
+| **ID** | `FEAT-000005-UVqkd7cL` |
+| **Name** | `authoring-composer` |
 | **Filename** | `FEAT-000005-authoring-composer.md` |
 | **Status** | shipped |
 | **Opened** | 2026-09-05 |
 | **Area** | catalyst-host-vscode |
-| **Roadmap** | `RM-000005` |
-| **Requirement(s)** | `REQ-000005` |
+| **Roadmap** | `RM-000005-UVqkd7cL` |
+| **Requirement(s)** | `REQ-000005-UVqkd7cL` |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description
@@ -46,5 +47,5 @@ requirement, called out plainly rather than claimed as satisfied.
 
 ## Related
 
-`REQ-000005` implements this feature. Builds on `FEAT-000004`'s proposal
+`REQ-000005-UVqkd7cL` implements this feature. Builds on `FEAT-000004-UVqkd7cL`'s proposal
 mechanism.

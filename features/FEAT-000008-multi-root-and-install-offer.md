@@ -1,4 +1,4 @@
-# `FEAT-000008` — Multi-root workspace support + install-offer
+# `FEAT-000008-UVqkd7cL` — Multi-root workspace support + install-offer
 
 A feature entry documents a new or future piece of functionality for the
 app — an idea, a roadmap item, a product direction. It is **not** a
@@ -8,13 +8,14 @@ feature requires — see `Requirement(s)` below.
 
 | Field | Value |
 |---|---|
-| **ID** | `FEAT-000008` |
+| **ID** | `FEAT-000008-UVqkd7cL` |
+| **Name** | `multi-root-and-install-offer` |
 | **Filename** | `FEAT-000008-multi-root-and-install-offer.md` |
 | **Status** | shipped |
 | **Opened** | 2026-09-06 |
 | **Area** | catalyst-host-vscode |
-| **Roadmap** | `RM-000008` |
-| **Requirement(s)** | `REQ-000008` |
+| **Roadmap** | `RM-000008-UVqkd7cL` |
+| **Requirement(s)** | `REQ-000008-UVqkd7cL` |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description
@@ -32,7 +33,7 @@ instantiation prompt to the clipboard.
 
 Both gaps were found while using the extension day to day, not from
 the original pasted roadmap — genuinely new scope, opened directly
-against a new roadmap row (`RM-000008`) rather than one of the seven
+against a new roadmap row (`RM-000008-UVqkd7cL`) rather than one of the seven
 original phases.
 
 ## Rough scope
@@ -54,4 +55,4 @@ None specific to this feature.
 
 ## Related
 
-`REQ-000008` implements this feature.
+`REQ-000008-UVqkd7cL` implements this feature.

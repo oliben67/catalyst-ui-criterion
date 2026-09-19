@@ -1,7 +1,6 @@
 # Rules of Development — template
 
 > Instantiates the catalyst framework's development-rules template (`development-framework/rules-of-development.template.md` in the `catalyst` repository).
-
 Standards for how development work — bugs, requirements, house-keeping, and
 meta-tags — gets proposed, tracked, and closed. Subordinate to
 [`rules/Rules-of-Rules.md`](rules/Rules-of-Rules.md):
@@ -30,8 +29,9 @@ process) — but it must be stated explicitly, not left blank.
 ## 2. Users, roles, and signing
 
 `IAM/users/users.json` is a JSON array of registered users
-(`{name, roles, registered, active, notes}`, plus `git_username` once a
-repoed deployment resolves it — `Rules-of-Rules.md` §13), managed only by
+(`{name, roles, registered, active, notes, userid}`, plus `git_username`
+once a repoed deployment resolves it — `Rules-of-Rules.md` §13), managed
+only by
 `/user-add`/`/user-remove`/`/user-modify`/`/user-assign-role`/`/user-list`
 — see §4. Once a user has a `git_username`, every `Signed-off-by`/journal
 `actor` written for them uses that, never `name`. Each user has one or
@@ -49,26 +49,34 @@ of a regenerated document.
 
 **Hard requirement: `IAM/users/users.json` must always have at least
 one entry with `"active": true`.** A project with nobody registered has
-nobody to sign work. `/user-remove` must refuse or warn (per its own
-spec) rather than silently drop the last active user to zero.
+nobody to sign work. `/user-remove` must refuse rather than silently
+drop the last active user to zero — this specific case isn't advisory,
+since it would break this hard requirement (INV-25's
+fundamental-invariant exception to acting without asking).
 
 **Beyond that one hard requirement, this role model is advisory, not an
-access-control system.** Catalyst has no way to verify who is actually
-typing, so a role mismatch is a prompt for confirmation, never a silent
-block:
+access-control system, and per INV-25 it never pauses for authorization
+either.** Catalyst has no way to verify who is actually typing, so a
+role mismatch is noted, never a block or a confirmation prompt:
 
 1. Before an artifact-creating or work-item-status-changing command
    completes, resolve who is signing it: the user established earlier
    this session, or ask if not yet established (don't guess from git
    config — confirm with the user).
-2. Look up that name in `IAM/users/users.json`. If unregistered, say so
-   and ask whether to proceed anyway or register them first via
-   `/user-add`.
+2. Look up that name in `IAM/users/users.json`. If unregistered, proceed
+   anyway, noting that the signer isn't registered — `/user-add` can
+   register them properly as a follow-up, but doesn't gate this write.
 3. Look up their role(s) in `IAM/roles/roles.json` and check whether the
-   action being performed is one that role covers. If it isn't, say so
-   and ask for confirmation before continuing — never refuse outright.
-4. Once confirmed (or if the role already covers the action), fill the
-   artifact's `Signed-off-by` field with the user's name and proceed.
+   action being performed is one that role covers. If it isn't, proceed
+   anyway — never refuse outright — noting the mismatch.
+4. Fill the artifact's `Signed-off-by` field with the user's name
+   (carrying forward any unregistered-signer or role-mismatch note from
+   steps 2-3) and proceed.
+5. Append that same signer's `userid` as this entity's own id suffix
+   (`Rules-of-Rules.md` §20, INV-26) — the same moment, never a separate
+   step done later. If the signer has no `userid` yet (unregistered, or
+   registered before INV-26 existed), register them and assign one
+   first; an entity is never assigned a suffixed id ahead of its signer.
 
 Every dev-artifact, feature entry, roadmap item, and work item carries a
 `Signed-off-by` field for this reason (see each type's template). It
@@ -102,7 +110,22 @@ file rather than created one at a time, and are exempt from this document's
 rules the same way feature entries are (no `Targets`, no `Domain`, never
 "done" against a rule). Formalizing a roadmap item means opening a
 `FEAT-NNNNNN` for it via `/create-feature`, citing the `RM-NNNNNN` ID in the
-feature's `Roadmap` field.
+feature's `Roadmap` field. A roadmap item of real size is expected to
+decompose into **more than one** requirement rather than one oversized
+`REQ-NNNNNN` standing in for the whole item — its row's `Linked` field
+names every `FEAT-`/`REQ-NNNNNN` currently associated with it, not just one.
+
+Steps (`STEP-NNNNNN`, folder `steps/`, template `templates/step.template.md`)
+sit one level *below* a requirement — see `Rules-of-Rules.md` §21. Each
+names exactly one parent `REQ-NNNNNN` and records one concrete unit of
+implementation work performed toward it (files touched, commands run, how
+it was verified). Like feature entries and roadmap items, a step is exempt
+from this document's rules (no `Targets`, no `Domain` of its own — it
+inherits its parent requirement's), but unlike them it's created
+*during* active implementation, not before it: a requirement worth calling
+`in-progress` is expected to have at least one step opened against it, and
+isn't closeable as `done` until every one of its steps is `done` or
+`abandoned`.
 
 ### Hard rule: individual files and indexes
 
@@ -177,6 +200,12 @@ The framework exposes the following custom slash commands:
   in `features/features.md`. Unlike `/create-bug`/`/create-req`, this never
   prompts for a rule target or domain — features are not rule-linked (see
   `Rules-of-Rules.md` §9).
+- `/create-step <REQ-id>` — create a new step immediately against an
+  existing requirement, register it in `steps/steps.md`, and append its ID
+  to that requirement's own `Steps` field. Like `/create-feature`, never
+  prompts for a rule target or domain — a step inherits its parent
+  requirement's (see `Rules-of-Rules.md` §21). Refuses if `<REQ-id>` doesn't
+  resolve to an existing requirement.
 - `/roadmap-add <name> <file>` — ingest a new named roadmap from a local
   file, creating `development/roadmaps/<name>.md` from
   `templates/roadmap.template.md` and registering it in
@@ -198,8 +227,8 @@ The framework exposes the following custom slash commands:
   `IAM/roles/roles.json`. Refuses if `<name>` is already registered —
   use `/user-modify`/`/user-assign-role` instead.
 - `/user-remove <name>` — set `<name>`'s `active` field to `false` in
-  `IAM/users/users.json`. Never deletes the entry (see §2). Refuses or
-  warns if this would leave zero active users (hard rule, §2).
+  `IAM/users/users.json`. Never deletes the entry (see §2). Refuses if
+  this would leave zero active users (hard rule, §2).
 - `/user-modify <name> <field> <value>` — edit `<name>`'s `notes` or
   `active` field. Refuses for `roles` (use `/user-assign-role`) and for
   identity/audit fields (`name`, `registered`).
@@ -235,6 +264,12 @@ the seven currently exist anywhere.
   item from `/sync-framework` by recording its file path in a root-level
   `.frozen` file. The command accepts one of four argument forms: an item
   ID, an item path, a type, or a template name.
+- `/migrate-definition <entity-type> <version>` — the only way to move a
+  deployed `definitions/<entity-type>.md` forward once it exists
+  (`INVARIANTS.md` INV-23: ordinary `/sync-framework` never touches one
+  that already exists). Refuses if `<entity-type>` isn't a real entity
+  type, or if `<version>` doesn't exist for it in this framework's own
+  `definitions/<entity-type>/` folder.
 - `/catalyzer <subcommand>` — manage plugin installation and activation through
   the framework interface. Every subcommand resolves plugins against the
   registry file `plugins/<type>/catalog.md` (currently only
@@ -308,14 +343,22 @@ the seven currently exist anywhere.
   ends clean or ends with fixes applied and reverified, offer this
   command (`create` if not yet repoed, `push` otherwise) as the natural
   next step — never run it automatically.
-- `/reconcile <RECON-id> accept|accept-with-edits|reject` — resolve an
-  open reconciliation case (`Rules-of-Rules.md` §16, `INVARIANTS.md`
-  INV-21): `accept` merges its `Proposed` content into the `Entity` it
-  names as-is, `accept-with-edits` appends a new `Revisions` row first
-  and merges that instead, `reject` leaves `criterion` unchanged and
-  flags the proposer's local copy for reverting. Sets `Status` to the
-  matching `Resolved-*` value, fills `Resolved`/`Resolver`, and
-  registers the outcome in `reconciliations/reconciliations.md`.
+- `/reconcile <RECON-id> accept|accept-with-edits|reject|propose <text>`
+  — resolve, or move toward resolving, an open reconciliation case
+  (`Rules-of-Rules.md` §16, `INVARIANTS.md` INV-21): `accept` merges its
+  `Proposed` content into the `Entity` it names as-is, `accept-with-edits`
+  appends a new `Revisions` row first and merges that instead, `reject`
+  leaves `criterion` unchanged and flags the proposer's local copy for
+  reverting — each sets `Status` to the matching `Resolved-*` value,
+  fills `Resolved`/`Resolver`, and registers the outcome in
+  `reconciliations/reconciliations.md`. `propose <text>` instead appends
+  `<text>` as a new `Revisions` row and moves `Status` to `Under Review`
+  without resolving anything. **Genuinely role-gated, not advisory**: the
+  actor's `reconciliation` field in `IAM/roles/roles.json` must be `full`
+  for the three resolving verbs — `propose`-level actors may only use
+  `propose`, and `none`-level actors are refused on any verb. If the case
+  names a `Workflow` (`WORKFLOW-NNNNNN`, `Rules-of-Rules.md` §19), read
+  its `## Steps`/`## Gates / exit criteria` before choosing a verb.
 - `/project create <project name>` — install a fresh catalyst deployment
   here (`Rules-of-Rules.md` §14): resolve `agent-source`, build the
   working copy there, and write `<app-name>.catalyst` at this project's
@@ -334,6 +377,20 @@ the seven currently exist anywhere.
   the current project. Refuses if a deployment already exists here,
   unless `force` is given, in which case it overwrites the existing one
   — confirm explicitly first.
+- `/switch-agent [agent-id]` — force the agent-switch procedure (hard
+  rule 6, `BOOTSTRAP.md` §1.1, `Rules-of-Rules.md` §14's Agent switching
+  procedure) to run now, regardless of whether the running agent's
+  identity already appears to match `<app-name>.catalyst`'s `agent`
+  field. The manual escape hatch for when the automatic per-session
+  check is skipped or only partially completes (e.g. `agent-source`
+  already relocated but the pointer's `agent` field never updated to
+  match). Resolves `agent-source` for `<agent-id>` (defaulting to the
+  running agent's own identifier if omitted) per `BOOTSTRAP.md` §1,
+  updates `<app-name>.catalyst` (`agent`, `agent-source`, `updated`)
+  unconditionally, mirrors `.criterion/` into the resolved location if
+  it existed elsewhere (exact copy, overwriting the destination — never
+  a partial merge), updates `Taskfile.yml`'s `CRITERION_DIR`, and
+  refreshes persistent framework memory.
 - `/status` — update an artifact or work item's `Status` field.
 - `/audit <file-name>` — analyze the change-impact of the specified file by
   checking the current repository state, the file's role in the framework,
@@ -384,21 +441,37 @@ rule-linked development work. Do not prompt for a domain or rule target —
 neither field exists on this artifact type. If this feature formalizes an
 existing roadmap row (in any `development/roadmaps/<name>.md`), cite that
 row's `RM-NNNNNN` ID in the new feature's `Roadmap` field and set the row's
-`Status` to `Triaged` and `Linked` to the new `FEAT-NNNNNN`. If the user later
-asks to start building a registered feature, create a `REQ-NNNNNN`
-requirement instead (prompting for domain/target rule as usual), and link
-it back to the `FEAT-NNNNNN` entry's `Requirement(s)` field.
+`Status` to `Triaged` and `Linked` to the new `FEAT-NNNNNN` (the row's first
+linked entry). If the user later asks to start building a registered
+feature, create a `REQ-NNNNNN` requirement instead (prompting for
+domain/target rule as usual), link it back to the `FEAT-NNNNNN` entry's
+`Requirement(s)` field, and **append** (never replace) that `REQ-NNNNNN` to
+the roadmap row's `Linked` list — a feature may reasonably decompose into
+more than one requirement, each added to `Linked` as it's opened, per
+`Rules-of-Rules.md` §21.
+
+When the user enters `/create-step <REQ-id>: ...`, refuse with a clear
+message if `<REQ-id>` doesn't resolve to an existing file under
+`requirements/`. Otherwise create a new step immediately using
+`templates/step.template.md`, register it in `steps/steps.md`, set its
+`Requirement` field to `<REQ-id>`, and append its own `STEP-NNNNNN` ID to
+that requirement's `Steps` field (creating the field if this is the
+requirement's first step). Do not prompt for a domain or rule target —
+neither field exists on this artifact type; it inherits `<REQ-id>`'s own
+`Targets`/`Domain`. New steps start `Status: planned` unless the user says
+work is already underway, in which case `in-progress`.
 
 When the user enters `/roadmap-add <name> <file>: ...`, refuse with a clear
 message if `development/roadmaps/<name>.md` already exists (point to
 `/roadmap-update`/`/roadmap-merge`). Otherwise read `<file>` from the
 local filesystem, identify its distinct items, and create
 `development/roadmaps/<name>.md` from `templates/roadmap.template.md` with
-one `RM-NNNNNN` row per item (`Status: Not triaged`, `Linked: *(none)*`),
-IDs continuing the global sequence across every existing named roadmap —
-never reused, never guessed. Register the new roadmap in
-`development/roadmaps/roadmaps.md`, then report the roadmap name and the
-IDs assigned.
+one `RM-NNNNNN` row per item (`Description`: a sentence or two summarizing
+the item, drawn from `<file>` — not a restatement of `Title`; `Status: Not
+triaged`, `Linked: *(none)*`), IDs continuing the global sequence across
+every existing named roadmap — never reused, never guessed. Register the
+new roadmap in `development/roadmaps/roadmaps.md`, then report the
+roadmap name and the IDs assigned.
 
 When the user enters `/roadmap-remove <name>`, refuse with a clear message
 if `development/roadmaps/<name>.md` does not exist. If every row's `Linked`
@@ -413,7 +486,8 @@ When the user enters `/roadmap-update <name> <file>: ...`, refuse with a
 clear message if `development/roadmaps/<name>.md` does not exist (point to
 `/roadmap-add`). Otherwise treat `<file>` as the new full, authoritative
 version of this roadmap: add a new `RM-NNNNNN` row for each item not already
-present, update the `Title`/`Notes` of any row that matches an item in
+present (with its own `Description`, same rule as `/roadmap-add`), update
+the `Title`/`Description`/`Notes` of any row that matches an item in
 `<file>` by title/description similarity (ask the user rather than
 guessing when a match is ambiguous), and flag — in `Notes`, never by
 deleting — any existing row whose item no longer appears in `<file>`.
@@ -444,9 +518,10 @@ user" requirement (§2) is now satisfied.
 
 When the user enters `/user-remove <name>`, refuse with a clear message if
 `<name>` has no entry in `IAM/users/users.json`. If `<name>` is the only
-`active: true` entry, warn that this would leave the project with zero
-active users (hard rule, §2) and ask for confirmation, or suggest
-`/user-add` for a replacement first. Otherwise set that entry's `active`
+`active: true` entry, refuse — this would leave the project with zero
+active users (hard rule, §2, INV-25's fundamental-invariant exception to
+acting without asking) — and point at `/user-add` for a replacement
+first. Otherwise set that entry's `active`
 field to `false` — never delete it, since existing `Signed-off-by`
 references on already-signed artifacts must stay resolvable. Report the
 result.
@@ -508,6 +583,21 @@ the item to its backing file path, append that path to the root-level
 `.frozen` file if it is not already present, and report success. The item is
 then protected from automatic framework synchronization until it is
 explicitly removed from `.frozen` or re-synchronized with an override.
+
+When the user enters `/migrate-definition <entity-type> <version>`, first
+confirm `<entity-type>` names a real entity type (this framework's source
+has a `definitions/<entity-type>/` folder for it — see `definitions/
+README.md`'s "Entity types covered" list); if not, refuse and name the
+valid types. Obtain this framework's current source content the same way
+`/sync-framework` does (`SYNCHRONIZE.md`'s "Version rule" — the `release`
+branch of the catalyst repository), and check whether `definitions/
+<entity-type>/DEFINITION-<ENTITY-TYPE>-v<version>.md` exists there. If it
+does not, refuse and report the highest version number that does exist for
+that type instead of guessing or rounding to the nearest one. If it does,
+overwrite the deployed `.criterion/definitions/<entity-type>.md` with that
+exact version's content — this is the one and only way that file ever
+changes once deployed, per `SYNCHRONIZE.md`'s definitions carve-out — and
+report the old version number moving to the new one.
 
 Every `/catalyzer` subcommand resolves plugin identity, repository URL, and
 version information exclusively from the `catalog.md` registry of the
@@ -795,9 +885,11 @@ not marked `Retired`, rows grouped by roadmap name then Status),
 **overwrite `development/BACKLOG.md` in full** with the result (from
 `templates/backlog.template.md`'s structure, with a refreshed timestamp),
 **also refresh every active `development/roadmaps/<name>.md`** in place —
-for each `RM-NNNNNN` row, resolve whichever `FEAT-`/`REQ-` its `Linked` field
-names (if any) and set `Status` to `Not triaged` / `Triaged` /
-`In progress` / `Done` accordingly, leaving `Title`/`Notes`/`Source`
+for each `RM-NNNNNN` row, resolve every `FEAT-`/`REQ-` its `Linked` field
+names (if any — it's a list, not a single id) and set `Status` to
+`Not triaged` (nothing linked) / `Triaged` (only a `FEAT-` linked) /
+`In progress` (at least one linked `REQ-` isn't yet `done`) / `Done`
+(every linked `REQ-` is `done`) accordingly, leaving `Title`/`Notes`/`Source`
 untouched — and also report the same summary to the user in this turn. No
 file write is optional — a stale `BACKLOG.md`, or any roadmap file that
 doesn't match the last `/show-backlog` run, is itself a bug in the
@@ -842,19 +934,22 @@ from `rules/domains/` — not free text. (Feature entries under
 
 ## 6. Development-artifact IDs
 
-Per `Rules-of-Rules.md` §5: `(BUG|REQ|HK)-(NNNNNN)`, global per type,
-sequential, zero-padded 6 digits, never reused. Meta-tags use a file-name
-pattern of `tag-<key>-<artefact-id>` rather than a sequential numeric ID.
-This is a hard requirement for all new artifacts and work items: every item
-name must be more than the bare ID and must follow the format
+Per `Rules-of-Rules.md` §5: `(BUG|REQ|HK)-(NNNNNN)-(userid)`, global per
+type, sequential, zero-padded 6 digits, never reused, plus the signer's
+`userid` as a trailing suffix from the moment they're signed
+(`Rules-of-Rules.md` §20, INV-26). Meta-tags use a file-name pattern of
+`tag-<key>-<artefact-id>` rather than a sequential numeric ID. This is a
+hard requirement for all new artifacts and work items: every item name
+must be more than the bare ID and must follow the format
 **`<artifact-id>-<short-summary>`**. The corresponding markdown filename must
 also follow the same descriptive pattern as
 **`<artifact-id>-<short-summary>.md`**, not simply `<artifact-id>.md`.
-Example: `BUG-000001-login-form-validation` or
-`BUG-000001-login-form-validation.md`, and `REQ-000002-password-reset-flow` or
-`REQ-000002-password-reset-flow.md`. The same rule must be applied
+Example: `BUG-000001-Ab3xR9pQ-login-form-validation` or
+`BUG-000001-Ab3xR9pQ-login-form-validation.md`, and
+`REQ-000002-Ab3xR9pQ-password-reset-flow` or
+`REQ-000002-Ab3xR9pQ-password-reset-flow.md`. The same rule must be applied
 retroactively during framework deployment or synchronization to existing
-deployed items whose names or filenames are still only the ID.
+deployed items whose names or filenames are still only the bare ID.
 
 ## 7. Closing an item
 
@@ -863,7 +958,11 @@ its individual file and is reflected in the relevant index file.
 
 - **Bug**: not closeable as "fixed" without its test-plan item landing.
 - **Requirement**: not closeable as "done" until the acceptance criteria and
-  rule targets are reflected in the implementation and tests.
+  rule targets are reflected in the implementation and tests, **and** every
+  `STEP-NNNNNN` in its `Steps` field is `done` or `abandoned`
+  (`Rules-of-Rules.md` §21).
+- **Step**: not closeable as "done" without its own Verification section
+  filled in; `abandoned` requires a reason there instead.
 - **House-keeping**: closeable once its stated verification passes.
 
 ## 8. Retired rules and development work

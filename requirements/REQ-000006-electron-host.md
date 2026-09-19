@@ -1,4 +1,4 @@
-# `REQ-000006` — Electron host
+# `REQ-000006-UVqkd7cL` — Electron host
 
 A requirement stands on its own: vetted against every existing rule
 document before being opened, always carries a `Domain`, and always
@@ -6,19 +6,21 @@ targets or proposes one or more rules.
 
 | Field | Value |
 |---|---|
-| **ID** | `REQ-000006` |
+| **ID** | `REQ-000006-UVqkd7cL` |
+| **Name** | `electron-host` |
 | **Filename** | `REQ-000006-electron-host.md` |
 | **Status** | done |
 | **Opened** | 2026-09-05 |
-| **Targets** | `electron-DESKTOP-001` |
+| **Targets** | `electron-DESKTOP-000001-UVqkd7cL` |
 | **Domain** | `DESKTOP` |
-| **Feature** | `FEAT-000006` |
+| **Feature** | `FEAT-000006-UVqkd7cL` |
+| **Steps** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description
 
 Implement `catalyst-host-electron`'s multi-project tracking, persistent
-per-project watch, and graph view (`electron-DESKTOP-001`), reusing
+per-project watch, and graph view (`electron-DESKTOP-000001-UVqkd7cL`), reusing
 `catalyst-core`'s existing protocol and `catalyst-ui`'s `NodeDetail`
 component unchanged.
 
@@ -40,7 +42,7 @@ component unchanged.
 
 ## Notes
 
-Targets one rule only (`electron-DESKTOP-001`) — this phase doesn't
+Targets one rule only (`electron-DESKTOP-000001-UVqkd7cL`) — this phase doesn't
 touch proposal/run-state infrastructure, so there's no second,
-independent-infrastructure rule the way `REQ-000004` targeted
-`core-CONTRACT-002` alongside its host-specific rule.
+independent-infrastructure rule the way `REQ-000004-UVqkd7cL` targeted
+`core-CONTRACT-000002-UVqkd7cL` alongside its host-specific rule.

@@ -1,4 +1,4 @@
-# `FEAT-000007` — Run monitor
+# `FEAT-000007-UVqkd7cL` — Run monitor
 
 A feature entry documents a new or future piece of functionality for the
 app — an idea, a roadmap item, a product direction. It is **not** a
@@ -8,13 +8,14 @@ feature requires — see `Requirement(s)` below.
 
 | Field | Value |
 |---|---|
-| **ID** | `FEAT-000007` |
+| **ID** | `FEAT-000007-UVqkd7cL` |
+| **Name** | `run-monitor` |
 | **Filename** | `FEAT-000007-run-monitor.md` |
 | **Status** | shipped |
 | **Opened** | 2026-09-06 |
 | **Area** | catalyst-core, catalyst-host-vscode |
-| **Roadmap** | `RM-000007` |
-| **Requirement(s)** | `REQ-000007` |
+| **Roadmap** | `RM-000007-UVqkd7cL` |
+| **Requirement(s)** | `REQ-000007-UVqkd7cL` |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description
@@ -54,5 +55,5 @@ this one.
 
 ## Related
 
-`REQ-000007` implements this feature. Builds on `FEAT-000004`'s
+`REQ-000007-UVqkd7cL` implements this feature. Builds on `FEAT-000004-UVqkd7cL`'s
 `proposals/` precedent for the uniform artifact-type deployment shape.

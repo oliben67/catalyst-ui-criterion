@@ -9,18 +9,18 @@ this domain consumes but does not redefine.
 
 ## Contents
 
-- [`INSPECTOR`](#inspector) — `vscode-INSPECTOR-001`
-- [`HEALTH`](#health) — `vscode-HEALTH-001`
-- [`PROPOSAL`](#proposal) — `vscode-PROPOSAL-001`, `vscode-PROPOSAL-002`
-- [`RUNMONITOR`](#runmonitor) — `vscode-RUNMONITOR-001`
-- [`ONBOARDING`](#onboarding) — `vscode-ONBOARDING-001`
-- [`AGENT`](#agent) — `vscode-AGENT-001`
+- [`INSPECTOR`](#inspector) — `vscode-INSPECTOR-000001-UVqkd7cL`
+- [`HEALTH`](#health) — `vscode-HEALTH-000001-UVqkd7cL`
+- [`PROPOSAL`](#proposal) — `vscode-PROPOSAL-000001-UVqkd7cL`, `vscode-PROPOSAL-000002-UVqkd7cL`
+- [`RUNMONITOR`](#runmonitor) — `vscode-RUNMONITOR-000001-UVqkd7cL`
+- [`ONBOARDING`](#onboarding) — `vscode-ONBOARDING-000001-UVqkd7cL`
+- [`AGENT`](#agent) — `vscode-AGENT-000001-UVqkd7cL`
 
 ## `INSPECTOR`
 
 > **Domain:** `INSPECTOR` — see [domains/vscode-INSPECTOR-chain-tree-and-node-detail-webview.md](domains/vscode-INSPECTOR-chain-tree-and-node-detail-webview.md).
 
-### `vscode-INSPECTOR-001` Read-only chain tree and node-detail webview
+### `vscode-INSPECTOR-000001-UVqkd7cL` Read-only chain tree and node-detail webview
 
 ✅ working. The extension resolves a catalyst deployment independently
 for every open workspace folder — not just the first, in a multi-root
@@ -43,8 +43,8 @@ underlying command carries which deployment the node came from, since
 node ids are only unique within one corpus. Read-only: no editing, no
 live-pushed webview updates (reopening the panel refreshes it). A
 folder with no resolvable catalyst deployment is handled by
-`vscode-ONBOARDING-001` instead of staying silent. Targeted by
-`REQ-000002`, extended by `REQ-000008` for multi-root.
+`vscode-ONBOARDING-000001-UVqkd7cL` instead of staying silent. Targeted by
+`REQ-000002-UVqkd7cL`, extended by `REQ-000008-UVqkd7cL` for multi-root.
 
 Implemented: `packages/catalyst-core/src/discover.ts` (corpus
 resolution) plus `watchCorpus`'s `{ model, report, proposals, runs }`
@@ -81,7 +81,7 @@ and downstream lists.
 
 > **Domain:** `HEALTH` — see [domains/vscode-HEALTH-diagnostics-definitions-and-codelens.md](domains/vscode-HEALTH-diagnostics-definitions-and-codelens.md).
 
-### `vscode-HEALTH-001` Diagnostics, click-to-jump, and CodeLens for corpus files
+### `vscode-HEALTH-000001-UVqkd7cL` Diagnostics, click-to-jump, and CodeLens for corpus files
 
 ✅ working. The validation report is surfaced as native VS Code
 diagnostics (`DiagnosticCollection`, refreshed on every watcher
@@ -94,7 +94,7 @@ summarizing what it links to/from, opening that node's detail via the
 existing `catalyst.showNodeDetail` command. All three are scoped to the
 resolved corpus root's markdown files only. Still read-only — no
 "propose fix" actions (Phase 4) or drift/pending badges (need the
-proposal loop). Targeted by `REQ-000003`.
+proposal loop). Targeted by `REQ-000003-UVqkd7cL`.
 
 Implemented: `packages/catalyst-host-vscode/src/{diagnostics,
 definitions,codelens}.ts` (pure, vscode-free logic) wired into
@@ -106,13 +106,13 @@ internally already, just not public) so the definition provider reuses
 them instead of re-deriving what counts as an id. Tested: `npm run
 lint`, `npm run format:check`, `npm run typecheck`, `npm test` (67
 tests) all exit zero; `extension.ts` itself stays a thin, untested glue
-layer, same deliberate deferral as `vscode-INSPECTOR-001`. Verified
+layer, same deliberate deferral as `vscode-INSPECTOR-000001-UVqkd7cL`. Verified
 end-to-end against this deployment's own real corpus: diagnostics
 mapping confirmed against both a located issue and a synthetic
 id-reuse issue (correctly falling back to `definitionsById`), the
 definition provider resolved a real `Targets` citation to its actual
-line, and CodeLens produced sensible output for `REQ-000001` and
-`core-CONTRACT-001`'s real files — which is what caught a wording bug:
+line, and CodeLens produced sensible output for `REQ-000001-UVqkd7cL` and
+`core-CONTRACT-000001-UVqkd7cL`'s real files — which is what caught a wording bug:
 generic "Targets X / Referenced by Y" read backwards for an edge that
 comes from mutual prose citation rather than a structural field (a rule
 doesn't "target" a requirement just because its own text says
@@ -123,9 +123,9 @@ from" before this was marked done.
 
 > **Domain:** `PROPOSAL` — see [domains/vscode-PROPOSAL-fix-and-authoring-proposals.md](domains/vscode-PROPOSAL-fix-and-authoring-proposals.md).
 
-### `vscode-PROPOSAL-001` Propose-fix code action and pending badges
+### `vscode-PROPOSAL-000001-UVqkd7cL` Propose-fix code action and pending badges
 
-✅ working. Every catalyst diagnostic (`vscode-HEALTH-001`)
+✅ working. Every catalyst diagnostic (`vscode-HEALTH-000001-UVqkd7cL`)
 gets a "Propose fix" Quick Fix (`CodeActionProvider`) that creates a new
 `proposals/PROP-NNNNNN.md` targeting the affected node, with a default
 `Expectations` sentence per issue kind — refused (no action offered) if
@@ -135,31 +135,31 @@ webview lists open proposals, for any node targeted by an open proposal
 (`catalyst-core`'s `openProposalsByTarget`). Creating a proposal is the
 only write this extension ever performs — governed files (rules,
 requirements, ...) are never touched by the UI. Targeted by
-`REQ-000004`.
+`REQ-000004-UVqkd7cL`.
 
 Implemented: `packages/catalyst-host-vscode/src/codeactions.ts`
 (`canProposeFix`, `defaultExpectationFor`, `buildProposeFixContent`) and
 `src/proposals.ts` (`buildProposalSection`, `renderProposalContent`,
-shared with `vscode-PROPOSAL-002`), wired into `extension.ts`'s
+shared with `vscode-PROPOSAL-000002-UVqkd7cL`), wired into `extension.ts`'s
 `registerCodeActionsProvider` and the `catalyst.proposeFix` command;
 `ChainInspectorProvider` tracks `getPendingTargets`/`getAllProposals`
 and renders a `⏳` mark on any pending node plus a "Proposals (N)" tree
 section. Tested: `npm run lint`, `npm run format:check`, `npm run
 typecheck`, `npm test` (106 tests across all four packages) all exit
 zero; `extension.ts` itself stays thin, untested glue, same deliberate
-deferral as `vscode-INSPECTOR-001`/`vscode-HEALTH-001`.
+deferral as `vscode-INSPECTOR-000001-UVqkd7cL`/`vscode-HEALTH-000001-UVqkd7cL`.
 
-### `vscode-PROPOSAL-002` Authoring composer
+### `vscode-PROPOSAL-000002-UVqkd7cL` Authoring composer
 
 ✅ working. A `catalyst.composeProposal` command gathers
 structured intent for a brand-new artifact (type, domain, targets,
 title, description) via a multi-step input, then compiles it into a
-proposal the same way `vscode-PROPOSAL-001` does — same file format,
+proposal the same way `vscode-PROPOSAL-000001-UVqkd7cL` does — same file format,
 same pending-badge treatment, same "the UI only ever proposes" rule.
 Works for any rule-linked artifact type this deployment actually has
 (rule, requirement, bug, house-keeping); this deployment has no
 project-management plugin active, so it cannot create or verify a work
-item specifically. Targeted by `REQ-000005`.
+item specifically. Targeted by `REQ-000005-UVqkd7cL`.
 
 Implemented: `packages/catalyst-host-vscode/src/composer.ts`
 (`buildAuthoringProposalContent`, `ComposableArtifactType`), wired into
@@ -170,18 +170,18 @@ format or pending-badge path. Tested: `npm run lint`, `npm run
 format:check`, `npm run typecheck`, `npm test` (106 tests) all exit
 zero; verified end-to-end via a scratchpad script generating a real
 proposal against this deployment's own corpus (a "Compose: Sample new
-rule" proposal targeting `core-CONTRACT-001`) confirming the rendered
+rule" proposal targeting `core-CONTRACT-000001-UVqkd7cL`) confirming the rendered
 content matches `renderProposalContent`'s field-table/section format.
 
 ## `RUNMONITOR`
 
 > **Domain:** `RUNMONITOR` — see [domains/vscode-RUNMONITOR-live-checklist-and-ledger.md](domains/vscode-RUNMONITOR-live-checklist-and-ledger.md).
 
-### `vscode-RUNMONITOR-001` Live run checklist and ledger
+### `vscode-RUNMONITOR-000001-UVqkd7cL` Live run checklist and ledger
 
 ✅ working. The chain inspector tree gets a "Runs (N)"
 section, sibling to the existing proposals section, listing every
-`RUN-NNNNNN` `catalyst-core` parses (`core-CONTRACT-003`): each run
+`RUN-NNNNNN` `catalyst-core` parses (`core-CONTRACT-000003-UVqkd7cL`): each run
 expands to its checklist (one line per step, glyph rendered per its
 parsed status) and ledger. The section's own label carries a `⚠️`
 suffix whenever any run has drift (`hasDrift`), and any run currently
@@ -189,7 +189,7 @@ suffix whenever any run has drift (`hasDrift`), and any run currently
 is what makes a drift event visible while the run is still in
 progress, not just after. Read-only, same as every other tree section:
 the extension never creates or edits a run file, only the external
-agent does. Targeted by `REQ-000007`.
+agent does. Targeted by `REQ-000007-UVqkd7cL`.
 
 Implemented: `packages/catalyst-host-vscode/src/runmonitor.ts`
 (`buildRunSection`, `formatRunLabel`, `formatStepLabel`), wired into
@@ -210,7 +210,7 @@ exit criterion.
 
 > **Domain:** `ONBOARDING` — see [domains/vscode-ONBOARDING-offer-to-install.md](domains/vscode-ONBOARDING-offer-to-install.md).
 
-### `vscode-ONBOARDING-001` Offer to install catalyst when no deployment is found
+### `vscode-ONBOARDING-000001-UVqkd7cL` Offer to install catalyst when no deployment is found
 
 ✅ working. When a workspace folder has no resolvable
 `*.catalyst` pointer, the extension offers to help rather than staying
@@ -225,7 +225,7 @@ repo location (auto-detected as a sibling directory containing
 `BOOTSTRAP.md`, else the `catalyst.frameworkPath` setting) and this
 project's own root, then tells the user to paste it into whichever
 coding agent they use. Never auto-runs anything — no CLI, extension,
-or agent is assumed to be installed. Targeted by `REQ-000008`.
+or agent is assumed to be installed. Targeted by `REQ-000008-UVqkd7cL`.
 
 Implemented: `packages/catalyst-host-vscode/src/framework-discovery.ts`
 (`findSiblingFrameworkRepo`, `buildInstantiationPrompt` — pure, no
@@ -246,7 +246,7 @@ prompt naming both real paths.
 
 > **Domain:** `AGENT` — see [domains/vscode-AGENT-run-slash-commands.md](domains/vscode-AGENT-run-slash-commands.md).
 
-### `vscode-AGENT-001` Run catalyst slash commands via a per-project agent terminal
+### `vscode-AGENT-000001-UVqkd7cL` Run catalyst slash commands via a per-project agent terminal
 
 ❌ not yet implemented. A `catalyst.runSlashCommand` command discovers
 the deployed `.claude/commands/*.md` slash commands for a workspace
@@ -261,9 +261,9 @@ a different project's command into whatever agent process happens to
 still be running in it. The terminal is branded (the extension's own
 icon, named after the project, `cwd` set to the project root) and
 opens in the editor area beside the current view — the same surface
-`vscode-INSPECTOR-001`'s node-detail webview uses — rather than the
+`vscode-INSPECTOR-000001-UVqkd7cL`'s node-detail webview uses — rather than the
 generic bottom Terminal panel shared by every other tool. Targeted by
-`REQ-000009`.
+`REQ-000009-UVqkd7cL`.
 
 ## Known Bugs — Quick Index
 

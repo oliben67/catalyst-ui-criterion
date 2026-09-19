@@ -1,6 +1,7 @@
 # `LAYOUT` — Repo and module layout
 
 **Document:** rules/dev-environment-rules.md
+**Name:** repo-and-module-layout
 **Defined:** 2026-09-05
 **Parent:** none
 **Sub-domains:** none

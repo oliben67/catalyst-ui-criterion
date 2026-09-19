@@ -1,6 +1,7 @@
 # `HEALTH` — Health board and editor affordances contract
 
 **Document:** rules/catalyst-host-vscode-rules.md
+**Name:** health-board-and-editor-affordances-contract
 **Defined:** 2026-09-05
 **Parent:** none
 **Sub-domains:** none
@@ -14,7 +15,7 @@ The behavioral guarantees `catalyst-host-vscode` makes for the read-only
 health board and editor affordances: the validation report surfaced as
 native VS Code diagnostics, click-to-jump navigation on any cited id, and
 CodeLens summarizing a node's own resolved links. Consumes `catalyst-
-core`'s validation report and chain model (`core-CONTRACT-001`) and
+core`'s validation report and chain model (`core-CONTRACT-000001-UVqkd7cL`) and
 `INSPECTOR`'s node-detail command — does not redefine either.
 
 ## Relationship to other domains

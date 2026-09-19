@@ -1,6 +1,7 @@
 # `DX` — Local dev environment
 
 **Document:** rules/dev-environment-rules.md
+**Name:** local-dev-environment
 **Defined:** 2026-09-05
 **Parent:** none
 **Sub-domains:** none

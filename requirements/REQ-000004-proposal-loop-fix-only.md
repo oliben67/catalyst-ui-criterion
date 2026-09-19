@@ -1,4 +1,4 @@
-# `REQ-000004` — Proposal loop, fix-only
+# `REQ-000004-UVqkd7cL` — Proposal loop, fix-only
 
 A requirement stands on its own: vetted against every existing rule
 document before being opened, always carries a `Domain`, and always
@@ -6,20 +6,22 @@ targets or proposes one or more rules.
 
 | Field | Value |
 |---|---|
-| **ID** | `REQ-000004` |
+| **ID** | `REQ-000004-UVqkd7cL` |
+| **Name** | `proposal-loop-fix-only` |
 | **Filename** | `REQ-000004-proposal-loop-fix-only.md` |
 | **Status** | done |
 | **Opened** | 2026-09-05 |
-| **Targets** | `core-CONTRACT-002`, `vscode-PROPOSAL-001` |
+| **Targets** | `core-CONTRACT-000002-UVqkd7cL`, `vscode-PROPOSAL-000001-UVqkd7cL` |
 | **Domain** | `PROPOSAL` |
-| **Feature** | `FEAT-000004` |
+| **Feature** | `FEAT-000004-UVqkd7cL` |
+| **Steps** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description
 
 Implement `catalyst-core`'s proposal parsing/tracking
-(`core-CONTRACT-002`) and `catalyst-host-vscode`'s propose-fix Quick Fix
-plus pending-badge display (`vscode-PROPOSAL-001`). The UI's first write
+(`core-CONTRACT-000002-UVqkd7cL`) and `catalyst-host-vscode`'s propose-fix Quick Fix
+plus pending-badge display (`vscode-PROPOSAL-000001-UVqkd7cL`). The UI's first write
 path: it only ever creates a `proposals/PROP-NNNNNN.md` file, never
 edits a governed file directly.
 
@@ -45,7 +47,7 @@ edits a governed file directly.
 
 ## Notes
 
-Targets two rules: `core-CONTRACT-002` (the parsing/tracking is real,
+Targets two rules: `core-CONTRACT-000002-UVqkd7cL` (the parsing/tracking is real,
 independent core infrastructure future hosts will also need — unlike
 Phase 2's corpus-discovery addition, which had no independent meaning of
-its own) and `vscode-PROPOSAL-001` (the VS Code UI built on top of it).
+its own) and `vscode-PROPOSAL-000001-UVqkd7cL` (the VS Code UI built on top of it).

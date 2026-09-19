@@ -10,14 +10,14 @@ neither amends the other.
 
 ## Contents
 
-- [`DESKTOP`](#desktop) — `electron-DESKTOP-001`
-- [`AGENTWINDOW`](#agentwindow) — `electron-AGENTWINDOW-001`
+- [`DESKTOP`](#desktop) — `electron-DESKTOP-000001-UVqkd7cL`
+- [`AGENTWINDOW`](#agentwindow) — `electron-AGENTWINDOW-000001-UVqkd7cL`
 
 ## `DESKTOP`
 
 > **Domain:** `DESKTOP` — see [domains/electron-DESKTOP-multi-project-host-and-graph-view.md](domains/electron-DESKTOP-multi-project-host-and-graph-view.md).
 
-### `electron-DESKTOP-001` Multi-project tracking, persistent watch, and graph view
+### `electron-DESKTOP-000001-UVqkd7cL` Multi-project tracking, persistent watch, and graph view
 
 ✅ working. The Electron app tracks a persisted list of
 projects (each resolved to its own corpus root the same way
@@ -30,8 +30,8 @@ selected node, the same `NodeDetail` component `catalyst-host-vscode`
 mounts in its webview, imported unchanged from `catalyst-ui`. Read-only
 — no proposal creation or authoring composer in this phase; that reuses
 `catalyst-core`'s existing proposal-loop infrastructure
-(`core-CONTRACT-002`) later, not redefined here. Targeted by
-`REQ-000006`.
+(`core-CONTRACT-000002-UVqkd7cL`) later, not redefined here. Targeted by
+`REQ-000006-UVqkd7cL`.
 
 Implemented: `packages/catalyst-host-electron/src/{state,graph,detail,
 GraphView,main,preload,renderer-entry}.ts(x)` — `state.ts` (persisted
@@ -59,7 +59,7 @@ both succeed cleanly.
 
 > **Domain:** `AGENTWINDOW` — see [domains/electron-AGENTWINDOW-run-slash-commands.md](domains/electron-AGENTWINDOW-run-slash-commands.md).
 
-### `electron-AGENTWINDOW-001` Run catalyst slash commands via a per-project agent window
+### `electron-AGENTWINDOW-000001-UVqkd7cL` Run catalyst slash commands via a per-project agent window
 
 ❌ not yet implemented. A command picker (populated via
 `catalyst-core`'s `discoverSlashCommands` for the selected tracked
@@ -67,13 +67,13 @@ project) sends the chosen, composed command
 (`composeSlashCommand`) to a spawned process running that project's
 own agent CLI (`resolveAgentCommand`, from its `*.catalyst` pointer's
 `agent` field), one process per tracked project, reused across
-multiple command runs the same way `electron-DESKTOP-001`'s
+multiple command runs the same way `electron-DESKTOP-000001-UVqkd7cL`'s
 `watchCorpus` instances are. Not a real pty terminal: `stdout`/
 `stderr` are piped to a scrolling output view in the renderer, with a
 free-text box for follow-up input written to the process's `stdin` —
 enough for the common case without taking on a native-module
 dependency (`node-pty`) this project's dependency footprint has
-avoided everywhere else. Targeted by `REQ-000009`.
+avoided everywhere else. Targeted by `REQ-000009-UVqkd7cL`.
 
 ## Known Bugs — Quick Index
 

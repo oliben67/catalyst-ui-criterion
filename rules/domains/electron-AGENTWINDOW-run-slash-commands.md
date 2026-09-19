@@ -1,6 +1,7 @@
 # `AGENTWINDOW` — Run slash commands via a per-project agent window
 
 **Document:** rules/catalyst-host-electron-rules.md
+**Name:** run-slash-commands-via-a-per-project-agent-window
 **Defined:** 2026-09-08
 **Parent:** none
 **Sub-domains:** none
@@ -16,7 +17,7 @@ own agent CLI: discovering available commands for the selected tracked
 project, composing the picked one with its arguments, and sending it
 to a spawned agent process — not a real pty, a piped-output panel with
 a follow-up input box. Consumes `catalyst-core`'s `resolveAgentCommand`/
-`discoverSlashCommands`/`composeSlashCommand` (`core-CONTRACT-004`) —
+`discoverSlashCommands`/`composeSlashCommand` (`core-CONTRACT-000004-UVqkd7cL`) —
 does not redefine any of the three. Named distinctly from
 `catalyst-host-vscode-rules.md`'s own `AGENT` domain (same underlying
 core infrastructure, two independent host-specific surfaces, siblings

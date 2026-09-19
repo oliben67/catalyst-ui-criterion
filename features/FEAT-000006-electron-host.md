@@ -1,4 +1,4 @@
-# `FEAT-000006` — Electron host
+# `FEAT-000006-UVqkd7cL` — Electron host
 
 A feature entry documents a new or future piece of functionality for the
 app — an idea, a roadmap item, a product direction. It is **not** a
@@ -8,13 +8,14 @@ feature requires — see `Requirement(s)` below.
 
 | Field | Value |
 |---|---|
-| **ID** | `FEAT-000006` |
+| **ID** | `FEAT-000006-UVqkd7cL` |
+| **Name** | `electron-host` |
 | **Filename** | `FEAT-000006-electron-host.md` |
 | **Status** | shipped |
 | **Opened** | 2026-09-05 |
 | **Area** | catalyst-host-electron |
-| **Roadmap** | `RM-000006` |
-| **Requirement(s)** | `REQ-000006` |
+| **Roadmap** | `RM-000006-UVqkd7cL` |
+| **Requirement(s)** | `REQ-000006-UVqkd7cL` |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description
@@ -37,7 +38,7 @@ can afford its layout cost across more than one project at a time.
 In: Electron main/preload/renderer, a persisted tracked-project list,
 one concurrent `watchCorpus` instance per tracked project, a
 deterministic (non-physics) graph layout, and `NodeDetail` reused from
-`catalyst-ui` for the selected node. Out: the run monitor (`RM-000007`,
+`catalyst-ui` for the selected node. Out: the run monitor (`RM-000007-UVqkd7cL`,
 separately deferred — its own agent run-state format is still
 unspecified), packaging/installers/code-signing/auto-update, proposal
 creation or the authoring composer from this host (read-only, same as
@@ -52,4 +53,4 @@ not this one.
 
 ## Related
 
-`REQ-000006` implements this feature.
+`REQ-000006-UVqkd7cL` implements this feature.

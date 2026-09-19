@@ -3,7 +3,7 @@
 > Instantiates the catalyst framework's rules-of-rules template (`development-framework/rules-of-rules.template.md` in the `catalyst` repository).
 
 Meta-rules governing how any rule gets added to, changed in, or retired
-from one of this project's rule documents: `dev-environment-rules.md`. These
+from one of this project's rule documents: `dev-environment-rules.md`, `catalyst-core-rules.md`, `catalyst-host-vscode-rules.md`, `catalyst-host-electron-rules.md`. These
 apply to the *process* of maintaining those documents and the code they
 describe, not to the app's behavior itself. Binding on anyone (human or
 agent) adding to any of them, at any point after this file exists.
@@ -18,10 +18,10 @@ index entry, or a global index entry.
 
 ---
 
-## 1. `rr-META-001` Check for conflicts before adding a new rule
+## 1. `rr-META-000001-UVqkd7cL` Check for conflicts before adding a new rule
 
 Before a new rule is implemented, check it against the rules already
-recorded in **every** rule document in `dev-environment-rules.md` — not just the
+recorded in **every** rule document in `dev-environment-rules.md`, `catalyst-core-rules.md`, `catalyst-host-vscode-rules.md`, `catalyst-host-electron-rules.md` — not just the
 document that seems most relevant, since the same underlying behavior is
 sometimes governed from more than one angle (e.g. a UI-visible
 enabled/disabled state and the backend constraint it's supposed to
@@ -38,7 +38,7 @@ break** an existing ✅ rule in any document, **stop and prompt for a
 decision** — do not silently override it, and do not silently implement
 both side by side and let whichever runs last win.
 
-## 2. `rr-META-002` A new rule is never done until it's gathered, implemented, tested, and documented
+## 2. `rr-META-000002-UVqkd7cL` A new rule is never done until it's gathered, implemented, tested, and documented
 
 All four, no exceptions:
 
@@ -61,62 +61,68 @@ All four, no exceptions:
 
 ## Which document does a rule belong in?
 
-Project-specific tiebreaker guidance goes here — e.g.:
+Project-specific tiebreaker guidance:
 
-- **{{RULE_DOC_1}}**: {{tiebreaker description}}.
-- **{{RULE_DOC_2}}**: {{tiebreaker description}}.
+- **`dev-environment-rules.md`** (`env`): tooling, stack, and process
+  decisions that apply across every package — not product behavior.
+- **`catalyst-core-rules.md`** (`core`): `packages/catalyst-core`'s own
+  contract — parsing, the typed chain model, global validation, the
+  watcher, proposal/run-state parsing. Headless, no DOM, no host-specific
+  UI.
+- **`catalyst-host-vscode-rules.md`** (`vscode`): behavior specific to
+  the VS Code extension host — tree views, webviews, diagnostics,
+  CodeLens, code actions, the composer, the run monitor.
+- **`catalyst-host-electron-rules.md`** (`electron`): behavior specific
+  to the Electron desktop host — multi-project tracking, the graph view,
+  the agent window.
 
 Not a hard wall — some rules legitimately have entries in more than one
 document (one for how it's surfaced, one for the constraint it enforces)
 and should cross-reference rather than pick just one.
 
-## 3. `rr-META-003` Every rule has a unique, stable ID
+## 3. `rr-META-000003-UVqkd7cL` Every rule has a unique, stable ID
 
-Format: **`(DOC_PREFIX)-(DOMAIN)-(NNN)[-(parent-id)]`**
+Format: **`(DOC_PREFIX)-(DOMAIN)-(NNNNNN)[-(parent-id)]-(userid)`**
 
 - **`DOC_PREFIX`** — which rule document the rule lives in. Define one
-  short lowercase prefix per document in `dev-environment-rules.md` (e.g. `ui`,
+  short lowercase prefix per document in `dev-environment-rules.md`, `catalyst-core-rules.md`, `catalyst-host-vscode-rules.md`, `catalyst-host-electron-rules.md` (e.g. `ui`,
   `br`), plus the fixed `rr` prefix reserved for this file itself.
-- **Name format** — every rule name must be more than the bare ID. The
-  canonical name format is **`<rule-id>-<short-summary>`**, where the suffix
-  is a lowercase slug that briefly describes what the rule is about. Example:
-  `br-AUTH-003-login-flow`. This is a hard requirement for all new rules and
-  must also be applied retroactively to existing deployed rules during
-  framework deployment or synchronization. Existing names that are only the ID
-  must be renamed to include a summary suffix, and every index entry and link
-  that references the old name must be updated.
+- **Name format** — every rule name and development entity must carry a name summarizing its purpose. The canonical rule name format is **`<rule-id>-<short-summary>`**, where the suffix is a lowercase slug that briefly describes what the rule is about. Example: `br-AUTH-000003-login-flow`. Similarly, every development entity (bugs, requirements, house-keeping items, features, rules, domains, reconciliations, workflows, etc.) contains an explicit **Name** field (`**Name**` in field tables or rule metadata) that summarizes the purpose of the entity. This is a hard requirement for all new rules and development entities and must also be applied retroactively to existing deployed items during framework deployment or synchronization. Existing names that are only the ID must be renamed to include a summary suffix, and every index entry and link that references the old name must be updated.
 - **`DOMAIN`** — a short, stable mnemonic code for the `##` functional
 domain the rule sits under. Fixed once assigned — renaming a domain's
 prose heading does not change its code, since existing IDs (in code
 comments, tests, Known Bugs indexes, cross-references) must keep
 resolving.
-- **`NNN`** — a zero-padded 3-digit sequence number, unique within that
-  `DOMAIN`, assigned in document order the first time IDs are
+- **`NNNNNN`** — a zero-padded **6-digit** sequence number, unique within
+  that `DOMAIN`, assigned in document order the first time IDs are
   retrofitted (or in creation order thereafter). Never reused, never
   renumbered, even if an earlier rule in the same domain is later
-deleted/retired.
+  deleted/retired. Zero-padding is always applied before the `userid`
+  suffix (rr-META-000020-UVqkd7cL) is appended — never after, and never left
+  half-done across a document (a mix of 3-digit and padded 6-digit IDs
+  breaks lexicographic sort).
 - **`[-parent-id]`** — optional. Used two ways: (a) a rule that is a
   specialization/consequence of another rule references that rule's full
-  ID as its own suffix; (b) a numbered sub-item inside a single rule
-  bullet that enumerates several concretely distinct behaviors gets the
-  parent's ID plus its own position (e.g. `br-EVTO-015-1`). Prefer this
-over inventing a new top-level rule when the sub-items are only
-  meaningful in the context of the parent bullet.
+  ID (including its own `userid` suffix) as its own suffix; (b) a
+  numbered sub-item inside a single rule bullet that enumerates several
+  concretely distinct behaviors gets the parent's ID plus its own
+  position (e.g. `br-EVTO-000015-1`, before that rule's own `userid` is
+  appended). Prefer this over inventing a new top-level rule when the
+  sub-items are only meaningful in the context of the parent bullet.
+- **`(userid)`** — always the final segment, after any `[-parent-id]`.
+  See rr-META-000020-UVqkd7cL for the full mechanism and the rule/domain
+  authorship limitation.
 
-Rules with no sub-items or parent never have the trailing segment — it's
-absent, not empty.
+Rules with no sub-items or parent never have that trailing segment —
+it's absent, not empty. The `userid` segment, by contrast, is never
+absent once rr-META-000020-UVqkd7cL applies.
 
-### Domain codes — {{RULE_DOC_1}}
+### Domain codes — every rule document
 
-| Code | Domain |
-|------|--------|
-| `{{CODE}}` | {{Domain name}} |
-
-### Domain codes — {{RULE_DOC_2}}
-
-| Code | Domain |
-|------|--------|
-| `{{CODE}}` | {{Domain name}} |
+`rules/domains/domains.md` is the single authoritative index of every
+domain code across all four rule documents (`env`, `core`, `vscode`,
+`electron`) — not duplicated here, to avoid a second copy that can drift
+out of sync with the real one.
 
 ### Domain code — this file
 
@@ -132,7 +138,7 @@ absent, not empty.
 3. Only add `[-parent-id]` if the rule is a numbered sub-case of one
    existing bullet, or an explicit specialization of another rule.
 
-## 4. `rr-META-004` Retiring a rule
+## 4. `rr-META-000004-UVqkd7cL` Retiring a rule
 
 A rule ID, once assigned, is **never deleted and never reused** —
 deleting the bullet outright breaks every cross-reference to it with no
@@ -141,7 +147,7 @@ trace of why. Instead, retire it in place:
 1. Change its status marker to **🗑 retired**.
 2. Leave the rule's text as-is (don't rewrite it to match new behavior —
    that's a *new* rule with a *new* ID) and append a one-line reason plus
-the date, e.g. `🗑 retired 2026-09-05 — superseded by \`env-RUNTIME-002\``.
+the date, e.g. `🗑 retired 2026-09-05 — superseded by \`<new-rule-id>\``.
 3. If something replaces it, the replacement is a normal new rule (next
    `NNN` in its domain) — retirement does not imply the new rule
    inherits the old number, even via `[-parent-id]`.
@@ -152,7 +158,7 @@ the date, e.g. `🗑 retired 2026-09-05 — superseded by \`env-RUNTIME-002\``.
    change, not removal from the graph of things development work can
    cite.
 
-## 5. `rr-META-005` Rules use typed directories and indexes
+## 5. `rr-META-000005-UVqkd7cL` Rules use typed directories and indexes
 
 Every rule must live in a type-specific directory under `rules/`, for
 example `business/`, `ui/`, or `infra/`. This is a hard requirement. Each
@@ -167,7 +173,7 @@ rule files belong under the type folders, not under `templates/` or the
 rules root. Aggregating multiple rules into one file or relying on
 unindexed notes is not permitted.
 
-## 6. `rr-META-006` Development artifacts have their own ID scheme
+## 6. `rr-META-000006-UVqkd7cL` Development artifacts have their own ID scheme
 
 If the deployed framework is missing `version.txt`, or if its version is
 lower than this framework's own `development-framework/version.txt`, the
@@ -181,7 +187,7 @@ type, assigned in creation order, never reused. See §9 for the separate,
 non-rule-linked `FEAT-` scheme used for feature entries — it is not a
 fourth member of this format.
 
-## 7. `rr-META-007` Defining a new `##` domain
+## 7. `rr-META-000007-UVqkd7cL` Defining a new `##` domain
 
 A bug or requirement is not required to fit an existing domain — it may
 propose a new one, but only by following this standard, in every rule
@@ -194,12 +200,12 @@ where rules live) and follows the same uniform shape as every other
 artifact type (§15): its own `templates/`, `README.md`, `domains.md`
 catalog, and free-form space for the actual domain files. Each domain
 gets one file at
-`rules/domains/env-{{CODE}}-{{short-description}}.md` (e.g.
+`rules/domains/{{DOC_PREFIX}}-{{CODE}}-{{short-description}}.md` (e.g.
 `domains/br-REDIS-caching-layer.md`). This is a hard requirement, the same as
 for artifact and work-item filenames (see `INSTANTIATION-GUIDE.md` §1): the
-bare `env-{{CODE}}.md` is not a valid filename, the file must carry
+bare `{{DOC_PREFIX}}-{{CODE}}.md` is not a valid filename, the file must carry
 a short description of what the domain covers as part of its name. The
-`{{CODE}}` used inside rule IDs (`env-{{CODE}}-{{NNN}}`) is
+`{{CODE}}` used inside rule IDs (`{{DOC_PREFIX}}-{{CODE}}-{{NNN}}`) is
 unaffected by this — only the on-disk filename gains the description suffix.
 See [`templates/domain.template.md`](templates/domain.template.md) → the
 current `rules/domains/templates/TEMPLATE-DOMAIN-vN.md`, for the
@@ -216,11 +222,11 @@ domain file shorter.
 - **Code**: `{{PARENT}}.{{SUB}}` — parent code, a literal `.`, then a
   short sub-mnemonic (e.g. `GATE.DOCKER`). This is still one `DOMAIN`
   value for ID purposes: a rule under it is
-  `env-{{PARENT}}.{{SUB}}-{{NNN}}` (e.g. `ui-GATE.DOCKER-004`),
+  `{{DOC_PREFIX}}-{{PARENT}}.{{SUB}}-{{NNN}}` (e.g. `ui-GATE.DOCKER-004`),
   with `NNN` scoped to the sub-domain, not the parent.
-- **File**: `domains/env-{{PARENT}}.{{SUB}}-{{short-description}}.md`,
+- **File**: `domains/{{DOC_PREFIX}}-{{PARENT}}.{{SUB}}-{{short-description}}.md`,
   alongside (not nested under) the parent's own
-  `domains/env-{{PARENT}}-{{short-description}}.md` — the
+  `domains/{{DOC_PREFIX}}-{{PARENT}}-{{short-description}}.md` — the
   directory itself stays flat; the nesting is expressed by the code and by
   the `Parent`/`Sub-domains` fields cross-linking the two files.
 - **Parent file** lists every child in its `Sub-domains` field. **Child
@@ -239,7 +245,7 @@ pointer back to this file, not the full metadata:
 ```
 ## {{Domain name}}
 
-> **Domain:** `CODE` — see [`domains/env-{{CODE}}-{{short-description}}.md`](domains/env-{{CODE}}-{{short-description}}.md).
+> **Domain:** `CODE` — see [`domains/{{DOC_PREFIX}}-{{CODE}}-{{short-description}}.md`](domains/{{DOC_PREFIX}}-{{CODE}}-{{short-description}}.md).
 ```
 
 This keeps the rule document itself readable (just rules) while the
@@ -257,7 +263,7 @@ list. Extend the existing domain instead of duplicating it.
 2. **Pick a code** — uppercase mnemonic, 3–7 characters, not already used
    as a `DOMAIN` code in the same document.
 3. **Add the code to the canonical table** in this file, and create its
-   `domains/env-{{CODE}}-{{short-description}}.md` file, in the
+   `domains/{{DOC_PREFIX}}-{{CODE}}-{{short-description}}.md` file, in the
    same change that adds the domain.
 4. **Write the domain file's Scope and Relationship-to-other-domains**,
 declaring either no conflict or the specific supersede/amend/
@@ -270,7 +276,7 @@ A domain's code is permanent, same as a rule ID — never reused for an
 unrelated domain even if the original is later emptied out or retired
 (its `domains/` file gets the same 🗑 retired treatment as a rule, §4).
 
-## 8. `rr-META-008` Scrum/agile work items are plugin-territory, not core
+## 8. `rr-META-000008-UVqkd7cL` Scrum/agile work items are plugin-territory, not core
 
 The framework version is tracked in `version.txt` at the framework root.
 If a deployed framework has no `version.txt`, or its version is lower than
@@ -283,14 +289,16 @@ deployment gets it by default. It only exists once a
 project-management-type plugin extending the agile schema at
 `plugins/_prototyping/project-management/agile/` (framework repository)
 is activated (INV-13, INV-22) — that schema defines
-`(EPIC|STORY|TASK|SPIKE)-(NNNNNN)`, `SPRINT-(NNN)`, and the two further
-optional types below, but defines them as *what a plugin deploys*, not
+`(EPIC|STORY|TASK|SPIKE)-(NNNNNN)`, `SPRINT-(NNN)`, and the one further
+optional type below, but defines them as *what a plugin deploys*, not
 as content core instantiation writes. See `INVARIANTS.md` INV-22 for the
 activation mechanism (§17 below defines it here) and INV-5 for the
 chain invariant's plugin-conditional wording. No concrete plugin extends
 this schema yet — it exists so the shape is ready to build against.
+(`WORKFLOW-(NNNNNN)` used to be part of this schema too; it's core now
+— see §19.)
 
-The schema's two further, optional types:
+The schema's one further, optional type:
 
 - **`BOARD-(NNNNNN)`** — the Kanban-flavor structural counterpart to
   `SPRINT-NNN`: a trackable container with its own `Status`
@@ -298,18 +306,13 @@ The schema's two further, optional types:
   sprint membership. Relevant only under the Kanban/Scrumban flavor (§2
   of `INSTANTIATION-GUIDE.md`) — a pure-Scrum deployment has no need for
   it, the same way a pure-Kanban one has no need for `sprints/`.
-- **`WORKFLOW-(NNNNNN)`** — a process-definition document, not a unit of
-  work: it documents a repeatable multi-step procedure (e.g. "how a bug
-  moves from triage to resolution"). It carries `Status`
-  (`Active`/`Deprecated`) reflecting whether the process is currently in
-  use, never a work-tracking lifecycle, and is never itself "done."
 
 **`TICKET-(NNNNNN)` is deliberately not a defined type even within the
 schema.** A `work-items/tickets/` folder, if a plugin deploys one,
 carries no prescribed semantics — its actual population and lifecycle
 (e.g. syncing from an external tracker) is that plugin's own concern.
 
-## 9. `rr-META-009` Feature entries have their own, non-rule-linked scheme
+## 9. `rr-META-000009-UVqkd7cL` Feature entries have their own, non-rule-linked scheme
 
 Format: **`FEAT-(NNNNNN)`** — zero-padded 6-digit sequence number, global,
 assigned in creation order, never reused. Same descriptive-naming
@@ -324,7 +327,7 @@ A feature entry documents a possible future capability — an idea or
 roadmap item, not a claim about current or required behavior. It is
 **not** one of the development artifacts in §6 and is exempt from:
 
-- §1 (`rr-META-001`)'s conflict check,
+- §1 (`rr-META-000001-UVqkd7cL`)'s conflict check,
 - `rules-of-development.md` §1 ("no development without a targeted
   rule"), and
 - ever carrying a `Targets` or `Domain` field.
@@ -337,7 +340,7 @@ rules, assigned a domain, and measured for completion. The feature entry
 records which requirement(s) resulted from it, for traceability back to
 the original idea, but that link is informational, not a rule target.
 
-## 10. `rr-META-010` Roadmap items have their own, source-tracked scheme
+## 10. `rr-META-000010-UVqkd7cL` Roadmap items have their own, source-tracked scheme
 
 Format: **`RM-(NNNNNN)`** — zero-padded 6-digit sequence number, **global
 across every named roadmap**, assigned in the order `/roadmap-add`/
@@ -357,7 +360,7 @@ planning doc, a stakeholder request) named this as a future direction —
 not a claim about current or required behavior, and not itself one of the
 development artifacts in §6. It is exempt from:
 
-- §1 (`rr-META-001`)'s conflict check,
+- §1 (`rr-META-000001-UVqkd7cL`)'s conflict check,
 - `rules-of-development.md` §1 ("no development without a targeted
   rule"), and
 - ever carrying a `Targets` or `Domain` field.
@@ -365,10 +368,19 @@ development artifacts in §6. It is exempt from:
 A roadmap item is never "done" against a rule and is never itself
 implemented. Once a human decides it's worth tracking inside catalyst,
 `/create-feature` opens a `FEAT-NNNNNN` for it (§9), citing the `RM-NNNNNN` ID
-in the feature's `Roadmap` field — that feature entry, and the `REQ-NNNNNN`
-it may later become, are what actually get vetted, assigned a domain, and
-measured. Each roadmap file's `Status`/`Linked` columns mirror whichever
-of those is currently linked, refreshed by `/show-backlog`, so a roadmap
+in the feature's `Roadmap` field — that feature entry, and the one or more
+`REQ-NNNNNN` requirements it may later become (§21 formalizes the
+expectation that a roadmap item of real size decomposes into more than one
+requirement), are what actually get vetted, assigned a domain, and
+measured.
+
+**`Linked` is a list, not a single ID**: every `FEAT-`/`REQ-NNNNNN`
+currently associated with that row, comma-separated, in the order each was
+linked. Each roadmap file's `Status`/`Linked` columns mirror every one of
+those, refreshed by `/show-backlog`: `Not triaged` while nothing is linked;
+`Triaged` while only a `FEAT-NNNNNN` is linked; `In progress` once at least
+one `REQ-NNNNNN` is linked and at least one of them isn't yet `done`;
+`Done` only once **every** linked `REQ-NNNNNN` is `done` — so a roadmap
 item's progress stays visible without becoming a second, competing source
 of truth for completion.
 
@@ -377,37 +389,59 @@ A named roadmap itself is never hard-deleted once any of its rows carry a
 it in place instead (marks it retired, keeps every row and ID resolvable)
 whenever removing it outright would break a `FEAT-`/`REQ-` cross-reference.
 
-## 11. `rr-META-011` Users and roles are advisory, not access control
+## 11. `rr-META-000011-UVqkd7cL` Users and roles are advisory, not access control
 
 `IAM/users/users.json` (`templates/users.template.json`) is the registry
 of people who can sign work — a JSON array of `{name, roles, registered,
-active, notes}` objects, kept as data rather than a hand-edited document
-because it is managed exclusively by commands:
+active, notes, userid}` objects, kept as data rather than a hand-edited
+document because it is managed exclusively by commands:
 `/user-add`/`/user-remove`/`/user-modify`/`/user-assign-role`/`/user-list`
 — see `rules-of-development.md` §4. `IAM/roles/roles.json`
 (`templates/roles.template.json`) maps each role to the actions/commands
-it typically performs — a JSON array of `{name, actions}` objects, seeded
+it typically performs — a JSON array of `{name, actions, reconciliation}`
+objects (`reconciliation` is `full`/`propose`/`none` — see §16, the one
+field in this file that's genuinely enforced rather than advisory), seeded
 with a default agile-role mapping and then extended via `/role-add`
 (new role) and `/role-modify` (change an existing role's actions).
 `IAM/users/` and `IAM/roles/` each follow the same uniform shape as every
 other artifact type (§15) — their own `templates/` and `README.md`.
 
+**`userid` generation (`/user-add`, INV-26).** Draw 8 characters, each
+independently and uniformly from the 62-character alphabet
+`[A-Za-z0-9]`, using whatever cryptographically-secure random source
+the running agent's environment provides (e.g. Python's
+`secrets.choice`) — this is an agent-followed procedure, not a
+specific library dependency, since catalyst itself has no fixed
+runtime. Redraw if the result contains no uppercase letter (this
+closes a real parsing ambiguity in host UIs that derive an id from a
+filename: an 8-letter, all-lowercase summary word like `database` must
+never be mistakable for a `userid` suffix — see rr-META-000020-UVqkd7cL). Check
+the candidate against every existing `userid` already in `users.json`
+(including any assigned earlier in the same batch operation); redraw
+from scratch on any collision, never patch a colliding draw. Assign
+once unique. A `userid`, once assigned, never changes — the same
+"never retroactively changes" posture as `Signed-off-by` below.
+
 **`IAM/users/users.json` must contain at least one entry with `"active":
 true`.** This is a hard requirement, unlike `roadmaps.md`'s "empty is
 fine": a project with zero active users has nobody to sign work, so
 deployment is not complete until `/user-add` has registered at least one
-person. `/user-remove` refuses (or warns, per the command's own spec) if
-removing the last active user would leave zero.
+person. `/user-remove` refuses if removing the last active user would
+leave zero — this specific case isn't advisory, since it would break
+this file's own hard existence requirement (INV-25's
+fundamental-invariant exception to acting without asking).
 
 Catalyst has no way to verify who is actually typing, so beyond that one
 hard existence requirement, this scheme is **advisory**: before an
 artifact-creating or status-changing command completes, the agent
 resolves who is signing it, checks their role(s) against `roles.json`,
 and — if the action isn't one their role covers, or they aren't
-registered at all — asks for confirmation rather than refusing outright.
-Every dev-artifact, feature entry, roadmap item, and work item carries a
-`Signed-off-by` field recording the outcome (`rules-of-development.md`
-§2).
+registered at all — proceeds anyway (INV-25), noting the mismatch rather
+than pausing for confirmation or refusing outright. Every dev-artifact,
+feature entry, roadmap item, and work item carries a `Signed-off-by`
+field recording the outcome (`rules-of-development.md` §2); at the same
+moment, that resolved signer's `userid` is appended as the entity's own
+id suffix (INV-26, rr-META-000020-UVqkd7cL) — never resolved separately or later.
 
 `/user-remove` never deletes a user's entry, the same "never delete,
 retire in place" principle as §4 and §10: it sets `active` to `false` so
@@ -416,7 +450,7 @@ resolvable. A changed or removed role in `roles.json` likewise never
 retroactively changes a `Signed-off-by` value already recorded — that
 value reflects who signed it under the mapping in effect at the time.
 
-## 12. `rr-META-012` The journal is transaction-log-grade, not a changelog
+## 12. `rr-META-000012-UVqkd7cL` The journal is transaction-log-grade, not a changelog
 
 `development/journal.jsonl` — one JSON object per line, strictly
 append-only. A "changelog" narrates what happened; this journal is
@@ -492,7 +526,7 @@ project may have both: the journal answers "what changed and why, and can
 I get back to how it was," `catalyst-git` answers "did anything just
 break a rule."
 
-## 13. `rr-META-013` Repoed deployments: `criterion` and per-user branches
+## 13. `rr-META-000013-UVqkd7cL` Repoed deployments: `criterion` and per-user branches
 
 Every deployment's `.criterion/` is a **local working copy**
 (`INVARIANTS.md` INV-6 — that never changes; it stays out of the
@@ -642,13 +676,13 @@ scoping" below) — then:
    normal merge of the branch into `criterion` first; only where that
    leaves a conflict — git-level, a vetting-flagged semantic clash, or a
    **rights-mismatch** (the actor's role doesn't cover this entity's
-   type/action per `rr-META-011`'s advisory mapping in
+   type/action per `rr-META-000011-UVqkd7cL`'s advisory mapping in
    `IAM/roles/roles.json`) — does a sub-agent propose a resolution
-   guided by `rr-META-001`'s own conflict-check principle, never
+   guided by `rr-META-000001-UVqkd7cL`'s own conflict-check principle, never
    silently dropping either side's rule-compliant intent. Where that
    proposal is itself contested, or the conflict is genuinely
    irreconcilable, open a `RECON-NNNNNN` instead of guessing which side
-   wins (`rr-META-016`): `Trigger` records which of the three kinds it
+   wins (`rr-META-000016-UVqkd7cL`): `Trigger` records which of the three kinds it
    was, `Baseline` = `criterion`'s current content for that entity,
    `Proposed` = the incoming branch's content. That one entity stays
    unmerged pending resolution (`/reconcile`); everything else in the
@@ -680,7 +714,7 @@ ever carry entries the actor was already entitled to add through the
 command that wrote them. If scoping excludes anything, report exactly
 which files and why — a smaller-than-expected push is never silent.
 This narrows what a push contains; it doesn't refuse the command itself
-(`rr-META-011`'s advisory-roles principle) — a non-`Admin` actor's push
+(`rr-META-000011-UVqkd7cL`'s advisory-roles principle) — a non-`Admin` actor's push
 still succeeds, just scoped to what they signed.
 
 **`criterion_branch` is `criterion` itself** (single-maintainer
@@ -739,7 +773,7 @@ already run standalone before the offer even appears, so the push it
 leads to can safely overwrite `criterion` directly without repeating
 that check.
 
-## 14. `rr-META-014` Agent-owned working copy, the tracked pointer, and project lifecycle
+## 14. `rr-META-000014-UVqkd7cL` Agent-owned working copy, the tracked pointer, and project lifecycle
 
 INV-6 (revised): the working copy — a directory always named
 `.criterion/` — is not built inside the target project's own tree. It
@@ -804,6 +838,22 @@ courtesy as `/criterion create`:
    something the user will want tracked, unlike anything that came before
    it.
 
+### Agent switching procedure
+
+When a session starts or an agent assumes governance of a project previously managed by another agent (detected when the running agent's identity differs from the `agent` field in `<app-name>.catalyst`):
+1. Resolve the running agent's `agent-source` path per `BOOTSTRAP.md` §1 (agent-owned space for the running agent, or in-project fallback `.criterion/`).
+2. Update `<app-name>.catalyst`: set `agent` to the current agent's identifier, `agent-source` to the resolved path, and `updated` to the current date string (`YYYY-MM-DD`).
+3. If the `.criterion/` working copy existed in the previous `agent-source` location, mirror it into the new `agent-source` location: the new location ends up an exact copy of the old one — every file the old one had, none it didn't — overwriting anything already at the new location that conflicts, and removing anything at the new location the old one doesn't have. Never a partial merge.
+4. Update `Taskfile.yml` at the project root: set the `CRITERION_DIR` variable to match the new `agent-source` path.
+5. Update persistent framework memory (and deployment notes) with the current agent name, resolved `agent-source` directory, and update timestamp.
+
+`/switch-agent [agent-id]` runs this same procedure on demand, unconditionally
+(steps 1–5 above, without first checking whether identity actually differs)
+— the manual escape hatch for when the automatic per-session check above is
+skipped (e.g. dropped by a compacted session) or only partially applies (one
+field updated, another left stale). Full command spec: `CODE-OF-CONDUCT.md`
+§4.
+
 ### `/project create`/`remove`/`export`/`import`
 
 The lifecycle commands for this model (full command spec:
@@ -819,7 +869,7 @@ The lifecycle commands for this model (full command spec:
   `<app-name>.catalyst` (and, on the fallback, stops treating the
   in-project `.criterion/` as active). The working copy itself, this
   agent's memory note, and any `criterion` repo are all left exactly as
-  they are — never delete, retire in place (`rr-META-004`), same
+  they are — never delete, retire in place (`rr-META-000004-UVqkd7cL`), same
   principle as roadmap/user retirement.
 - **`remove <name> force`** additionally deletes the working copy at
   `agent-source` and this agent's memory note for the project. This is
@@ -845,7 +895,7 @@ The lifecycle commands for this model (full command spec:
   to be replaced and confirm explicitly first, same tier of
   destructiveness as `remove ... force`.
 
-## 15. `rr-META-015` Every artifact type has the same directory shape
+## 15. `rr-META-000015-UVqkd7cL` Every artifact type has the same directory shape
 
 Hard rule, no exception: **every artifact-type directory carries a
 versioned, catalogued `templates/` subdirectory**, and both it and the
@@ -908,6 +958,11 @@ the same shape for its own `rules-of-work-items.md` (§8, INV-22).
   `features/`, not nested under `work-items/`: `RECON-NNNNNN` cases are
   triggered by `/criterion push`'s own mechanism (§13), not agile
   process (§8), and are never themselves work (§16).
+- `workflows/` — top-level folder, sibling of `reconciliations/`:
+  `WORKFLOW-NNNNNN` process-definition documents, core (not gated behind
+  any plugin) and never themselves work (§19).
+- `steps/` — top-level folder, sibling of `requirements/`: `STEP-NNNNNN`
+  execution records, each naming exactly one parent `REQ-NNNNNN` (§21).
 - `IAM/` — new top-level folder replacing bare
   `development/users.json`/`roles.json`; holds `users/` and `roles/`,
   each shaped exactly like any other artifact type (§11), including the
@@ -931,26 +986,33 @@ the same shape for its own `rules-of-work-items.md` (§8, INV-22).
   `plugins/_prototyping/project-management/agile/`'s schema is
   activated; that plugin's own `## Contributes` section then defines
   which of `boards/`/`epics/`/`spikes/`/`sprints/`/`stories/`/`tasks/`/
-  `tickets/`/`workflows/` it deploys, alongside `README.md` and
+  `tickets/` it deploys, alongside `README.md` and
   `rules-of-work-items.md`.
 
 See `INSTANTIATION-GUIDE.md` §1 for the full deployed layout tree and
 `INSTANTIATION-CHECKLIST.md` for the tickable deploy-skeleton steps.
 
-## 16. `rr-META-016` Reconciliation of diverging entity versions
+## 16. `rr-META-000016-UVqkd7cL` Reconciliation of diverging entity versions
 
 `/criterion push`'s merge step (§13) already has to handle two versions
 of the same entity disagreeing — a git-level conflict, a
 vetting-flagged semantic clash, or a rights-mismatch against
-`rr-META-011`'s advisory role mapping. `RECON-NNNNNN` is the durable,
+`rr-META-000011-UVqkd7cL`'s advisory role mapping. `RECON-NNNNNN` is the durable,
 chainable record of that disagreement and how it got settled, instead
 of the resolution living only in an ephemeral sub-agent proposal.
 
-**Never itself work.** Like `WORKFLOW-` (§8), a `RECON-` carries no
+**Never itself work.** Like `WORKFLOW-` (§19), a `RECON-` carries no
 `Targets` rule field and is exempt from the chain invariant's
 epic→story→task→REQ/BUG/HK→rule requirement — its chain runs sideways,
 via an `Entity` field naming the artifact actually in dispute, not
 downward to a rule.
+
+**May optionally name a guiding workflow.** A `Workflow` field can cite
+a `WORKFLOW-NNNNNN` (§19) whose `## Steps`/`## Gates / exit criteria`
+describe how this specific, recurring kind of conflict should be
+resolved — read it before choosing a `/reconcile` verb, when present.
+Most cases won't have one: the fixed verb set below already *is* the
+procedure for the ordinary case.
 
 **Opened** by `/criterion push` itself (automatically, when its merge
 step hits one of the three trigger kinds above) or manually by any
@@ -970,18 +1032,31 @@ are, and every edit is journaled with its before/after content hash
 (INV-17) — that already gives the audit trail; no second versioning
 scheme is needed on top.
 
-**Resolved** via `/reconcile <id> accept|accept-with-edits|reject`:
-`accept` merges `Proposed` into the `Entity` as-is; `accept-with-edits`
-merges the latest `## Revisions` row's content instead; `reject` leaves
-`criterion` unchanged and flags the proposer's local copy as needing to
-pull the rejection down. `Status` moves `Open` → `Under Review` (once
-someone starts working it) → one of `Resolved-Accepted` /
-`Resolved-Accepted-with-Edits` / `Resolved-Rejected` → `Closed`. Who
-*can* resolve one is advisory, same as every other role check
-(`rr-META-011`) — catalyst still can't verify who's typing — but the
-`Resolver` field and the journal entry it produces mean an
-unauthorized resolution is a visible, permanent record, not a silent
-gap the way an unreconciled rights-mismatch would otherwise be.
+**Resolved** via `/reconcile <id> accept|accept-with-edits|reject|propose
+<text>`: `accept` merges `Proposed` into the `Entity` as-is;
+`accept-with-edits` merges the latest `## Revisions` row's content
+instead; `reject` leaves `criterion` unchanged and flags the proposer's
+local copy as needing to pull the rejection down; `propose <text>`
+appends `<text>` as a new `## Revisions` row without resolving anything.
+`Status` moves `Open` → `Under Review` → one of `Resolved-Accepted` /
+`Resolved-Accepted-with-Edits` / `Resolved-Rejected` → `Closed`.
+
+**Who can do what is genuinely gated by role — the one deliberate
+exception to `rr-META-000011-UVqkd7cL`'s advisory-only principle.** Each role in
+`IAM/roles/roles.json` carries a `reconciliation` field: `full` may use
+every verb, including the three resolving ones; `propose` may only use
+`propose <text>` — moving `Status` to `Under Review` — and is refused
+outright on `accept`/`accept-with-edits`/`reject`, told a `full`-level
+actor must finish it; `none` is refused on every verb immediately, told
+to ask a `full` or `propose` actor to act on their behalf. This differs
+from every other role check in the framework in that the command
+genuinely stops rather than asking for confirmation and proceeding
+anyway. The trust boundary is unchanged — catalyst still can't verify
+who's typing — but letting anyone finish a reconciliation regardless of
+role would defeat the reason `RECON-` exists: the `Resolver` field and
+the journal entry it produces are only meaningful as a record of *who
+was actually allowed to decide*, not just who happened to type the
+command.
 
 **Layout and ID**: `reconciliations/`, top-level, sibling to
 `requirements/`/`features/` (§15's "Where every artifact type actually
@@ -989,7 +1064,7 @@ sits"), full `templates/`+catalog treatment (INV-20). ID format
 `RECON-(NNNNNN)`, 6 digits, its own global sequence, never reused —
 same scheme as every other numbered type (§3).
 
-## 17. `rr-META-017` Content-contributing plugins
+## 17. `rr-META-000017-UVqkd7cL` Content-contributing plugins
 
 Every `repository`-type plugin only *observes* the deployed project —
 it reads the project's own repository and writes its own output (e.g.
@@ -1036,7 +1111,7 @@ lives in catalyst's own repository until it graduates into a top-level
 plugin-type directory (e.g. `repository/`, `project-management/`), at
 which point INV-11 applies to it like any other plugin.
 
-## 18. `rr-META-018` Recreation drift check
+## 18. `rr-META-000018-UVqkd7cL` Recreation drift check
 
 `/dogfood`'s base procedure (§13's `### /dogfood` subsection) verifies
 that catalyst's actual state still matches what its own rule document
@@ -1134,3 +1209,143 @@ does not resolve it.
 Stays catalyst-development-only, the same boundary §13 already draws
 for `/dogfood` itself. Not a mechanism any other deployed project gains
 access to.
+
+## 19. `rr-META-000019-UVqkd7cL` Workflow entity for guided procedures
+
+`WORKFLOW-NNNNNN` (`templates/workflow.template.md`) is a
+process-definition document, not a unit of work: it documents a
+repeatable multi-step procedure (e.g. "how a bug moves from triage to
+resolution," or how to work through a particular recurring kind of
+reconciliation). It carries `Status` (`Active`/`Deprecated`) reflecting
+whether the process is currently in use, never a work-tracking
+lifecycle, and is never itself "done." Used to live inside
+`work-items/`'s plugin-territory schema (§8); it's core now — its own
+top-level `workflows/` folder, sibling of `reconciliations/`, always
+present, full INV-20 treatment, no plugin required (`INVARIANTS.md`
+INV-24).
+
+**Its purpose is to be referenced, not just filed.** A core entity may
+optionally name a `WORKFLOW-` by ID to guide its own process — `RECON-`
+reconciliation is the first to do this (§16's optional `Workflow`
+field): when a case names one, the resolver reads its `## Steps`/
+`## Gates / exit criteria` before choosing a `/reconcile` verb, the same
+way a documented procedure guides a human through an otherwise
+ambiguous judgment call. Most reconciliations won't need one — `/reconcile`'s
+fixed verb set already *is* the procedure for the ordinary case; a
+`Workflow` is for a project that wants a documented, repeatable
+escalation path for a specific recurring kind of conflict.
+
+No dedicated creation command (no `/create-workflow` in core) — like
+`RECON-`, a workflow is authored occasionally, not through a frequent,
+form-driven flow; an agent creates one ad hoc from
+`templates/workflow.template.md` and registers it in `workflows/workflows.md`
+the same way any other artifact type's instance gets registered.
+
+## 20. `rr-META-000020-UVqkd7cL` Entity IDs carry their signer's userid
+
+Once a registered user has a `userid` (§11, INV-26), every rule,
+`BUG-`/`REQ-`/`HK-`, `FEAT-`, `RM-`, `WORKFLOW-`, and `RECON-` ID
+carries that user's `userid` as a trailing `-XXXXXXXX` segment — always
+the final segment of the id, after any type-specific suffix a section
+above already defines (a rule's `[-parent-id]`, §3). Assigned once, at
+the same moment the entity's `Signed-off-by` (or, for a rule, the
+authorship resolved below) is determined; never reassigned, never
+changed if the signer is later deactivated or their role changes — the
+same immutability posture `Signed-off-by` itself already has (§11).
+
+**Hard ordering.** No entity may be assigned a suffixed id until its
+signer already has a `userid`. Never generate a userid and an entity
+suffix in the same breath if the signer isn't already registered with
+one — register the user first, confirm the `userid` exists, then
+proceed.
+
+**For a type with a resolvable signer** (every type above except
+rules): the `userid` is exactly that resolved signer's — the same
+person `rules-of-development.md` §2's signer-resolution procedure names
+in `Signed-off-by`. No separate lookup, no separate decision.
+
+**For a rule** (and, by extension, a domain's own code, which is
+never suffixed — see below): no rule or domain template carries an
+authorship field of any kind, so there is nothing today recording who
+added a given rule. Until a dedicated field is designed, use the sole
+registered active user; if more than one is active, use whichever was
+most recently registered. **This is a known, documented limitation**,
+not a permanent design choice — a deployment with real multi-author
+rule authorship will get an inaccurate attribution under this fallback,
+and should treat adding a real per-rule authorship field as its own
+future `HK-` item once that limitation actually bites.
+
+**Domains are out of scope.** A domain has no numeric sequence — it's
+identified by its `CODE` alone (§7), embedded as a substring inside
+every rule id that cites it. There is no id to suffix.
+
+**Cross-reference impact.** Renaming an id (retroactive migration, or
+the initial rollout of this rule) means updating every place that id is
+cited by exact string: its own heading/field, its type's index/catalog
+row, every structured cross-reference field (`Targets`, `Feature`,
+`Roadmap`, `Requirement(s)`, `Steps`, `Linked`, `Entity`, `Workflow`), and
+every free-text citation in `## Related`/`## Notes`/prose — there is no
+dedicated cross-reference-checking script today (`/check-rules` and
+`/audit` are agent-judgment procedures), so this is the agent's
+responsibility to verify by direct search, not something CI catches
+automatically. Two things a rename must never touch:
+`development/journal.jsonl` (INV-17 — append-only; historical entries
+correctly keep citing the pre-rename form forever) and
+`development/BACKLOG.md` (INV-14 — machine-regenerated; run
+`/show-backlog` after the rename instead of hand-editing it).
+
+## 21. `rr-META-000021-UVqkd7cL` Steps record a requirement's actual implementation work
+
+`STEP-NNNNNN` (`templates/step.template.md`) is the itemized record of one
+concrete unit of work performed toward a specific `REQ-NNNNNN` — the files
+touched, commands run, and how it was verified. It exists so a
+requirement's real implementation history is structured and independently
+referenceable, not only prose buried in its own `## Design / implementation
+plan` section or the journal's free-text `intent`.
+
+Format: **`STEP-(NNNNNN)`** — zero-padded 6-digit sequence number, global
+across every requirement, assigned in creation order, never reused — same
+scheme as every other numbered type. Same descriptive-naming requirement as
+every other artifact (`INSTANTIATION-GUIDE.md` §1): name and filename are
+`STEP-NNNNNN-<short-summary>` / `STEP-NNNNNN-<short-summary>.md`, never the
+bare ID. Stored one file per instance under `steps/`, top-level, sibling of
+`requirements/`/`features/`/`reconciliations/`/`workflows/`, full INV-20
+treatment (`templates/`, `README.md`, `steps.md` index).
+
+**Always names exactly one parent requirement** — the `Requirement` field,
+required, never blank. A step with no requirement to belong to isn't a
+step; open the requirement first (`/create-req`), then steps under it.
+
+Exempt from:
+
+- §1 (`rr-META-000001-UVqkd7cL`)'s conflict check,
+- `rules-of-development.md` §1 ("no development without a targeted
+  rule"), and
+- ever carrying a `Targets` or `Domain` field of its own —
+
+it inherits its parent requirement's already-vetted rule target; a step
+documents *executing* that work, it never asserts a new behavioral claim of
+its own. A step's own `Status` (`planned`/`in-progress`/`done`/`abandoned`)
+tracks that one unit of work's completion, independent of the parent
+requirement's own `Status` — a requirement stays `in-progress` while its
+steps range across every status, and isn't closeable as `done`
+(`rules-of-development.md` §7) until every one of its steps is `done` or
+explicitly `abandoned` with a reason.
+
+**A requirement's `Steps` field** (`rules-of-development.md`'s requirement
+template) lists every `STEP-NNNNNN` opened against it, in creation order —
+populated as steps are opened, never guessed or backfilled from unrelated
+work. A requirement with real implementation work underway and zero steps
+recorded is itself incomplete documentation, the same posture
+`rules-of-development.md` §2's `Test plan` requirement already takes
+toward untested rules.
+
+**Roadmap items decompose the same way, one level up.** A roadmap row's
+`Linked` field (§10) names one or more `FEAT-`/`REQ-NNNNNN` — a roadmap
+item of real size is expected to become more than one requirement, each
+targeting its own rule(s) and accumulating its own steps, rather than one
+oversized requirement standing in for the whole item. Nothing here
+numerically requires more than one requirement or more than one step, but
+a roadmap item that closes out via exactly one requirement with zero
+recorded steps is a signal the work was either trivial or
+under-documented — worth a second look before marking it `Done`.

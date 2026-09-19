@@ -1,6 +1,7 @@
 # `DEPS` — Dependency policy
 
 **Document:** rules/dev-environment-rules.md
+**Name:** dependency-policy
 **Defined:** 2026-09-05
 **Parent:** none
 **Sub-domains:** none

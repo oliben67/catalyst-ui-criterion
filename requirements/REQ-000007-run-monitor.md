@@ -1,4 +1,4 @@
-# `REQ-000007` — Run monitor
+# `REQ-000007-UVqkd7cL` — Run monitor
 
 A requirement stands on its own: vetted against every existing rule
 document before being opened, always carries a `Domain`, and always
@@ -6,18 +6,20 @@ targets or proposes one or more rules.
 
 | Field | Value |
 |---|---|
-| **ID** | `REQ-000007` |
+| **ID** | `REQ-000007-UVqkd7cL` |
+| **Name** | `run-monitor` |
 | **Filename** | `REQ-000007-run-monitor.md` |
 | **Status** | done |
 | **Opened** | 2026-09-06 |
-| **Targets** | `core-CONTRACT-003`, `vscode-RUNMONITOR-001` |
+| **Targets** | `core-CONTRACT-000003-UVqkd7cL`, `vscode-RUNMONITOR-000001-UVqkd7cL` |
 | **Domain** | `RUNMONITOR` |
-| **Feature** | `FEAT-000007` |
+| **Feature** | `FEAT-000007-UVqkd7cL` |
+| **Steps** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description
 
-Implement `catalyst-core`'s run-state parsing (`core-CONTRACT-003`) and
+Implement `catalyst-core`'s run-state parsing (`core-CONTRACT-000003-UVqkd7cL`) and
 `catalyst-host-vscode`'s live "Runs" tree section (`vscode-RUNMONITOR-
 001`), completing the roadmap's last surface.
 
@@ -40,9 +42,9 @@ Implement `catalyst-core`'s run-state parsing (`core-CONTRACT-003`) and
 
 ## Notes
 
-Targets two rules, same split as `REQ-000004`: `core-CONTRACT-003` (the
+Targets two rules, same split as `REQ-000004-UVqkd7cL`: `core-CONTRACT-000003-UVqkd7cL` (the
 parsing is real, independent core infrastructure — any future host
-wants the same `Run`/`hasDrift` shape) and `vscode-RUNMONITOR-001` (the
-VS Code UI built on top of it). Unlike `REQ-000004`/`REQ-000005`, there
+wants the same `Run`/`hasDrift` shape) and `vscode-RUNMONITOR-000001-UVqkd7cL` (the
+VS Code UI built on top of it). Unlike `REQ-000004-UVqkd7cL`/`REQ-000005-UVqkd7cL`, there
 is no write-path rule here — a run is never authored by this deployment's
 own UI.

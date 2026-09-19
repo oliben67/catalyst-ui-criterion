@@ -1,6 +1,7 @@
 # `PROPOSAL` — Propose-fix and authoring-composer contract
 
 **Document:** rules/catalyst-host-vscode-rules.md
+**Name:** propose-fix-and-authoring-composer-contract
 **Defined:** 2026-09-05
 **Parent:** none
 **Sub-domains:** none
@@ -15,7 +16,7 @@ first write path: creating a proposal (never editing a governed file
 directly) from a health-board diagnostic (fix-only) or from structured
 authoring intent (a new artifact), and displaying pending state on any
 node an open proposal targets. Consumes `catalyst-core`'s proposal
-parsing (`core-CONTRACT-002`) and `INSPECTOR`'s node-detail command and
+parsing (`core-CONTRACT-000002-UVqkd7cL`) and `INSPECTOR`'s node-detail command and
 chain model — does not redefine either.
 
 ## Relationship to other domains

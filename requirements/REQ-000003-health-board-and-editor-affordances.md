@@ -1,4 +1,4 @@
-# `REQ-000003` — Health board and editor affordances
+# `REQ-000003-UVqkd7cL` — Health board and editor affordances
 
 A requirement stands on its own: vetted against every existing rule
 document before being opened, always carries a `Domain`, and always
@@ -6,13 +6,15 @@ targets or proposes one or more rules.
 
 | Field | Value |
 |---|---|
-| **ID** | `REQ-000003` |
+| **ID** | `REQ-000003-UVqkd7cL` |
+| **Name** | `health-board-and-editor-affordances` |
 | **Filename** | `REQ-000003-health-board-and-editor-affordances.md` |
 | **Status** | done |
 | **Opened** | 2026-09-05 |
-| **Targets** | `vscode-HEALTH-001` |
+| **Targets** | `vscode-HEALTH-000001-UVqkd7cL` |
 | **Domain** | `HEALTH` |
-| **Feature** | `FEAT-000003` |
+| **Feature** | `FEAT-000003-UVqkd7cL` |
+| **Steps** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description
@@ -42,6 +44,6 @@ command as-is.
 
 ## Notes
 
-Single rule (`vscode-HEALTH-001`) covers diagnostics, the definition
+Single rule (`vscode-HEALTH-000001-UVqkd7cL`) covers diagnostics, the definition
 provider, and CodeLens together — one coherent "editor affordances"
 contract, not three separate rules.

@@ -1,6 +1,7 @@
 # `RUNMONITOR` — Live run checklist and ledger
 
 **Document:** rules/catalyst-host-vscode-rules.md
+**Name:** live-run-checklist-and-ledger
 **Defined:** 2026-09-06
 **Parent:** none
 **Sub-domains:** none
@@ -16,7 +17,7 @@ agent's own live run-state: a "Runs" tree section listing every
 and ledger, with drift (`⚠️`) visible on the section label as soon as
 the watcher picks up the file mutation — before the run itself
 completes. Consumes `catalyst-core`'s run-state parsing
-(`core-CONTRACT-003`) and `INSPECTOR`'s existing `TreeDataProvider` —
+(`core-CONTRACT-000003-UVqkd7cL`) and `INSPECTOR`'s existing `TreeDataProvider` —
 does not redefine either. Read-only: this domain never creates or
 edits a run file, only the external agent does (distinct from
 `PROPOSAL`, where the UI itself is the writer).

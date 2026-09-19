@@ -11,13 +11,13 @@ repository).
 
 ## Contents
 
-- [`CONTRACT`](#contract) — `core-CONTRACT-001`, `core-CONTRACT-002`, `core-CONTRACT-003`, `core-CONTRACT-004`
+- [`CONTRACT`](#contract) — `core-CONTRACT-000001-UVqkd7cL`, `core-CONTRACT-000002-UVqkd7cL`, `core-CONTRACT-000003-UVqkd7cL`, `core-CONTRACT-000004-UVqkd7cL`
 
 ## `CONTRACT`
 
 > **Domain:** `CONTRACT` — see [domains/core-CONTRACT-parser-model-validator-watcher.md](domains/core-CONTRACT-parser-model-validator-watcher.md).
 
-### `core-CONTRACT-001` Typed chain model, global validation, watched changes
+### `core-CONTRACT-000001-UVqkd7cL` Typed chain model, global validation, watched changes
 
 ✅ working. `catalyst-core` exposes a single message protocol (defined
 once, before any host exists) covering: (1) a typed chain model
@@ -30,7 +30,7 @@ dangling references are inherently cross-cutting checks, not per-file
 ones; (3) a file watcher that debounces/coalesces changes in a
 150–200ms trailing window and uses single-flight cancellation, so a
 change landing mid-parse aborts and restarts rather than queuing.
-Targeted by `REQ-000001`.
+Targeted by `REQ-000001-UVqkd7cL`.
 
 Implemented: `packages/catalyst-core/src/{types,ids,parser,graph,validator,watcher,cli,index}.ts`,
 tests under `src/test/`. Protocol types (`ChainNode`, `ChainModel`,
@@ -43,7 +43,7 @@ reports 36 nodes, 0 errors; a synthetic 5× corpus (250 rules/domains/
 requirements) parses, models, and validates in under 100ms (roadmap
 Phase 1's own exit criterion).
 
-### `core-CONTRACT-002` Proposal parsing and reconciliation-state tracking
+### `core-CONTRACT-000002-UVqkd7cL` Proposal parsing and reconciliation-state tracking
 
 ✅ working. `catalyst-core` parses `proposals/*.md`
 (`PROP-NNNNNN`, this deployment's own uniform-layout artifact type —
@@ -58,7 +58,7 @@ executing a proposal's expectations, and advancing its `status`, is an
 agent's job, never this package's or any host's. Included in
 `watchCorpus`'s `WatchUpdate` alongside the chain model and validation
 report, so proposal state refreshes the same way everything else does.
-Targeted by `REQ-000004`.
+Targeted by `REQ-000004-UVqkd7cL`.
 
 Implemented: `packages/catalyst-core/src/proposals.ts` (`parseProposals`,
 `nextProposalId`, `openProposalsByTarget`), wired into `watcher.ts`'s
@@ -73,7 +73,7 @@ holding no `PROP-` files yet — README/index/templates only — correctly
 returning an empty list rather than erroring), and `nextProposalId`
 correctly returns `PROP-000001` for that empty state.
 
-### `core-CONTRACT-003` Run-state parsing
+### `core-CONTRACT-000003-UVqkd7cL` Run-state parsing
 
 ✅ working. `catalyst-core` parses `runs/*.md`
 (`RUN-NNNNNN`, this deployment's own uniform-layout artifact type —
@@ -90,7 +90,7 @@ independently verifies a step's `drift` claim, the same way it never
 executes a proposal's `expectations`. Included in `watchCorpus`'s
 `WatchUpdate` alongside the chain model, validation report, and
 proposals, so a run's live edits refresh the same way everything else
-does. Targeted by `REQ-000007`.
+does. Targeted by `REQ-000007-UVqkd7cL`.
 
 Implemented: `packages/catalyst-core/src/runs.ts` (`parseRuns`,
 `hasDrift`), `parser.ts`'s `sectionLines`/`bulletItems` promoted from
@@ -109,7 +109,7 @@ and `hasDrift` correctly returned `true` while the run's own `Status`
 was still `running` — the concrete proof that a drift event is
 detectable before a run completes.
 
-### `core-CONTRACT-004` Agent-command and slash-command discovery
+### `core-CONTRACT-000004-UVqkd7cL` Agent-command and slash-command discovery
 
 ❌ not yet implemented. `catalyst-core` exposes three small,
 host-agnostic helpers every host needs identically: `resolveAgentCommand`
@@ -125,7 +125,7 @@ picked command plus optional arguments into the literal text sent to
 the agent, e.g. `/create-bug <title>`). None of the three touch a
 governed file or execute anything themselves — they only resolve what
 a host needs to know before it hands a composed line to a real agent
-process. Targeted by `REQ-000009`.
+process. Targeted by `REQ-000009-UVqkd7cL`.
 
 ## Known Bugs — Quick Index
 

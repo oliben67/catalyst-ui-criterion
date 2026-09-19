@@ -1,4 +1,4 @@
-# `REQ-000001` — catalyst-core: parser, model, validator, watcher
+# `REQ-000001-UVqkd7cL` — catalyst-core: parser, model, validator, watcher
 
 A requirement stands on its own: vetted against every existing rule
 document before being opened, always carries a `Domain`, and always
@@ -6,13 +6,15 @@ targets or proposes one or more rules.
 
 | Field | Value |
 |---|---|
-| **ID** | `REQ-000001` |
+| **ID** | `REQ-000001-UVqkd7cL` |
+| **Name** | `catalyst-core-parser-model-validator-watcher` |
 | **Filename** | `REQ-000001-catalyst-core-parser-model-validator-watcher.md` |
 | **Status** | done |
 | **Opened** | 2026-09-05 |
-| **Targets** | `core-CONTRACT-001` |
+| **Targets** | `core-CONTRACT-000001-UVqkd7cL` |
 | **Domain** | `CONTRACT` |
-| **Feature** | `FEAT-000001` |
+| **Feature** | `FEAT-000001-UVqkd7cL` |
+| **Steps** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description
@@ -20,7 +22,7 @@ targets or proposes one or more rules.
 Implement `packages/catalyst-core`: the corpus parser, the typed chain
 model it builds, the global validator that runs on every reparse, and
 the file watcher with debounce/coalesce and single-flight cancellation
-— the full contract `core-CONTRACT-001` describes. This is the first
+— the full contract `core-CONTRACT-000001-UVqkd7cL` describes. This is the first
 requirement opened against `catalyst-core-rules.md`, and the first real
 application work in this repository (everything before this was
 tooling scaffolding, `env-*`).
@@ -39,6 +41,6 @@ tooling scaffolding, `env-*`).
 
 ## Notes
 
-Targets `core-CONTRACT-001` directly — the rule and this requirement
+Targets `core-CONTRACT-000001-UVqkd7cL` directly — the rule and this requirement
 were authored together, since no prior product rule document existed
 for catalyst-ui before this.

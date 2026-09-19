@@ -1,4 +1,4 @@
-# `FEAT-000003` — Health board and editor affordances
+# `FEAT-000003-UVqkd7cL` — Health board and editor affordances
 
 A feature entry documents a new or future piece of functionality for the
 app — an idea, a roadmap item, a product direction. It is **not** a
@@ -8,13 +8,14 @@ feature requires — see `Requirement(s)` below.
 
 | Field | Value |
 |---|---|
-| **ID** | `FEAT-000003` |
+| **ID** | `FEAT-000003-UVqkd7cL` |
+| **Name** | `health-board-and-editor-affordances` |
 | **Filename** | `FEAT-000003-health-board-and-editor-affordances.md` |
 | **Status** | shipped |
 | **Opened** | 2026-09-05 |
 | **Area** | catalyst-host-vscode |
-| **Roadmap** | `RM-000003` |
-| **Requirement(s)** | `REQ-000003` |
+| **Roadmap** | `RM-000003-UVqkd7cL` |
+| **Requirement(s)** | `REQ-000003-UVqkd7cL` |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description
@@ -48,4 +49,4 @@ corpus root's markdown files. Out (this phase): "propose fix" actions
 
 ## Related
 
-`REQ-000003` implements this feature.
+`REQ-000003-UVqkd7cL` implements this feature.

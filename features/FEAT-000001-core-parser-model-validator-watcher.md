@@ -1,4 +1,4 @@
-# `FEAT-000001` — Core: parser, typed model, validator, watcher
+# `FEAT-000001-UVqkd7cL` — Core: parser, typed model, validator, watcher
 
 A feature entry documents a new or future piece of functionality for the
 app — an idea, a roadmap item, a product direction. It is **not** a
@@ -8,13 +8,14 @@ feature requires — see `Requirement(s)` below.
 
 | Field | Value |
 |---|---|
-| **ID** | `FEAT-000001` |
+| **ID** | `FEAT-000001-UVqkd7cL` |
+| **Name** | `core-parser-model-validator-watcher` |
 | **Filename** | `FEAT-000001-core-parser-model-validator-watcher.md` |
 | **Status** | shipped |
 | **Opened** | 2026-09-05 |
 | **Area** | catalyst-core |
-| **Roadmap** | `RM-000001` |
-| **Requirement(s)** | `REQ-000001` |
+| **Roadmap** | `RM-000001-UVqkd7cL` |
+| **Requirement(s)** | `REQ-000001-UVqkd7cL` |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description
@@ -53,4 +54,4 @@ planned — proposals are the design).
 
 ## Related
 
-`REQ-000001` implements this feature.
+`REQ-000001-UVqkd7cL` implements this feature.

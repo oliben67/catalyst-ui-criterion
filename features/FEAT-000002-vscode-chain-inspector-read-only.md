@@ -1,4 +1,4 @@
-# `FEAT-000002` — VS Code chain inspector, read-only
+# `FEAT-000002-UVqkd7cL` — VS Code chain inspector, read-only
 
 A feature entry documents a new or future piece of functionality for the
 app — an idea, a roadmap item, a product direction. It is **not** a
@@ -8,13 +8,14 @@ feature requires — see `Requirement(s)` below.
 
 | Field | Value |
 |---|---|
-| **ID** | `FEAT-000002` |
+| **ID** | `FEAT-000002-UVqkd7cL` |
+| **Name** | `vscode-chain-inspector-read-only` |
 | **Filename** | `FEAT-000002-vscode-chain-inspector-read-only.md` |
 | **Status** | shipped |
 | **Opened** | 2026-09-05 |
 | **Area** | catalyst-host-vscode, catalyst-ui |
-| **Roadmap** | `RM-000002` |
-| **Requirement(s)** | `REQ-000002` |
+| **Roadmap** | `RM-000002-UVqkd7cL` |
+| **Requirement(s)** | `REQ-000002-UVqkd7cL` |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description
@@ -50,4 +51,4 @@ view (deferred to Phase 6 per the roadmap), live-pushed webview updates
 
 ## Related
 
-`REQ-000002` implements this feature.
+`REQ-000002-UVqkd7cL` implements this feature.

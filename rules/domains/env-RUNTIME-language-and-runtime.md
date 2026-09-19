@@ -1,6 +1,7 @@
 # `RUNTIME` — Language and runtime
 
 **Document:** rules/dev-environment-rules.md
+**Name:** language-and-runtime
 **Defined:** 2026-09-05
 **Parent:** none
 **Sub-domains:** none

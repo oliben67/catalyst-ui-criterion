@@ -1,6 +1,7 @@
 # `TEST` — Testing
 
 **Document:** rules/dev-environment-rules.md
+**Name:** testing
 **Defined:** 2026-09-05
 **Parent:** none
 **Sub-domains:** none

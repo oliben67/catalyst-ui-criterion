@@ -1,6 +1,7 @@
 # `ONBOARDING` — Offer to install catalyst
 
 **Document:** rules/catalyst-host-vscode-rules.md
+**Name:** offer-to-install-catalyst
 **Defined:** 2026-09-06
 **Parent:** none
 **Sub-domains:** none

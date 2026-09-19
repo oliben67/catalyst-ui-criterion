@@ -1,4 +1,4 @@
-# `REQ-000008` — Multi-root workspace support + install-offer
+# `REQ-000008-UVqkd7cL` — Multi-root workspace support + install-offer
 
 A requirement stands on its own: vetted against every existing rule
 document before being opened, always carries a `Domain`, and always
@@ -6,21 +6,23 @@ targets or proposes one or more rules.
 
 | Field | Value |
 |---|---|
-| **ID** | `REQ-000008` |
+| **ID** | `REQ-000008-UVqkd7cL` |
+| **Name** | `multi-root-and-install-offer` |
 | **Filename** | `REQ-000008-multi-root-and-install-offer.md` |
 | **Status** | done |
 | **Opened** | 2026-09-06 |
-| **Targets** | `vscode-INSPECTOR-001`, `vscode-ONBOARDING-001` |
+| **Targets** | `vscode-INSPECTOR-000001-UVqkd7cL`, `vscode-ONBOARDING-000001-UVqkd7cL` |
 | **Domain** | `ONBOARDING` |
-| **Feature** | `FEAT-000008` |
+| **Feature** | `FEAT-000008-UVqkd7cL` |
+| **Steps** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description
 
 Extend `catalyst-host-vscode` to resolve, watch, and display a
 deployment per workspace folder instead of only the first one
-(amending `vscode-INSPECTOR-001`), and to offer an actionable
-instantiation prompt when a folder has none (`vscode-ONBOARDING-001`,
+(amending `vscode-INSPECTOR-000001-UVqkd7cL`), and to offer an actionable
+instantiation prompt when a folder has none (`vscode-ONBOARDING-000001-UVqkd7cL`,
 new).
 
 ## Acceptance
@@ -49,9 +51,9 @@ new).
 
 ## Notes
 
-Targets two rules: `vscode-INSPECTOR-001` (amended in place — this is
+Targets two rules: `vscode-INSPECTOR-000001-UVqkd7cL` (amended in place — this is
 an extension of what it already promises, not a new capability, same
 treatment as the CodeLens wording correction in Phase 3) and the new
-`vscode-ONBOARDING-001` (a genuinely new capability). No `catalyst-
+`vscode-ONBOARDING-000001-UVqkd7cL` (a genuinely new capability). No `catalyst-
 core` or `catalyst-host-electron` changes — `resolveCorpusRoot`/
 `watchCorpus` are already per-corpus-root.

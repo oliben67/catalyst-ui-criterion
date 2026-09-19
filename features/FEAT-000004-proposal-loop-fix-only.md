@@ -1,4 +1,4 @@
-# `FEAT-000004` — Proposal loop, fix-only
+# `FEAT-000004-UVqkd7cL` — Proposal loop, fix-only
 
 A feature entry documents a new or future piece of functionality for the
 app — an idea, a roadmap item, a product direction. It is **not** a
@@ -8,13 +8,14 @@ feature requires — see `Requirement(s)` below.
 
 | Field | Value |
 |---|---|
-| **ID** | `FEAT-000004` |
+| **ID** | `FEAT-000004-UVqkd7cL` |
+| **Name** | `proposal-loop-fix-only` |
 | **Filename** | `FEAT-000004-proposal-loop-fix-only.md` |
 | **Status** | shipped |
 | **Opened** | 2026-09-05 |
 | **Area** | catalyst-core, catalyst-host-vscode |
-| **Roadmap** | `RM-000004` |
-| **Requirement(s)** | `REQ-000004` |
+| **Roadmap** | `RM-000004-UVqkd7cL` |
+| **Requirement(s)** | `REQ-000004-UVqkd7cL` |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description
@@ -50,4 +51,4 @@ applied-proposal history to be meaningful).
 
 ## Related
 
-`REQ-000004` implements this feature.
+`REQ-000004-UVqkd7cL` implements this feature.

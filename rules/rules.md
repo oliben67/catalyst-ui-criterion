@@ -14,23 +14,23 @@ Global index of every rule document and rule ID in this deployment. Per
 
 ## Rule IDs
 
-- `env-RUNTIME-001` — Language and runtime
-- `env-LAYOUT-001` — npm workspaces monorepo
-- `env-DEPS-001` — Locked, ordinary semver dependencies
-- `env-STYLE-001` — ESLint + Prettier
-- `env-TEST-001` — Vitest for core/UI; VS Code's own harness for the VS Code host
-- `env-CI-001` — GitHub Actions gate: lint, typecheck, test
-- `env-DX-001` — Pinned Node version, no devcontainer yet
-- `core-CONTRACT-001` — Typed chain model, global validation, watched changes
-- `core-CONTRACT-002` — Proposal parsing and reconciliation-state tracking
-- `core-CONTRACT-003` — Run-state parsing
-- `core-CONTRACT-004` — Agent-command and slash-command discovery
-- `vscode-INSPECTOR-001` — Read-only chain tree and node-detail webview
-- `vscode-HEALTH-001` — Diagnostics, click-to-jump, and CodeLens for corpus files
-- `vscode-PROPOSAL-001` — Propose-fix code action and pending badges
-- `vscode-PROPOSAL-002` — Authoring composer
-- `vscode-RUNMONITOR-001` — Live run checklist and ledger
-- `vscode-ONBOARDING-001` — Offer to install catalyst when no deployment is found
-- `vscode-AGENT-001` — Run catalyst slash commands via a per-project agent terminal
-- `electron-DESKTOP-001` — Multi-project tracking, persistent watch, and graph view
-- `electron-AGENTWINDOW-001` — Run catalyst slash commands via a per-project agent window
+- `env-RUNTIME-000001-UVqkd7cL` — Language and runtime
+- `env-LAYOUT-000001-UVqkd7cL` — npm workspaces monorepo
+- `env-DEPS-000001-UVqkd7cL` — Locked, ordinary semver dependencies
+- `env-STYLE-000001-UVqkd7cL` — ESLint + Prettier
+- `env-TEST-000001-UVqkd7cL` — Vitest for core/UI; VS Code's own harness for the VS Code host
+- `env-CI-000001-UVqkd7cL` — GitHub Actions gate: lint, typecheck, test
+- `env-DX-000001-UVqkd7cL` — Pinned Node version, no devcontainer yet
+- `core-CONTRACT-000001-UVqkd7cL` — Typed chain model, global validation, watched changes
+- `core-CONTRACT-000002-UVqkd7cL` — Proposal parsing and reconciliation-state tracking
+- `core-CONTRACT-000003-UVqkd7cL` — Run-state parsing
+- `core-CONTRACT-000004-UVqkd7cL` — Agent-command and slash-command discovery
+- `vscode-INSPECTOR-000001-UVqkd7cL` — Read-only chain tree and node-detail webview
+- `vscode-HEALTH-000001-UVqkd7cL` — Diagnostics, click-to-jump, and CodeLens for corpus files
+- `vscode-PROPOSAL-000001-UVqkd7cL` — Propose-fix code action and pending badges
+- `vscode-PROPOSAL-000002-UVqkd7cL` — Authoring composer
+- `vscode-RUNMONITOR-000001-UVqkd7cL` — Live run checklist and ledger
+- `vscode-ONBOARDING-000001-UVqkd7cL` — Offer to install catalyst when no deployment is found
+- `vscode-AGENT-000001-UVqkd7cL` — Run catalyst slash commands via a per-project agent terminal
+- `electron-DESKTOP-000001-UVqkd7cL` — Multi-project tracking, persistent watch, and graph view
+- `electron-AGENTWINDOW-000001-UVqkd7cL` — Run catalyst slash commands via a per-project agent window

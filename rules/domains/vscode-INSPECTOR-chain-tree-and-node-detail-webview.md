@@ -1,6 +1,7 @@
 # `INSPECTOR` — Chain tree and node-detail webview contract
 
 **Document:** rules/catalyst-host-vscode-rules.md
+**Name:** chain-tree-and-node-detail-webview-contract
 **Defined:** 2026-09-05
 **Parent:** none
 **Sub-domains:** none
@@ -14,7 +15,7 @@ The behavioral guarantees `catalyst-host-vscode` makes for the read-only
 chain inspector: how the extension resolves which catalyst deployment to
 inspect for the opened project, the sidebar tree's shape, and the
 extension↔webview message contract for node detail. Consumes
-`catalyst-core`'s typed chain model and watcher (`core-CONTRACT-001`) and
+`catalyst-core`'s typed chain model and watcher (`core-CONTRACT-000001-UVqkd7cL`) and
 `catalyst-ui`'s shared React surfaces — does not redefine either.
 
 ## Relationship to other domains
