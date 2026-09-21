@@ -15,6 +15,7 @@ targets or proposes one or more rules.
 | **Domain** | `RUNMONITOR` |
 | **Feature** | `FEAT-000007-UVqkd7cL` |
 | **Steps** | *(none yet)* |
+| **Tests** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description

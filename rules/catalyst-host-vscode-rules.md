@@ -13,7 +13,7 @@ this domain consumes but does not redefine.
 - [`HEALTH`](#health) — `vscode-HEALTH-000001-UVqkd7cL`
 - [`PROPOSAL`](#proposal) — `vscode-PROPOSAL-000001-UVqkd7cL`, `vscode-PROPOSAL-000002-UVqkd7cL`
 - [`RUNMONITOR`](#runmonitor) — `vscode-RUNMONITOR-000001-UVqkd7cL`
-- [`ONBOARDING`](#onboarding) — `vscode-ONBOARDING-000001-UVqkd7cL`
+- [`ONBOARDING`](#onboarding) — `vscode-ONBOARDING-000001-UVqkd7cL`, `vscode-ONBOARDING-000002-UVqkd7cL`
 - [`AGENT`](#agent) — `vscode-AGENT-000001-UVqkd7cL`
 
 ## `INSPECTOR`
@@ -38,19 +38,27 @@ than one, the root instead shows one collapsible entry per deployment,
 named after its workspace folder, each expanding into its own six
 sections. A requirement with at least one `STEP-NNNNNN` pointing at it
 (resolved via the chain model's reverse edges) becomes expandable,
-listing its own steps as children — the only node kind in this tree
-with children today. Selecting a node opens a `WebviewPanel` —
+listing its own steps as children. The Dev Artifacts section also gains
+a nested **Tests** sub-section: each `TEST-NNNNNN` renders with its own
+passing/failing/blocked/proposed status glyph and a dedicated icon, and
+— independently of that sub-section — is also nested under both its
+parent requirement and its parent step wherever its own
+`Requirements`/`Steps` fields name one, the same reverse-edge
+resolution the requirement/step nesting above already uses
+(many-to-many: a test can appear under more than one parent, or under
+none). Selecting a node opens a `WebviewPanel` —
 `catalyst-ui`'s bundled React surface — showing that node's own fields
 plus what it's justified by (upstream) and what it produces
 (downstream, which is how a requirement's steps also surface in its own
-detail view); the underlying command carries which deployment the node
-came from, since node ids are only unique within one corpus. Read-only:
-no editing, no live-pushed webview updates (reopening the panel
-refreshes it). A folder with no resolvable catalyst deployment is
-handled by `vscode-ONBOARDING-000001-UVqkd7cL` instead of staying
-silent. Targeted by `REQ-000002-UVqkd7cL`, extended by
-`REQ-000008-UVqkd7cL` for multi-root and `REQ-000010-UVqkd7cL` for
-steps.
+detail view, and equally how a test's own `Requirements`/`Steps` links
+surface it under each parent's downstream list); the underlying command
+carries which deployment the node came from, since node ids are only
+unique within one corpus. Read-only: no editing, no live-pushed webview
+updates (reopening the panel refreshes it). A folder with no resolvable
+catalyst deployment is handled by `vscode-ONBOARDING-000001-UVqkd7cL`
+instead of staying silent. Targeted by `REQ-000002-UVqkd7cL`, extended
+by `REQ-000008-UVqkd7cL` for multi-root, `REQ-000010-UVqkd7cL` for
+steps, and `REQ-000011-UVqkd7cL` for tests.
 
 Implemented: `packages/catalyst-core/src/discover.ts` (corpus
 resolution) plus `watchCorpus`'s `{ model, report, proposals, runs }`
@@ -71,12 +79,16 @@ single-folder code called a global `collection.clear()`, which would
 have wiped every other deployment's diagnostics the moment any one
 watcher fired). Steps specifically: `ChainInspectorProvider`'s
 `hasStepChildren`/`stepChildrenFor` resolve a requirement's own steps
-from `model.reverseEdges` — the tree's only parent/child nesting
-between two real `ChainNode`s today — rendered through the same generic
+from `model.reverseEdges` — rendered through the same generic
 `"node"` tree-item shape every other kind already uses, no new
-`InspectorTreeItem` variant needed. Tested: `npm run lint`, `npm run
-format:check`, `npm run typecheck`, `npm test` (73 tests in this
-package, 294 across every workspace) all exit zero;
+`InspectorTreeItem` variant needed; the same reverse-edge mechanism now
+also nests a `TEST-NNNNNN` under both its parent requirement and its
+parent step (many-to-many, so a test can appear under more than one
+parent, or under none), and the Dev Artifacts tree gains a dedicated
+"Tests" sub-section with its own passing/failing/blocked/proposed
+status glyph and icon. Tested: `npm run lint`, `npm run
+format:check`, `npm run typecheck`, `npm test` (79 tests in this
+package, 309 across every workspace) all exit zero;
 `extension.ts` itself stays a thin, untested glue layer over the real
 `vscode` API, same deliberate deferral as always — no real multi-root
 Extension Host was launched this session, so the tree-grouping and
@@ -253,6 +265,40 @@ Verified end-to-end against this machine's own real directory layout
 real project root correctly found the real `catalyst` framework
 checkout cloned beside it and produced a well-formed instantiation
 prompt naming both real paths.
+
+### `vscode-ONBOARDING-000002-UVqkd7cL` Offer to sync, and warn below a minimum, when a deployment resolves but is outdated
+
+✅ working. Distinct from `vscode-ONBOARDING-000001-UVqkd7cL` (which
+only covers *no resolvable deployment*): when a workspace folder's
+`*.catalyst` pointer *does* resolve, but its framework `version.txt` is
+behind `MAX_COMPATIBLE_FRAMEWORK_VERSION` (the highest framework
+version this extension build has been verified against), it offers a
+`/sync-framework` action the same dismissible way
+`vscode-ONBOARDING-000001-UVqkd7cL` offers an install prompt — nothing
+runs until the user explicitly clicks "Sync now." Below
+`catalyst-core`'s own declared `REQUIRED_FRAMEWORK_VERSION`
+(`core-CONTRACT-000001-UVqkd7cL`, item 6) the same notification's
+wording says so explicitly — parsing may actually be wrong there, not
+just missing newer sections — but it's still exactly one notification
+either way, never two popups for what's really one situation, and
+still advisory: a dismissible offer, never a hard refusal to activate.
+Targeted by `REQ-000012-UVqkd7cL`; the underlying sync-offer mechanism
+itself predates this rule's own existence (built prior to this
+deployment's own rule-writing catching up to it) and is retroactively
+documented here for the first time alongside the new minimum-version
+half.
+
+Implemented: `packages/catalyst-host-vscode/src/extension.ts`'s
+`offerToSyncFramework` (the `showInformationMessage`/dismissal glue,
+same `context.workspaceState` tracking pattern as `offerToInstall`),
+consuming `catalyst-core`'s `compareVersions`/
+`meetsRequiredFrameworkVersion`/`REQUIRED_FRAMEWORK_VERSION`/
+`MAX_COMPATIBLE_FRAMEWORK_VERSION` (the last is this extension's own
+constant, not `catalyst-core`'s). Tested: `npm run lint`, `npm run
+format:check`, `npx tsc --build --force`, `npm test` (79 tests in
+`catalyst-host-vscode`, unaffected — `offerToSyncFramework` has no
+direct unit tests, it's `vscode`-API-bound same as the rest of
+`extension.ts`) all exit zero.
 
 ## `AGENT`
 

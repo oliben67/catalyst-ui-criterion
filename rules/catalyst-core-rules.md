@@ -30,19 +30,37 @@ dangling references are inherently cross-cutting checks, not per-file
 ones; (3) a file watcher that debounces/coalesces changes in a
 150–200ms trailing window and uses single-flight cancellation, so a
 change landing mid-parse aborts and restarts rather than queuing; (4)
-`STEP-NNNNNN` parsing (framework 0.29.0, `Rules-of-Rules.md` §21) — a
-step names exactly one parent requirement via its `Requirement` field,
-resolved into a graph edge and validated by the same generic
-dangling-reference/orphan checks every other typed cross-reference
-already gets. Targeted by `REQ-000001-UVqkd7cL`, extended by
-`REQ-000010-UVqkd7cL` for step parsing.
+`STEP-NNNNNN` parsing (framework 0.29.0, `Rules-of-Rules.md` §21,
+widened at 0.31.0) — a step names exactly one parent, a requirement or
+a bug, via its `Parent` field (a legacy `Requirement` field is read as
+a fallback for a corpus that hasn't run that rename yet), resolved into
+a graph edge and validated by the same generic dangling-reference/
+orphan checks every other typed cross-reference already gets; (5)
+`TEST-NNNNNN` parsing (framework 0.30.0, `Rules-of-Rules.md` §22) — a
+fourth `DevArtifactType` (`"test"`, alongside `bug`/`req`/`hk`), reading
+`tests/tests.md` + `tests/*.md` with `requirements`/`steps` optional
+array fields on `DevArtifactNode` populated from a test's own
+`Requirements`/`Steps` fields; `graph.ts` resolves each into a forward
+edge from the test toward whichever `REQ-`/`STEP-` it names, validated
+by the same generic dangling-reference checks every other typed
+cross-reference already gets — no bespoke validator logic needed; (6)
+a declared minimum framework version this protocol can correctly
+parse — `REQUIRED_FRAMEWORK_VERSION`, a version specifier (`">=0.31.0"`,
+described the same way a `uv.lock`'s `requires-python` field states its
+own floor) evaluated via `parseVersionSpecifier`/
+`satisfiesVersionSpecifier`/`meetsRequiredFrameworkVersion`, the last of
+which treats an unreadable `version.txt` as satisfying the requirement
+rather than a false failure. Targeted by `REQ-000001-UVqkd7cL`,
+extended by `REQ-000010-UVqkd7cL` for step parsing,
+`REQ-000011-UVqkd7cL` for test parsing and the `Parent` rename, and
+`REQ-000012-UVqkd7cL` for the minimum-version declaration.
 
-Implemented: `packages/catalyst-core/src/{types,ids,parser,graph,validator,watcher,cli,index}.ts`,
+Implemented: `packages/catalyst-core/src/{types,ids,parser,graph,validator,watcher,versioning,discover,cli,index}.ts`,
 tests under `src/test/`. Protocol types (`ChainNode`, `ChainModel`,
 `ValidationReport`, ...) published from `index.ts`. Ships as a CLI —
 `catalyst-core <corpusRoot> [--watch] [--json]` — printing the
 validation report and exiting non-zero on error-severity issues.
-Tested: `npm run lint`, `npm run typecheck`, `npm test` (181 tests) all
+Tested: `npm run lint`, `npm run typecheck`, `npm test` (203 tests) all
 exit zero; the built CLI run against this deployment's own real corpus
 reports 36 nodes, 0 errors; a synthetic 5× corpus (250 rules/domains/
 requirements) parses, models, and validates in under 100ms (roadmap

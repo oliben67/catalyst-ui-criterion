@@ -15,6 +15,7 @@ targets or proposes one or more rules.
 | **Domain** | `PROPOSAL` |
 | **Feature** | `FEAT-000004-UVqkd7cL` |
 | **Steps** | *(none yet)* |
+| **Tests** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description

@@ -9,6 +9,7 @@
 | **Status** | done |
 | **Opened** | 2026-09-19 |
 | **Closed** | 2026-09-19 |
+| **Tests** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description

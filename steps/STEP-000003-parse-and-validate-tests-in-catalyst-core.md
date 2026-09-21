@@ -1,0 +1,56 @@
+# `STEP-000003-UVqkd7cL` — Parse and validate tests in catalyst-core
+
+| Field | Value |
+|---|---|
+| **ID** | `STEP-000003-UVqkd7cL` |
+| **Name** | `parse-and-validate-tests-in-catalyst-core` |
+| **Filename** | `STEP-000003-parse-and-validate-tests-in-catalyst-core.md` |
+| **Parent** | `REQ-000011-UVqkd7cL` |
+| **Status** | done |
+| **Opened** | 2026-09-19 |
+| **Closed** | 2026-09-19 |
+| **Tests** | `TEST-000001-UVqkd7cL` |
+| **Signed-off-by** | Olivier Steck |
+
+## Description
+
+Give `catalyst-core` a fourth `DevArtifactType` (`"test"`), teach the
+parser to read `tests/tests.md` + `tests/*.md`, and wire a test's
+`Requirements`/`Steps` fields into the graph and validator — the
+data-model half of `REQ-000011-UVqkd7cL`, the same split
+`STEP-000001-UVqkd7cL` used for `STEP-`.
+
+## Actions performed
+
+- `packages/catalyst-core/src/types.ts`: added `"test"` to
+  `DevArtifactType`, and `requirements`/`steps` optional array fields on
+  `DevArtifactNode` to carry a test's own `Requirements`/`Steps` links.
+- `packages/catalyst-core/src/parser.ts`: taught the dev-artifact parser
+  to read `tests/tests.md` + `tests/*.md` as the fourth `DevArtifactType`,
+  reading a test's `Requirements`/`Steps` fields into the new array
+  fields, modeled on the existing `bug`/`req`/`hk` parsing path.
+- `packages/catalyst-core/src/graph.ts`: added forward edges from a test
+  node to whichever `REQ-`/`STEP-` its `requirements`/`steps` fields
+  name, mirroring the existing dev-artifact/roadmap/step edge-building
+  blocks.
+- `packages/catalyst-core/src/validator.ts`: no bespoke check needed
+  beyond what already exists — the generic `dangling-reference` check
+  already catches an unresolvable `Requirements`/`Steps` id, since both
+  fields are backtick-quoted and already matched by the existing
+  dev-artifact id regex.
+- Added test coverage: `packages/catalyst-core/src/test/parser.test.ts`,
+  `graph.test.ts`, and `validator.test.ts` — parsing a test with/without
+  `Requirements`/`Steps`, forward-edge resolution toward named
+  requirements/steps, and dangling-reference detection for an
+  unresolvable id.
+
+## Verification
+
+`npx tsc --build --force` clean; `npx vitest run` in
+`packages/catalyst-core`: 189/189 passing (181 pre-existing + 8 new,
+zero regressions).
+
+## Related
+
+`STEP-000004-UVqkd7cL` (the display half, in `catalyst-host-vscode`/
+`catalyst-ui`).

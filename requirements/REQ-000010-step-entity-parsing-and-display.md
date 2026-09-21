@@ -14,6 +14,7 @@ targets or proposes one or more rules.
 | **Targets** | `core-CONTRACT-000001-UVqkd7cL`, `vscode-INSPECTOR-000001-UVqkd7cL` |
 | **Domain** | `INSPECTOR` |
 | **Steps** | `STEP-000001-UVqkd7cL`, `STEP-000002-UVqkd7cL` |
+| **Tests** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 
 ## Description
