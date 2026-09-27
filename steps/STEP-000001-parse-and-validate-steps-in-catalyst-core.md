@@ -5,7 +5,7 @@
 | **ID** | `STEP-000001-UVqkd7cL` |
 | **Name** | `parse-and-validate-steps-in-catalyst-core` |
 | **Filename** | `STEP-000001-parse-and-validate-steps-in-catalyst-core.md` |
-| **Requirement** | `REQ-000010-UVqkd7cL` |
+| **Parent** | `REQ-000010-UVqkd7cL` |
 | **Status** | done |
 | **Opened** | 2026-09-19 |
 | **Closed** | 2026-09-19 |

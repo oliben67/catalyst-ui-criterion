@@ -5,7 +5,7 @@
 | **ID** | `STEP-000002-UVqkd7cL` |
 | **Name** | `display-steps-in-the-chain-inspector` |
 | **Filename** | `STEP-000002-display-steps-in-the-chain-inspector.md` |
-| **Requirement** | `REQ-000010-UVqkd7cL` |
+| **Parent** | `REQ-000010-UVqkd7cL` |
 | **Status** | done |
 | **Opened** | 2026-09-19 |
 | **Closed** | 2026-09-19 |

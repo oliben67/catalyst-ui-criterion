@@ -18,7 +18,7 @@ ACCESS-CONTROL.md       Per-role read/write rights reference (from
 Taskfile.common.yml     Thin task dispatch per CODE-OF-CONDUCT.md §4 command,
                          included by catalyst-ui's root Taskfile.yml
 modules/
-  software-engineering/   The active process module (v2.0.0), whole release tree
+  software-engineering/   The active process module (v2.1.0), whole release tree
 rules/
   Rules-of-Rules.md      Meta-rules governing this deployment's rules
   rules.md                Global rule index

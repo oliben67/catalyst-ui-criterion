@@ -31,6 +31,7 @@ Global index of every rule document and rule ID in this deployment. Per
 - `vscode-PROPOSAL-000002-UVqkd7cL` — Authoring composer
 - `vscode-RUNMONITOR-000001-UVqkd7cL` — Live run checklist and ledger
 - `vscode-ONBOARDING-000001-UVqkd7cL` — Offer to install catalyst when no deployment is found
+- `vscode-ONBOARDING-000002-UVqkd7cL` — Offer to sync, and warn below a minimum, when a deployment resolves but is outdated
 - `vscode-AGENT-000001-UVqkd7cL` — Run catalyst slash commands via a per-project agent terminal
 - `electron-DESKTOP-000001-UVqkd7cL` — Multi-project tracking, persistent watch, and graph view
 - `electron-AGENTWINDOW-000001-UVqkd7cL` — Run catalyst slash commands via a per-project agent window

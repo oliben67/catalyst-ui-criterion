@@ -163,6 +163,13 @@ tasks:
     cmds:
       - '{{.AGENT_CMD}} "/help {{.CLI_ARGS}}"'
 
+  # Not a slash command: a direct pass-through to the catalyst CLI
+  # (framework/kernel/CLI.md), vendored at .criterion/bin/catalyst.pyz.
+  catalyst:
+    desc: "Run the catalyst CLI: task catalyst -- <args>"
+    cmds:
+      - python3 .criterion/bin/catalyst.pyz {{.CLI_ARGS}}
+
   # ---- From module software-engineering (its Taskfile.module.yml, MODULE-SPECIFICATION.md §6.5) ----
 
   create-bug:
