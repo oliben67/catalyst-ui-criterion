@@ -1,0 +1,62 @@
+# `STEP-000004-UVqkd7cL` — Display tests in the Chain Inspector
+
+| Field | Value |
+|---|---|
+| **ID** | `STEP-000004-UVqkd7cL` |
+| **Name** | `display-tests-in-the-chain-inspector` |
+| **Filename** | `STEP-000004-display-tests-in-the-chain-inspector.md` |
+| **Requirement** | `REQ-000011-UVqkd7cL` |
+| **Status** | done |
+| **Opened** | 2026-09-19 |
+| **Closed** | 2026-09-19 |
+| **Tests** | `TEST-000001-UVqkd7cL` |
+| **Signed-off-by** | Olivier Steck |
+
+## Description
+
+Surface `TEST-NNNNNN` dev-artifact nodes (from `STEP-000003-UVqkd7cL`) in
+the VS Code Chain Inspector: a "Tests" sub-section under "Dev Artifacts",
+a passing/failing/blocked/proposed status glyph, a dedicated icon, and
+nesting under both a test's parent requirement and its parent step — the
+UI half of `REQ-000011-UVqkd7cL`.
+
+## Actions performed
+
+- `packages/catalyst-host-vscode/src/tree.ts`: added a nested "Tests"
+  sub-section under the "Dev Artifacts" section grouping, and a
+  dedicated status-glyph branch for a test's
+  passing/failing/blocked/proposed status (the generic dev-artifact
+  fallback didn't distinguish these).
+- `packages/catalyst-host-vscode/src/extension.ts`: added a dedicated
+  icon for the `"test"` dev-artifact kind, and extended
+  `ChainInspectorProvider`'s requirement/step child-resolution methods
+  (`hasStepChildren`/`stepChildrenFor`-style helpers) to also resolve a
+  test's parent requirement and parent step via `model.reverseEdges`, so
+  a test nests under both wherever it names them (many-to-many — a test
+  can appear under more than one parent, or under none), wired into
+  `getTreeItem` (collapsible state) and `getChildren`.
+- New icon: a dedicated glyph for the `test` dev-artifact kind, matching
+  the pattern `STEP-000002-UVqkd7cL` set for `step`.
+- `packages/catalyst-ui`: `NodeDetail.tsx`'s generic field/section
+  rendering already renders a test's own detail view, and `<NodeList>`
+  (`upstream`/`downstream`) already lists a test under its parent
+  requirement's/step's "Produces (downstream)" once the graph edge
+  exists — one added `NodeDetail` test case confirms this for a test
+  node specifically.
+- Added test coverage: `packages/catalyst-host-vscode/src/test/tree.test.ts`,
+  `treeLabel.test.ts`, and `detail.test.ts` (Tests sub-section grouping,
+  status glyph/icon rendering, and a requirement's/step's downstream
+  list including a linked test, resolved via `reverseEdges`); one case
+  in `catalyst-ui`'s `NodeDetail.test.ts`.
+
+## Verification
+
+`npx tsc --build --force` clean across every workspace; full monorepo
+`npm test`: `catalyst-core` 189/189, `catalyst-host-electron` 16/16
+(unaffected), `catalyst-host-vscode` 79/79 (73 pre-existing + 6 new),
+`catalyst-ui` 25/25 (24 pre-existing + 1 new) — 309 total, zero
+regressions. `npm run lint` clean.
+
+## Related
+
+`STEP-000003-UVqkd7cL` (the parsing half, in `catalyst-core`).

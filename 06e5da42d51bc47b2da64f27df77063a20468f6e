@@ -1,0 +1,36 @@
+# catalyst-host-vscode rules
+
+Product behavior rules for `packages/catalyst-host-vscode` — the VS Code
+extension adapting `catalyst-core`'s protocol to a sidebar tree and a
+node-detail webview, and `packages/catalyst-ui`'s shared React surface
+mounted inside that webview. Distinct from `catalyst-core-rules.md`
+(prefix `core`), which governs the corpus parser/model/validator/watcher
+this domain consumes but does not redefine.
+
+## Contents
+
+- [`INSPECTOR`](#inspector) — `vscode-INSPECTOR-001`
+
+## `INSPECTOR`
+
+> **Domain:** `INSPECTOR` — see [domains/vscode-INSPECTOR-chain-tree-and-node-detail-webview.md](domains/vscode-INSPECTOR-chain-tree-and-node-detail-webview.md).
+
+### `vscode-INSPECTOR-001` Read-only chain tree and node-detail webview
+
+❌ not yet implemented. The extension resolves which catalyst deployment
+to inspect from the opened project's own `<name>.catalyst` pointer file
+(`agent-source` field), watches it via `catalyst-core`'s `watchCorpus`,
+and exposes a sidebar `TreeDataProvider` grouping the chain model's nodes
+by layer: dev artifacts, rules, rules of rules (rules whose id starts
+`rr-`), domains, features (work items excluded — none active in this
+deployment). Selecting a node opens a `WebviewPanel` — `catalyst-ui`'s
+bundled React surface — showing that node's own fields plus what it's
+justified by (upstream, via the chain model's resolved edges) and what
+it produces (downstream, via reverse edges). Read-only: no editing, no
+live-pushed webview updates (reopening the panel refreshes it). No
+catalyst deployment found for the opened project is a graceful empty
+state, not an error. Targeted by `REQ-000002`.
+
+## Known Bugs — Quick Index
+
+*(none yet — no implementation exists to have found bugs in)*

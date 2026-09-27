@@ -1,0 +1,12 @@
+{
+  "users": [
+    {
+      "name": "Olivier Steck",
+      "roles": ["Admin"],
+      "registered": "2026-09-05",
+      "active": true,
+      "notes": "",
+      "userid": "UVqkd7cL"
+    }
+  ]
+}

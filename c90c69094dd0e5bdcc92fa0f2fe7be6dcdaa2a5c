@@ -1,0 +1,50 @@
+# `REQ-000007-UVqkd7cL` — Run monitor
+
+A requirement stands on its own: vetted against every existing rule
+document before being opened, always carries a `Domain`, and always
+targets or proposes one or more rules.
+
+| Field | Value |
+|---|---|
+| **ID** | `REQ-000007-UVqkd7cL` |
+| **Name** | `run-monitor` |
+| **Filename** | `REQ-000007-run-monitor.md` |
+| **Status** | done |
+| **Opened** | 2026-09-06 |
+| **Targets** | `core-CONTRACT-000003-UVqkd7cL`, `vscode-RUNMONITOR-000001-UVqkd7cL` |
+| **Domain** | `RUNMONITOR` |
+| **Feature** | `FEAT-000007-UVqkd7cL` |
+| **Steps** | *(none yet)* |
+| **Signed-off-by** | Olivier Steck |
+
+## Description
+
+Implement `catalyst-core`'s run-state parsing (`core-CONTRACT-000003-UVqkd7cL`) and
+`catalyst-host-vscode`'s live "Runs" tree section (`vscode-RUNMONITOR-
+001`), completing the roadmap's last surface.
+
+## Acceptance
+
+- `catalyst-core` parses `runs/*.md` into a typed list (id, status,
+  command, started, a checklist of glyph-parsed steps, a ledger),
+  included in `watchCorpus`'s update alongside the model, validation
+  report, and proposals.
+- An unrecognized checklist-line prefix is skipped, not thrown on — the
+  parser stays tolerant of agent-authored content it doesn't control,
+  same posture as every other parser in this package.
+- `hasDrift(run)` is `true` iff any step's status is `drift`.
+- The chain inspector tree shows a "Runs (N)" section; its label
+  carries a visible `⚠️` marker whenever any run has drift, updating
+  live as the watcher picks up the agent's own file edits — the
+  concrete form of "a drift event is visible in the UI before the run
+  completes."
+- Read-only: the extension never creates or edits a run file.
+
+## Notes
+
+Targets two rules, same split as `REQ-000004-UVqkd7cL`: `core-CONTRACT-000003-UVqkd7cL` (the
+parsing is real, independent core infrastructure — any future host
+wants the same `Run`/`hasDrift` shape) and `vscode-RUNMONITOR-000001-UVqkd7cL` (the
+VS Code UI built on top of it). Unlike `REQ-000004-UVqkd7cL`/`REQ-000005-UVqkd7cL`, there
+is no write-path rule here — a run is never authored by this deployment's
+own UI.

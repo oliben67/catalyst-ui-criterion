@@ -1,0 +1,60 @@
+# catalyst-host-vscode rules
+
+Product behavior rules for `packages/catalyst-host-vscode` — the VS Code
+extension adapting `catalyst-core`'s protocol to a sidebar tree and a
+node-detail webview, and `packages/catalyst-ui`'s shared React surface
+mounted inside that webview. Distinct from `catalyst-core-rules.md`
+(prefix `core`), which governs the corpus parser/model/validator/watcher
+this domain consumes but does not redefine.
+
+## Contents
+
+- [`INSPECTOR`](#inspector) — `vscode-INSPECTOR-001`
+
+## `INSPECTOR`
+
+> **Domain:** `INSPECTOR` — see [domains/vscode-INSPECTOR-chain-tree-and-node-detail-webview.md](domains/vscode-INSPECTOR-chain-tree-and-node-detail-webview.md).
+
+### `vscode-INSPECTOR-001` Read-only chain tree and node-detail webview
+
+✅ working. The extension resolves which catalyst deployment to inspect
+from the opened project's own `<name>.catalyst` pointer file
+(`agent-source` field), watches it via `catalyst-core`'s `watchCorpus`,
+and exposes a sidebar `TreeDataProvider` grouping the chain model's nodes
+by layer: dev artifacts, rules, rules of rules (rules whose id starts
+`rr-`), domains, features (work items excluded — none active in this
+deployment). Selecting a node opens a `WebviewPanel` — `catalyst-ui`'s
+bundled React surface — showing that node's own fields plus what it's
+justified by (upstream, via the chain model's resolved edges) and what
+it produces (downstream, via reverse edges). Read-only: no editing, no
+live-pushed webview updates (reopening the panel refreshes it). No
+catalyst deployment found for the opened project is a graceful empty
+state, not an error. Targeted by `REQ-000002`.
+
+Implemented: `packages/catalyst-core/src/discover.ts` (corpus
+resolution) plus `watchCorpus`'s extended `{ model, report }` callback
+and the `NodeDetailPayload` protocol type; `packages/catalyst-host-
+vscode/src/{tree,detail,extension}.ts` (sidebar tree, webview payload
+builder, real `activate()`); `packages/catalyst-ui/src/{NodeDetail.tsx,
+webview-entry.tsx}` (the mounted React surface, bundled via `esbuild`
+into `dist/webview.js`). Tested: `npm run lint`, `npm run format:check`,
+`npm run typecheck`, `npm test` (56 tests: Vitest for catalyst-core/
+catalyst-ui, Mocha for catalyst-host-vscode's `tree.ts`/`detail.ts`)
+all exit zero. `extension.ts` itself stays a thin, untested glue layer
+over the real `vscode` API — full `@vscode/test-electron` integration
+testing is deliberately deferred, the devDependency stays in place.
+Verified end-to-end against this deployment's own real corpus (not just
+fixtures): 40 nodes resolved and correctly grouped into all five
+sections; a real bug this caught and fixed — a node's own backtick-quoted
+`**ID**` field was read back as a self-reference, creating a self-loop
+in the chain model — is covered by a regression test in `catalyst-core`.
+Known, accepted characteristic (not a bug): a rule or feature whose own
+prose says "Targeted by `REQ-X`" creates a real mutual citation with
+that requirement's `Targets`/`Feature` field, so such a node can
+legitimately appear in both a requirement's upstream and downstream
+lists — already true of Phase 1's docs, just newly visible now that a
+node's neighbors are actually rendered.
+
+## Known Bugs — Quick Index
+
+*(none yet — no implementation exists to have found bugs in)*

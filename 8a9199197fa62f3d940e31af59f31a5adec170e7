@@ -1,0 +1,37 @@
+# catalyst-host-electron rules
+
+Product behavior rules for `packages/catalyst-host-electron` — the
+Electron desktop host adapting `catalyst-core`'s protocol to a
+multi-project shell and a graph view, and `packages/catalyst-ui`'s
+shared React surface mounted inside its renderer. Distinct from
+`catalyst-host-vscode-rules.md` (prefix `vscode`), which governs the VS
+Code extension's own equivalent surface — the two hosts are siblings,
+neither amends the other.
+
+## Contents
+
+- [`DESKTOP`](#desktop) — `electron-DESKTOP-001`
+
+## `DESKTOP`
+
+> **Domain:** `DESKTOP` — see [domains/electron-DESKTOP-multi-project-host-and-graph-view.md](domains/electron-DESKTOP-multi-project-host-and-graph-view.md).
+
+### `electron-DESKTOP-001` Multi-project tracking, persistent watch, and graph view
+
+❌ not yet implemented. The Electron app tracks a persisted list of
+projects (each resolved to its own corpus root the same way
+`catalyst-host-vscode` resolves one), running one `watchCorpus`
+instance per tracked project concurrently — not just the single
+project a VS Code window happens to have open. Selecting a project
+shows a graph view of its chain model (nodes grouped by layer, laid out
+deterministically rather than via a physics simulation) and, for a
+selected node, the same `NodeDetail` component `catalyst-host-vscode`
+mounts in its webview, imported unchanged from `catalyst-ui`. Read-only
+— no proposal creation or authoring composer in this phase; that reuses
+`catalyst-core`'s existing proposal-loop infrastructure
+(`core-CONTRACT-002`) later, not redefined here. Targeted by
+`REQ-000006`.
+
+## Known Bugs — Quick Index
+
+*(none yet — no implementation exists to have found bugs in)*

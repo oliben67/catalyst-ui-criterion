@@ -1,0 +1,24 @@
+# Rules index
+
+Global index of every rule document and rule ID in this deployment. Per
+`Rules-of-Rules.md` §5, no rule is valid unless listed here.
+
+## Rule documents
+
+| Prefix | Document | Domains |
+|---|---|---|
+| `env` | [`dev-environment-rules.md`](dev-environment-rules.md) | `RUNTIME`, `LAYOUT`, `DEPS`, `STYLE`, `TEST`, `CI`, `DX` |
+| `core` | [`catalyst-core-rules.md`](catalyst-core-rules.md) | `CONTRACT` |
+| `vscode` | [`catalyst-host-vscode-rules.md`](catalyst-host-vscode-rules.md) | `INSPECTOR` |
+
+## Rule IDs
+
+- `env-RUNTIME-001` — Language and runtime
+- `env-LAYOUT-001` — npm workspaces monorepo
+- `env-DEPS-001` — Locked, ordinary semver dependencies
+- `env-STYLE-001` — ESLint + Prettier
+- `env-TEST-001` — Vitest for core/UI; VS Code's own harness for the VS Code host
+- `env-CI-001` — GitHub Actions gate: lint, typecheck, test
+- `env-DX-001` — Pinned Node version, no devcontainer yet
+- `core-CONTRACT-001` — Typed chain model, global validation, watched changes
+- `vscode-INSPECTOR-001` — Read-only chain tree and node-detail webview

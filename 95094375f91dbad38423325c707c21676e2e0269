@@ -1,0 +1,48 @@
+# catalyst-core rules
+
+Product behavior rules for `packages/catalyst-core` — the parser, typed
+chain model, global validator, and file watcher every other package
+(the two hosts, `catalyst-ui`) consumes through its message protocol.
+Distinct from `dev-environment-rules.md` (prefix `env`), which governs
+tooling/process, not product behavior — greenfield instantiation's
+tooling layer never substitutes for this
+(`development-framework/INSTANTIATION-GUIDE.md` §3 step 5, catalyst
+repository).
+
+## Contents
+
+- [`CONTRACT`](#contract) — `core-CONTRACT-001`
+
+## `CONTRACT`
+
+> **Domain:** `CONTRACT` — see [domains/core-CONTRACT-parser-model-validator-watcher.md](domains/core-CONTRACT-parser-model-validator-watcher.md).
+
+### `core-CONTRACT-001` Typed chain model, global validation, watched changes
+
+✅ working. `catalyst-core` exposes a single message protocol (defined
+once, before any host exists) covering: (1) a typed chain model
+connecting dev artifacts → rules → rules of rules, built from a full
+reparse of the corpus (work items excluded — no project-management
+plugin is active in this deployment, so `work-items/` doesn't exist);
+(2) global validation that runs on every reparse, never incrementally —
+orphaned artifacts, rules without meta-rule backing, ID reuse, and
+dangling references are inherently cross-cutting checks, not per-file
+ones; (3) a file watcher that debounces/coalesces changes in a
+150–200ms trailing window and uses single-flight cancellation, so a
+change landing mid-parse aborts and restarts rather than queuing.
+Targeted by `REQ-000001`.
+
+Implemented: `packages/catalyst-core/src/{types,ids,parser,graph,validator,watcher,cli,index}.ts`,
+tests under `src/test/`. Protocol types (`ChainNode`, `ChainModel`,
+`ValidationReport`, ...) published from `index.ts`. Ships as a CLI —
+`catalyst-core <corpusRoot> [--watch] [--json]` — printing the
+validation report and exiting non-zero on error-severity issues.
+Tested: `npm run lint`, `npm run typecheck`, `npm test` (41 tests) all
+exit zero; the built CLI run against this deployment's own real corpus
+reports 36 nodes, 0 errors; a synthetic 5× corpus (250 rules/domains/
+requirements) parses, models, and validates in under 100ms (roadmap
+Phase 1's own exit criterion).
+
+## Known Bugs — Quick Index
+
+*(none yet — no implementation exists to have found bugs in)*
