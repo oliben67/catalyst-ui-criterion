@@ -1,4 +1,4 @@
-# Written by `catalyst criterion create`. Runs the catalyst gates on every
+# Written by `catalyst criterion create` (rewritten by it while this line stays). Runs the catalyst gates on every
 # pull request against the shared branch: branch protection
 # (`catalyst criterion protect`) requires this check to pass.
 name: catalyst
@@ -17,6 +17,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: fetch the journal's pinned blobs
+        run: |
+          # a brand-new repository has no pins yet; any other failure fails
+          if git ls-remote --exit-code origin refs/catalyst/journal >/dev/null; then
+            git fetch origin refs/catalyst/journal:refs/catalyst/journal
+          fi
       - name: catalyst check
         run: python3 bin/catalyst.pyz --working-copy . check
       - name: nothing recorded was lost in the merge

@@ -5,7 +5,6 @@ development/journal.jsonl merge=union
 features/features.md merge=union
 reconciliations/reconciliations.md merge=union
 requirements/requirements.md merge=union
-rules/rules.md merge=union
 steps/steps.md merge=union
 tests/tests.md merge=union
 workflows/workflows.md merge=union
