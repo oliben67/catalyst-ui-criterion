@@ -6,3 +6,4 @@
 | v2 | `TEMPLATE-REQUIREMENT-v2.md` | 2026-09-18 | Adds `Name` field (framework 0.27.0). |
 | v3 | `TEMPLATE-REQUIREMENT-v3.md` | 2026-09-19 | Adds `Steps` field (framework 0.29.0). |
 | v4 | `TEMPLATE-REQUIREMENT-v4.md` | 2026-09-19 | Adds `Tests` field (framework 0.30.0). |
+| v5 | `TEMPLATE-REQUIREMENT-v5.md` | 2026-09-28 | Aligned with the module's entity definition (statuses, closed states, tiers) — module 2.2.0. |

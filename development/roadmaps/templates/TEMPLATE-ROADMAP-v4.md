@@ -1,26 +1,5 @@
 # `RM-NNNNNN` roadmap — template
 
-> Copy this file to `development/roadmaps/templates/TEMPLATE-ROADMAP-v1.md`
-> on first deploy (see `INSTANTIATION-GUIDE.md` and `INVARIANTS.md`
-> INV-15, INV-20), the same way every other `TEMPLATE-<TYPE>-vN.md` seeds
-> its type. `/roadmap-add
-> <name> <file>` then copies *this* template to
-> `development/roadmaps/<name>.md` each time a new named roadmap is
-> ingested — one file per named roadmap, registered in
-> `development/roadmaps/roadmaps.md`.
->
-> Unlike the other artifact templates, a roadmap file is not filled in
-> once by a human: `/roadmap-add`/`/roadmap-update`/`/roadmap-merge` add
-> or update its `RM-NNNNNN` rows from an external source file, and
-> `/show-backlog` refreshes each row's `Status`/`Linked` columns from
-> every `FEAT-`/`REQ-` currently linked to it — `Linked` is a
-> comma-separated list, not a single ID (`Rules-of-Rules.md` §21: a
-> roadmap item of real size is expected to decompose into more than one
-> requirement). Hand-edit the `Notes` column freely; never hand-edit
-> `Status` or `Linked` — the next `/show-backlog` run overwrites them
-> from the real indexes, the same way it overwrites
-> `development/BACKLOG.md` (INV-14).
-
 **Name:** {{name — the identifier used in `/roadmap-add`/`-remove`/`-update`/`-merge`, and this file's own filename}}
 **Source:** {{the file path last ingested via `/roadmap-add` or `/roadmap-update` — `/roadmap-merge` does not change this}}
 **Added:** {{DATE}}

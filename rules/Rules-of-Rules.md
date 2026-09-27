@@ -1298,8 +1298,9 @@ currently associated with that row, comma-separated, in the order each was
 linked. Each roadmap file's `Status`/`Linked` columns mirror every one of
 those, refreshed by `/show-backlog`: `Not triaged` while nothing is linked;
 `Triaged` while only a `FEAT-NNNNNN` is linked; `In progress` once at least
-one `REQ-NNNNNN` is linked and at least one of them isn't yet `done`;
-`Done` only once **every** linked `REQ-NNNNNN` is `done` — so a roadmap
+one `REQ-NNNNNN` is linked and at least one of them isn't yet in a closed
+state (`Completed`/`Abandoned`); `Done` only once **every** linked
+`REQ-NNNNNN` is `Completed` or `Abandoned` — so a roadmap
 item's progress stays visible without becoming a second, competing source
 of truth for completion.
 
@@ -1442,8 +1443,10 @@ it inherits its parent's already-vetted rule target; a step documents
 *executing* that work, it never asserts a new behavioral claim of its
 own. A step's own `Status` (`planned`/`in-progress`/`done`/`abandoned`)
 tracks that one unit of work's completion, independent of the parent's
-own `Status` — a requirement or bug stays open/`in-progress` while its
-steps range across every status, and isn't closeable as `done`/`fixed`
+own `Status` — a requirement or bug stays open (requirement:
+`Draft`/`Proposed`/`Vetted`/`Active`; bug: `Open`/`Under Review`/`Fixed`)
+while its steps range across every status, and doesn't move to a closed
+state (requirement: `Completed`/`Abandoned`; bug: `Closed`/`WontFix`)
 (`CODE-OF-CONDUCT.md` §7) until every one of its steps is `done` or
 explicitly `abandoned` with a reason.
 

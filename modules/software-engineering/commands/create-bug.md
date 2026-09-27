@@ -1,5 +1,5 @@
 ---
-description: Create a new bug artifact and register it in bugs/bugs.md
+description: Create a new bug artifact and register it in development/bugs/bugs.md
 argument-hint: <description> [--targets <rule-id>...] [--severity Critical|High|Medium|Low]
 ---
 
@@ -18,12 +18,13 @@ Input: $ARGUMENTS
 3. Allocate the ID with `catalyst id next BUG --as <signer>` — never
    guess, compute by hand, or reuse a number.
 4. Copy the current `TEMPLATE-BUG-vN.md`, fill every field, and save as
-   `bugs/<ID>-<short-summary>.md` — never a bare ID.
-5. Register it: `catalyst index regen` rebuilds `bugs/bugs.md`.
+   `.criterion/development/bugs/<ID>-<short-summary>.md` — never a bare ID.
+   `Status: Open`; `Severity` exactly one of `Critical`/`High`/`Medium`/`Low`.
+5. Register it: `catalyst index regen` rebuilds `development/bugs/bugs.md`.
 6. Journal it: `catalyst journal append --command /create-bug --action create
-   --artifact <ID> --target <rule-id> ... --intent "<goal>" --file <each touched file>`.
-7. Report the result. Do not commit or push — leave changes unstaged
-   unless the user asks otherwise.
+   --tier fix --artifact <ID> --target <rule-id> ... --intent "<goal>" --file <each touched file>`.
+7. Report the result. Do not commit or push on your own: the working copy (`.criterion/`)
+   and the product repository are committed only with the user's assent.
 
 `catalyst <args>` is `python3 .criterion/bin/catalyst.pyz <args>`
 (`CODE-OF-CONDUCT.md` §4).

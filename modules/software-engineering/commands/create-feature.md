@@ -27,8 +27,8 @@ Input: $ARGUMENTS
 7. Journal it: `catalyst journal append --command /create-feature --action create
    --artifact <ID> --intent "<goal>" --file <each touched file>` (no
    `--target`: features are not rule-linked).
-8. Report the result. Do not commit or push — leave changes unstaged
-   unless the user asks otherwise.
+8. Report the result. Do not commit or push on your own: the working copy (`.criterion/`)
+   and the product repository are committed only with the user's assent.
 
 `catalyst <args>` is `python3 .criterion/bin/catalyst.pyz <args>`
 (`CODE-OF-CONDUCT.md` §4).

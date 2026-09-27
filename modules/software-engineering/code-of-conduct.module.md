@@ -84,9 +84,12 @@ verified). Like feature entries and roadmap items, a step is exempt from
 inherits its parent's), but unlike them it's created *during* active
 implementation, not before it: a requirement (a feature, in tier terms)
 has steps opened as its work happens and cannot close without at least
-one; a bug's steps are optional. Either one isn't closeable as
-`done`/`fixed` until every one of its steps is `done` or `abandoned`. Opened and closed as the work itself happens, not
-batched afterward, per `INVARIANTS.md` INV-29.
+one; a bug's steps are optional. Neither moves to one of its ETD's
+closed states (requirement: `Completed`/`Abandoned`; bug:
+`Closed`/`WontFix`) while any of its steps is still `planned` or
+`in-progress` — each must be `done` or `abandoned` first. Opened and
+closed as the work itself happens, not batched afterward, per
+`INVARIANTS.md` INV-29.
 
 Tests (`TEST-NNNNNN`, folder `tests/`, template `templates/test.template.md`)
 join this module's development-artifact types as of framework `0.30.0` — see
@@ -103,9 +106,9 @@ field in the same action — the mirror image of a requirement's `Steps` field.
 - Bugs, requirements, house-keeping items, and tests each follow
   `CODE-OF-CONDUCT.md` §3's individual-file and index hard rules. Their
   index files are:
-  - `bugs/bugs.md` for the bug index.
+  - `development/bugs/bugs.md` for the bug index.
   - `requirements/requirements.md` for the requirements index.
-  - `house-keeping/house-keeping.md` for the house-keeping index.
+  - `development/house-keeping/house-keeping.md` for the house-keeping index.
   - `tests/tests.md` for the test index.
   - Feature entries and steps are indexed the same way, in
     `features/features.md` and `steps/steps.md`.
@@ -184,25 +187,39 @@ Before closing a bug or requirement, ensure the corresponding entry exists in
 its individual file and is reflected in the relevant index file
 (`CODE-OF-CONDUCT.md` §7).
 
-- **Bug**: not closeable as "fixed" without its test-plan item landing,
-  **and** every `STEP-NNNNNN` in its `Steps` field is `done` or
-  `abandoned` (`Rules-of-Rules.md` `rr-META-021`).
-- **Requirement**: not closeable as "done" until the acceptance criteria and
-  rule targets are reflected in the implementation and tests, its `Steps`
-  field names at least one step (`catalyst validate` reports a closed
-  requirement without one as `closed-incomplete`), **and** every
-  `STEP-NNNNNN` in it is `done` or `abandoned` (`Rules-of-Rules.md`
-  `rr-META-021`).
-- **Step**: not closeable as "done" without its own Verification section
-  filled in; `abandoned` requires a reason there instead.
-- **House-keeping**: closeable once its stated verification passes.
-- **Test**: not closeable as "passing" without its own Actual outcome
-  section reflecting a real run; `failing`/`blocked` require the same
+Each type's Status takes exactly its entity type definition's
+`allowed_values`, and "closed" means one of its `closed_states`. Only the
+requirement's `Steps` check below is enforced by `catalyst validate`; the
+rest are this module's rules, applied by the agent and the reviewer.
+
+- **Bug** (`Open` → `Under Review` → `Fixed` → `Closed`, or `WontFix`;
+  closed states `Closed`/`WontFix`): fix-tier work, steps optional. Does not
+  move to `Closed`/`WontFix` while any `STEP-NNNNNN` in its `Steps` field is
+  not `done` or `abandoned` (`Rules-of-Rules.md` `rr-META-021`). Its Test
+  plan should name the test covering the fix before it moves to `Closed` —
+  guidance, not a tool-enforced condition.
+- **Requirement** (`Draft` → `Proposed` → `Vetted` → `Active` →
+  `Completed`, or `Abandoned`; closed states `Completed`/`Abandoned`):
+  feature-tier work. Its `Steps` field must name at least one step before
+  it closes (`required_when_closed` in its ETD — `catalyst validate`
+  reports a closed requirement without one as `closed-incomplete`), and
+  every `STEP-NNNNNN` in it is `done` or `abandoned` (`Rules-of-Rules.md`
+  `rr-META-021`). It moves to `Completed` once its acceptance criteria and
+  rule targets are reflected in the implementation; tests follow the test
+  entries of §3 and its own Test plan — guidance, not a tool-enforced
+  condition.
+- **Step** (`planned` → `in-progress` → `done`, or `abandoned`): not
+  `done` without its own Verification section filled in; `abandoned`
+  requires a reason there instead.
+- **House-keeping** (`Open` → `Completed`): `Completed` once its stated
+  verification passes.
+- **Test** (`Draft` → `Active` → `Passing`/`Failing`, or `Disabled`;
+  closed state `Passing`): not `Passing` without its own Actual outcome
+  section reflecting a real run; `Failing`/`Disabled` require the same
   section explaining why.
 
-Closing a bug, requirement, or house-keeping item as
-`wontfix`/`rejected`/`abandoned` never retires the rule(s) it targeted, and
-vice versa (`CODE-OF-CONDUCT.md` §8).
+Closing a bug as `WontFix` or a requirement as `Abandoned` never retires
+the rule(s) it targeted, and vice versa (`CODE-OF-CONDUCT.md` §8).
 
 ## 4. Slash-command entry points
 
@@ -213,7 +230,7 @@ ends with `CODE-OF-CONDUCT.md` §4's common steps: `catalyst index regen`,
 runs it.
 
 - `/create-bug` — create a new bug artifact immediately, register it in
-  `bugs/bugs.md`, and track it in the same workflow as any other bug.
+  `development/bugs/bugs.md`, and track it in the same workflow as any other bug.
 - `/create-req` or `/create-requirement` — create a new requirement artifact
   immediately, register it in `requirements/requirements.md`, and track it in
   the same workflow.
@@ -258,19 +275,21 @@ runs it.
 
 When the user enters `/create-bug: ...`, create a new bug artifact immediately
 with the ID from `catalyst id next BUG --as <signer>`, register it in
-`bugs/bugs.md` (`catalyst index regen`), and track it in the same workflow as
-any other bug. If the domain cannot be inferred from context, prompt for the
+`development/bugs/bugs.md` (`catalyst index regen`), and track it in the same
+workflow as any other bug. It starts `Status: Open` and carries exactly one
+`Severity` of `Critical`/`High`/`Medium`/`Low`. If the domain cannot be inferred from context, prompt for the
 domain and rule before creating the artifact. Journal it with
-`catalyst journal append --command /create-bug --action create`, its
-`Targets` as `--target`s.
+`catalyst journal append --command /create-bug --action create --tier fix`,
+its `Targets` as `--target`s.
 
 When the user enters `/create-req:` or `/create-requirement: ...`, create a
 new requirement artifact immediately with the ID from
 `catalyst id next REQ --as <signer>`, register it in
 `requirements/requirements.md` (`catalyst index regen`), and track it in the
-same workflow. If the domain or target rule cannot be inferred, prompt for
-both before creating the artifact. Journal it with
-`catalyst journal append --action create`, its `Targets` as `--target`s.
+same workflow. It starts `Status: Draft`. If the domain or target rule
+cannot be inferred, prompt for both before creating the artifact. Journal it
+with `catalyst journal append --action create --tier feature`, its `Targets`
+as `--target`s.
 
 When the user enters `/create-test: ...`, create a new test artifact
 immediately using `templates/test.template.md` and the ID from
@@ -285,8 +304,8 @@ each named requirement's/step's own `Tests` field (creating that field if this
 is its first test); if `<REQ-id>`/`<STEP-id>` doesn't resolve to an existing
 artifact, refuse with a clear message rather than citing a dangling id. Both
 fields are optional — a test naming neither is valid as long as
-`Targets`/`Domain` are still set. Journal it with
-`catalyst journal append --action create`, covering the test file, every
+`Targets`/`Domain` are still set. It starts `Status: Draft`. Journal it with
+`catalyst journal append --action create --tier feature`, covering the test file, every
 requirement/step file whose `Tests` field changed, and the regenerated
 indexes.
 
@@ -322,7 +341,8 @@ target — neither field exists on this artifact type; it inherits
 `<REQ-id|BUG-id>`'s own `Targets`/`Domain`. New steps start `Status:
 planned` unless the user says
 work is already underway, in which case `in-progress`. Journal it with
-`catalyst journal append --action create`, covering the step file, the
+`catalyst journal append --action create --tier feature` (`--tier fix` when
+the parent is a `BUG-`), covering the step file, the
 parent file and the regenerated index.
 
 When the user enters `/roadmap-add <name> <file>: ...`, refuse with a clear
@@ -377,7 +397,8 @@ change the `Source` field — only `Last updated`. Journal it with
 what was added/updated.
 
 When the user enters `/show-backlog`, run `catalyst index regen`, then
-inspect the current artifact indexes (open bugs by severity, in-progress/proposed requirements, work items with no
+inspect the current artifact indexes (open bugs — Status `Open`/`Under Review`/`Fixed` — by severity, open
+requirements — Status `Draft`/`Proposed`/`Vetted`/`Active` —, work items with no
 linked `REQ-`/`BUG-` doc, rules with no open work targeting them, feature
 ideas with no requirement yet, and every `development/roadmaps/<name>.md`
 not marked `Retired`, rows grouped by roadmap name then Status),
@@ -387,8 +408,9 @@ not marked `Retired`, rows grouped by roadmap name then Status),
 for each `RM-NNNNNN` row, resolve every `FEAT-`/`REQ-` its `Linked` field
 names (if any — it's a list, not a single id) and set `Status` to
 `Not triaged` (nothing linked) / `Triaged` (only a `FEAT-` linked) /
-`In progress` (at least one linked `REQ-` isn't yet `done`) / `Done`
-(every linked `REQ-` is `done`) accordingly, leaving `Title`/`Notes`/`Source`
+`In progress` (at least one linked `REQ-` isn't yet `Completed` or
+`Abandoned`) / `Done` (every linked `REQ-` is `Completed` or `Abandoned`)
+accordingly, leaving `Title`/`Notes`/`Source`
 untouched; journal any roadmap row whose `Status` changed with
 `catalyst journal append --action status-change` — and also report the
 same summary to the user in this turn. No

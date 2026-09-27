@@ -25,9 +25,12 @@ Input: $ARGUMENTS
    field if this is its first step), then `catalyst index regen` to
    rebuild `steps/steps.md`.
 5. Journal it: `catalyst journal append --command /create-step --action create
-   --artifact <ID> --intent "<goal>" --file <step file> --file <parent file>
-   --file <each regenerated index>`.
-6. Report the new step's ID and filename. Do not commit or push.
+   --tier feature --artifact <ID> --intent "<goal>" --file <step file> --file <parent file>
+   --file <each regenerated index>` (`--tier fix` instead when the parent
+   is a `BUG-`: a bug is fix-tier work, `CODE-OF-CONDUCT.md` §3).
+6. Report the new step's ID and filename. Do not commit or push on your
+   own: the working copy (`.criterion/`) and the product
+   repository are committed only with the user's assent.
 
 `catalyst <args>` is `python3 .criterion/bin/catalyst.pyz <args>`
 (`CODE-OF-CONDUCT.md` §4).

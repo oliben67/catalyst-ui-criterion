@@ -19,6 +19,14 @@ fields:
       - Fixed
       - Closed
       - WontFix
+  - name: Severity
+    kind: enum
+    required: false
+    allowed_values:
+      - Critical
+      - High
+      - Medium
+      - Low
   - name: Targets
     kind: ref-list
     required: true

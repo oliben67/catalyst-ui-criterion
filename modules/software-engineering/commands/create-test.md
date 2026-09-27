@@ -26,16 +26,16 @@ Input: $ARGUMENTS
    allocate the ID with `catalyst id next TEST --as <signer>` — never
    guess, compute by hand, or reuse a number.
 4. Copy the current `TEMPLATE-TEST-vN.md`, fill every field, save as
-   `tests/<ID>-<short-summary>.md`.
+   `tests/<ID>-<short-summary>.md`, `Status: Draft`.
 5. Append this test's ID to the `Tests` field of every requirement/step
    named in step 2 (creating that field if this is its first test) —
    never leave the back-reference for a later pass.
 6. Register it: `catalyst index regen` rebuilds `tests/tests.md` (and any
    index showing the touched requirements/steps).
 7. Journal it: `catalyst journal append --command /create-test --action create
-   --artifact <ID> --target <rule-id> ... --intent "<goal>" --file <each touched file>`.
-8. Report the result. Do not commit or push — leave changes unstaged
-   unless the user asks otherwise.
+   --tier feature --artifact <ID> --target <rule-id> ... --intent "<goal>" --file <each touched file>`.
+8. Report the result. Do not commit or push on your own: the working copy (`.criterion/`)
+   and the product repository are committed only with the user's assent.
 
 `catalyst <args>` is `python3 .criterion/bin/catalyst.pyz <args>`
 (`CODE-OF-CONDUCT.md` §4).

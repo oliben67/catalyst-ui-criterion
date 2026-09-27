@@ -54,8 +54,8 @@ module's definitions and in the deployed `Rules-of-Rules.md`.
   `STEP-NNNNNN` names exactly one parent (`Parent`: a `REQ-` or `BUG-`),
   records one concrete unit of work toward it, lives in `steps/` (full
   INV-20 treatment) and inherits its parent's rule target (exempt from
-  INV-5's targeting). No requirement or bug closes as `done`/`fixed`
-  while one of its steps is open (`Rules-of-Rules.md` rr-META-021). A
+  INV-5's targeting). No requirement or bug reaches a closed state
+  (`Completed`/`Abandoned`, `Closed`/`WontFix`) while one of its steps is open (`Rules-of-Rules.md` rr-META-021). A
   roadmap row's `Linked` field is a list.
 - **INV-28 — Tests are development artifacts with optional (0,n) links.**
   `TEST-NNNNNN` (`templates/test.template.md`) joined the

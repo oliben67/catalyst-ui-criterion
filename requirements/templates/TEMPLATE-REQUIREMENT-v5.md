@@ -1,7 +1,5 @@
 # `REQ-NNNNNN` — <project or requirement name>
 
-> Copy this file to `{{REQUIREMENTS_DIR}}/templates/TEMPLATE-REQUIREMENT-v1.md` and resolve every `{{PLACEHOLDER}}` (INV-20). See catalyst's `framework/kernel/INSTANTIATION-GUIDE.md`.
-
 This document captures concrete, application-bound requirements derived
 from the project's rule documents, especially UI and business rules. Use
 it to translate documented expectations into testable behavior that is
@@ -26,7 +24,7 @@ more rules. None of those three are optional.
 | **Status** | exactly one of `Draft` / `Proposed` / `Vetted` / `Active` / `Completed` / `Abandoned` (the requirement ETD's `allowed_values`; starts `Draft`; `Completed` and `Abandoned` are its closed states) |
 | **Opened** | YYYY-MM-DD |
 | **Targets** | one or more rule IDs this requirement implements or extends — **required, never empty** (see `CODE-OF-CONDUCT.md` §1). If none exist yet, define them first (see New rules proposed below) |
-| **Domain** | the `DOMAIN` code(s) of the targeted/new rule(s), from `{{RULES_DIR}}/domains/` — **required, never free text** |
+| **Domain** | the `DOMAIN` code(s) of the targeted/new rule(s), from `rules/domains/` — **required, never free text** |
 | **Feature** | `FEAT-NNNNNN`, if this requirement was motivated by a documented feature — omit if none |
 | **Steps** | `STEP-NNNNNN` list, in creation order, opened against this requirement (`Rules-of-Rules.md` §21) — empty while implementation hasn't started. A requirement is feature-tier work (`CODE-OF-CONDUCT.md` §3): it cannot be in a closed state (`Completed`/`Abandoned`) with this field empty — `catalyst validate` reports that as `closed-incomplete` — and does not close until every listed step is `done` or `abandoned` (`Rules-of-Rules.md` §21) |
 | **Tests** | `TEST-NNNNNN` list of tests that verify this requirement — empty until `/create-test` names it; back-populated automatically, never hand-edited (`Rules-of-Rules.md` §22) |
@@ -35,7 +33,7 @@ more rules. None of those three are optional.
 ## Vetted against existing rules
 
 Per `Rules-of-Rules.md` §1: confirm this requirement was checked against
-every rule document in `{{RULE_DOCS_LIST}}`, not only the one that seems
+every rule document in ``dev-environment-rules.md`, `catalyst-core-rules.md`, `catalyst-host-vscode-rules.md`, `catalyst-host-electron-rules.md``, not only the one that seems
 most relevant, and record the outcome — no conflict found, or the
 specific existing rule ID(s) this requirement narrows/amends (and the
 decision that authorized that).

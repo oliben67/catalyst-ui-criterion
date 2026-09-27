@@ -41,8 +41,8 @@ Input: $ARGUMENTS
    (a hand-edited row — roadmaps have no generated index).
 8. Journal it: `catalyst journal append --command /roadmap-add --action create
    --artifact <name> --intent "<goal>" --file <roadmap file> --file <roadmaps.md>`.
-9. Report the roadmap name and the IDs assigned. Do not commit or push —
-   leave changes unstaged unless the user asks otherwise.
+9. Report the roadmap name and the IDs assigned. Do not commit or push on your own: the working copy (`.criterion/`)
+   and the product repository are committed only with the user's assent.
 
 `catalyst <args>` is `python3 .criterion/bin/catalyst.pyz <args>`
 (`CODE-OF-CONDUCT.md` §4).

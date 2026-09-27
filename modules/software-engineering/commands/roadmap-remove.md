@@ -25,8 +25,8 @@ Input: $ARGUMENTS
 5. Journal it: `catalyst journal append --command /roadmap-remove --action retire
    --artifact <name> --intent "<goal>" --file <roadmap file> --file <roadmaps.md>`
    (a deleted file is recorded with `after: null`).
-6. Report the result. Do not commit or push — leave changes unstaged
-   unless the user asks otherwise.
+6. Report the result. Do not commit or push on your own: the working copy (`.criterion/`)
+   and the product repository are committed only with the user's assent.
 
 `catalyst <args>` is `python3 .criterion/bin/catalyst.pyz <args>`
 (`CODE-OF-CONDUCT.md` §4).

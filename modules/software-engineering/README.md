@@ -44,7 +44,7 @@ rule, which belongs to a domain.
   (`steps/`) are one concrete unit of implementation work — files touched,
   commands run, how it was verified — created via `/create-step` as work
   happens. A requirement needs at least one before it closes; a bug's are
-  optional. Neither is closeable as done/fixed until every step opened
+  optional. Neither reaches a closed state until every step opened
   against it is done or abandoned (INV-27).
 - **Tests.** `TEST-NNNNNN` records (`tests/`) are a fourth rule-targeting
   dev-artifact type, created via `/create-test` with their own
