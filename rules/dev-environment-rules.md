@@ -128,7 +128,7 @@ environment variables or secrets exist yet. Implemented: root
 `.nvmrc`. Tested: `cat .nvmrc` matches the CI workflow's configured
 Node version.
 
-## Known Bugs — Quick Index
+## Linked Artifacts — Quick Index
 
 *(none yet — this is a fresh greenfield instantiation, not an audit of
 a running system)*

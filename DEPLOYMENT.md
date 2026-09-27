@@ -3,8 +3,10 @@
 - Framework: catalyst framework
 - Deployed project: catalyst-ui (`git@github.com:oliben67/catalyst-ui.git`)
 - Working copy (`.criterion/`): this directory — agent-owned space,
-  resolved per `BOOTSTRAP.md` §1 (Claude Code's per-project data
-  directory, sibling to its `memory/` folder for this same project)
+  computed per machine per `BOOTSTRAP.md` §1 (Claude Code's per-project
+  data directory for this project), reached through the gitignored
+  `catalyst-ui/.criterion` symlink; no tracked file records its path
+  (kernel 0.37.0, INV-6)
 - Originally instantiated: 2026-09-05 (greenfield path —
   `development-framework/INSTANTIATION-GUIDE.md` §3 — no application
   code existed yet; dev-environment decisions established as this
@@ -12,6 +14,15 @@
   before any product code)
 - `version.txt`: `0.17.0`, matching the framework's own version at
   instantiation time.
+
+## Process module (`MODULE-SPECIFICATION.md` §6)
+
+- module: `software-engineering` (named in `catalyst-ui.catalyst`'s `module` field)
+- module version: `2.0.0` — seeded whole-tree into `modules/software-engineering/` from the
+  module's v2.0.0 release archive (manifest `kernelVersion: >=0.36.0`)
+- composed into `CODE-OF-CONDUCT.md` §3/§4, `rules/Rules-of-Rules.md` and
+  `Taskfile.common.yml` under `From module software-engineering` blocks by
+  `/sync-framework` (kernel 0.36.0 migration, applied 2026-09-27)
 
 ## Repo sync (criterion, `Rules-of-Rules.md` §13)
 

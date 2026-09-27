@@ -75,6 +75,6 @@ enough for the common case without taking on a native-module
 dependency (`node-pty`) this project's dependency footprint has
 avoided everywhere else. Targeted by `REQ-000009-UVqkd7cL`.
 
-## Known Bugs — Quick Index
+## Linked Artifacts — Quick Index
 
 *(none yet — no implementation exists to have found bugs in)*

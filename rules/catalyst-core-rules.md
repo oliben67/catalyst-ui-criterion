@@ -150,6 +150,6 @@ governed file or execute anything themselves — they only resolve what
 a host needs to know before it hands a composed line to a real agent
 process. Targeted by `REQ-000009-UVqkd7cL`.
 
-## Known Bugs — Quick Index
+## Linked Artifacts — Quick Index
 
 *(none yet — no implementation exists to have found bugs in)*

@@ -2,7 +2,7 @@
 
 This is catalyst-ui's own instantiation of the catalyst framework.
 Deployed via the greenfield path
-(`development-framework/INSTANTIATION-GUIDE.md` §3, in the `catalyst`
+(`framework/kernel/INSTANTIATION-GUIDE.md` §3, in the `catalyst`
 repository): no application code existed yet, so the foundational
 tooling, stack, and dev-environment decisions were established as this
 deployment's first rule document before any product code was written.
@@ -11,9 +11,14 @@ deployment's first rule document before any product code was written.
 
 ```
 CODE-OF-CONDUCT.md      Dev-artifact standards, users/roles, slash commands (from
-                         development-framework/rules-of-development.template.md)
+                         framework/kernel/rules-of-development.template.md +
+                         the software-engineering module's code-of-conduct.module.md)
 ACCESS-CONTROL.md       Per-role read/write rights reference (from
-                         development-framework/ACCESS-CONTROL.md)
+                         framework/kernel/ACCESS-CONTROL.md)
+Taskfile.common.yml     Thin task dispatch per CODE-OF-CONDUCT.md §4 command,
+                         included by catalyst-ui's root Taskfile.yml
+modules/
+  software-engineering/   The active process module (v2.0.0), whole release tree
 rules/
   Rules-of-Rules.md      Meta-rules governing this deployment's rules
   rules.md                Global rule index
@@ -24,6 +29,8 @@ rules/
   domains/                20 domains across the four rule documents
 requirements/            REQ- docs (9, one per shipped/in-progress phase)
 features/                FEAT- entries (9)
+steps/                   STEP- implementation-work records
+tests/                   TEST- verification artifacts
 proposals/               Proposal-loop artifacts (none yet)
 runs/                    Agent run-state artifacts (none yet)
 reconciliations/         RECON- cases (none yet)
@@ -39,7 +46,7 @@ development/
   roadmaps/                Named roadmaps — catalyst-ui.md (9 items, RM-000001..009)
   journal.jsonl             Append-only, transaction-log-grade change history —
                              see rules/Rules-of-Rules.md §12
-version.txt               The framework version this was last synced against
+version.txt               The kernel version this was last synced against
 ```
 
 `work-items/` is not part of this deployment — plugin-territory, not

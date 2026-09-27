@@ -1,6 +1,6 @@
 # Rules of Rules — template
 
-> Instantiates the catalyst framework's rules-of-rules template (`development-framework/rules-of-rules.template.md` in the `catalyst` repository).
+> Instantiates the catalyst kernel's rules-of-rules template (`framework/kernel/rules-of-rules.template.md` in the `catalyst` repository), with the active module's `rules-of-rules.module.md` appended under `### From module software-engineering` (`MODULE-SPECIFICATION.md` §6.1).
 
 Meta-rules governing how any rule gets added to, changed in, or retired
 from one of this project's rule documents: `dev-environment-rules.md`, `catalyst-core-rules.md`, `catalyst-host-vscode-rules.md`, `catalyst-host-electron-rules.md`. These
@@ -30,7 +30,7 @@ in order:
 
 1. The same functionality area in whichever document(s) are relevant.
 2. Each document's Cross-Cutting Notes heading (or equivalent).
-3. Each document's Known Bugs / Quick Index heading — a "new" rule is
+3. Each document's `## Linked Artifacts — Quick Index` heading — a "new" rule is
    sometimes actually a conflicting rewrite of an existing one.
 
 If the new rule **contradicts, narrows, silently overrides, or would
@@ -87,11 +87,11 @@ Format: **`(DOC_PREFIX)-(DOMAIN)-(NNNNNN)[-(parent-id)]-(userid)`**
 - **`DOC_PREFIX`** — which rule document the rule lives in. Define one
   short lowercase prefix per document in `dev-environment-rules.md`, `catalyst-core-rules.md`, `catalyst-host-vscode-rules.md`, `catalyst-host-electron-rules.md` (e.g. `ui`,
   `br`), plus the fixed `rr` prefix reserved for this file itself.
-- **Name format** — every rule name and development entity must carry a name summarizing its purpose. The canonical rule name format is **`<rule-id>-<short-summary>`**, where the suffix is a lowercase slug that briefly describes what the rule is about. Example: `br-AUTH-000003-login-flow`. Similarly, every development entity (bugs, requirements, house-keeping items, features, rules, domains, reconciliations, workflows, etc.) contains an explicit **Name** field (`**Name**` in field tables or rule metadata) that summarizes the purpose of the entity. This is a hard requirement for all new rules and development entities and must also be applied retroactively to existing deployed items during framework deployment or synchronization. Existing names that are only the ID must be renamed to include a summary suffix, and every index entry and link that references the old name must be updated.
+- **Name format** — every rule name and development entity must carry a name summarizing its purpose. The canonical rule name format is **`<rule-id>-<short-summary>`**, where the suffix is a lowercase slug that briefly describes what the rule is about. Example: `br-AUTH-000003-login-flow`. Similarly, every development entity (rules, domains, reconciliations, workflows, the active module's entity types, etc.) contains an explicit **Name** field (`**Name**` in field tables or rule metadata) that summarizes the purpose of the entity. This is a hard requirement for all new rules and development entities and must also be applied retroactively to existing deployed items during framework deployment or synchronization. Existing names that are only the ID must be renamed to include a summary suffix, and every index entry and link that references the old name must be updated.
 - **`DOMAIN`** — a short, stable mnemonic code for the `##` functional
 domain the rule sits under. Fixed once assigned — renaming a domain's
 prose heading does not change its code, since existing IDs (in code
-comments, tests, Known Bugs indexes, cross-references) must keep
+comments, tests, linked-artifact indexes, cross-references) must keep
 resolving.
 - **`NNNNNN`** — a zero-padded **6-digit** sequence number, unique within
   that `DOMAIN`, assigned in document order the first time IDs are
@@ -134,7 +134,7 @@ out of sync with the real one.
 
 1. Pick (or confirm) the `DOMAIN` it belongs to.
 2. Take the next unused `NNN` in that domain — check both the domain's
-   existing bullets and the Known Bugs index.
+   existing bullets and the Linked Artifacts quick index.
 3. Only add `[-parent-id]` if the rule is a numbered sub-case of one
    existing bullet, or an explicit specialization of another rule.
 
@@ -154,7 +154,7 @@ the date, e.g. `🗑 retired 2026-09-05 — superseded by \`<new-rule-id>\``.
 4. Never repurpose a retired rule's ID for an unrelated rule later, even
    in the same domain.
 5. A retired rule can still be a valid target for dev-artifact work (e.g.
-   a bug explaining why it had to be retired) — retirement is a status
+   an artifact explaining why it had to be retired) — retirement is a status
    change, not removal from the graph of things development work can
    cite.
 
@@ -176,24 +176,25 @@ unindexed notes is not permitted.
 ## 6. `rr-META-000006-UVqkd7cL` Development artifacts have their own ID scheme
 
 If the deployed framework is missing `version.txt`, or if its version is
-lower than this framework's own `development-framework/version.txt`, the
+lower than this framework's own `version.txt`, the
 deployed framework must be synchronized before further work proceeds. See
 [`SYNCHRONIZE.md`](SYNCHRONIZE.md).
 
-Format: **`(BUG|REQ|HK|TEST)-(NNNNNN)`** — see
+Format: **`<PREFIX>-(NNNNNN)`** — one `<PREFIX>` per development-artifact
+entity type of the active module (its `module.yaml` `entity_types`); see
 [`rules-of-development.template.md`](rules-of-development.template.md).
 `NNNNNN` is a zero-padded 6-digit sequence number, global within its own
-type, assigned in creation order, never reused. `TEST-NNNNNN` joined
-this format at framework `0.30.0` (§22) — like every other member, it
+type, assigned in creation order, never reused. Every rule-linked member
 carries its own `Targets`/`Domain` and is subject to
 `rules-of-development.md` §1 ("no development without a targeted
-rule"). See §9 for the separate, non-rule-linked `FEAT-` scheme used
-for feature entries — that one is not a member of this format.
+rule"). Which prefixes belong to this format, and any separate,
+non-rule-linked schemes the module also defines, are the active
+module's meta-rules (`MODULE-SPECIFICATION.md` §6.1).
 
 ## 7. `rr-META-000007-UVqkd7cL` Defining a new `##` domain
 
-A bug or requirement is not required to fit an existing domain — it may
-propose a new one, but only by following this standard, in every rule
+A development artifact of the active module is not required to fit an
+existing domain — it may propose a new one, but only by following this standard, in every rule
 document.
 
 **Domains are defined in their own directory, not inline in the rule
@@ -281,13 +282,14 @@ unrelated domain even if the original is later emptied out or retired
 
 ## 8. `rr-META-000008-UVqkd7cL` Scrum/agile work items are plugin-territory, not core
 
-The framework version is tracked in `version.txt` at the framework root.
+The kernel version is tracked in `version.txt` at the catalyst repository root.
 If a deployed framework has no `version.txt`, or its version is lower than
-this framework's own `development-framework/version.txt`, it is considered
+this framework's own `version.txt`, it is considered
 out of date and must be synchronized using [`SYNCHRONIZE.md`](SYNCHRONIZE.md).
 
 **`work-items/` is not part of the core deployed layout.** Unlike
-`rules/`/`requirements/`/`features/`/`reconciliations/`/`IAM/`, no
+`rules/`/`reconciliations/`/`workflows/`/`IAM/` or the active module's
+own artifact-type folders, no
 deployment gets it by default. It only exists once a
 project-management-type plugin extending the agile schema at
 `plugins/_prototyping/project-management/agile/` (framework repository)
@@ -315,82 +317,15 @@ schema.** A `work-items/tickets/` folder, if a plugin deploys one,
 carries no prescribed semantics — its actual population and lifecycle
 (e.g. syncing from an external tracker) is that plugin's own concern.
 
-## 9. `rr-META-000009-UVqkd7cL` Feature entries have their own, non-rule-linked scheme
+## 9. `rr-META-000009-UVqkd7cL` — owned by the active module
 
-Format: **`FEAT-(NNNNNN)`** — zero-padded 6-digit sequence number, global,
-assigned in creation order, never reused. Same descriptive-naming
-requirement as every other artifact and work-item ID (`INSTANTIATION-GUIDE.md`
-§1): the name and filename are `FEAT-NNNNNN-<short-summary>` /
-`FEAT-NNNNNN-<short-summary>.md`, never the bare ID. Stored one file per
-entry under `features/`, indexed in `features/features.md`, using
-[`templates/features.template.md`](templates/features.template.md) →
-the current `features/templates/TEMPLATE-FEATURE-vN.md`.
+`rr-META-000009-UVqkd7cL` — owned by the active module (`MODULE-SPECIFICATION.md`
+§6.1); never reused.
 
-A feature entry documents a possible future capability — an idea or
-roadmap item, not a claim about current or required behavior. It is
-**not** one of the development artifacts in §6 and is exempt from:
+## 10. `rr-META-000010-UVqkd7cL` — owned by the active module
 
-- §1 (`rr-META-000001-UVqkd7cL`)'s conflict check,
-- `rules-of-development.md` §1 ("no development without a targeted
-  rule"), and
-- ever carrying a `Targets` or `Domain` field.
-
-It is never "done" against a rule and is never itself implemented. Once
-work on a feature actually starts, open a `REQ-NNNNNN` requirement (§6)
-that targets or proposes the rule(s) the feature requires — that
-requirement, not the feature entry, is what gets vetted against existing
-rules, assigned a domain, and measured for completion. The feature entry
-records which requirement(s) resulted from it, for traceability back to
-the original idea, but that link is informational, not a rule target.
-
-## 10. `rr-META-000010-UVqkd7cL` Roadmap items have their own, source-tracked scheme
-
-Format: **`RM-(NNNNNN)`** — zero-padded 6-digit sequence number, **global
-across every named roadmap**, assigned in the order `/roadmap-add`/
-`/roadmap-update`/`/roadmap-merge` first adds each item, never reused.
-Unlike a rule or a dev-artifact but like `FEAT-NNNNNN`, an `RM-` item is a
-table row, not its own file — but unlike `FEAT-NNNNNN` (one flat
-`features/features.md`), roadmap rows are partitioned across **one file
-per named roadmap**: `development/roadmaps/<name>.md`
-(`templates/roadmap.template.md`), each registered in
-`development/roadmaps/roadmaps.md`. A project may hold several named
-roadmaps at once (e.g. a product roadmap and an infra roadmap, ingested
-and updated independently); an `RM-NNNNNN` ID stays unique and resolvable
-regardless of which named roadmap's file it lives in.
-
-A roadmap item records that an external source (a product roadmap, a
-planning doc, a stakeholder request) named this as a future direction —
-not a claim about current or required behavior, and not itself one of the
-development artifacts in §6. It is exempt from:
-
-- §1 (`rr-META-000001-UVqkd7cL`)'s conflict check,
-- `rules-of-development.md` §1 ("no development without a targeted
-  rule"), and
-- ever carrying a `Targets` or `Domain` field.
-
-A roadmap item is never "done" against a rule and is never itself
-implemented. Once a human decides it's worth tracking inside catalyst,
-`/create-feature` opens a `FEAT-NNNNNN` for it (§9), citing the `RM-NNNNNN` ID
-in the feature's `Roadmap` field — that feature entry, and the one or more
-`REQ-NNNNNN` requirements it may later become (§21 formalizes the
-expectation that a roadmap item of real size decomposes into more than one
-requirement), are what actually get vetted, assigned a domain, and
-measured.
-
-**`Linked` is a list, not a single ID**: every `FEAT-`/`REQ-NNNNNN`
-currently associated with that row, comma-separated, in the order each was
-linked. Each roadmap file's `Status`/`Linked` columns mirror every one of
-those, refreshed by `/show-backlog`: `Not triaged` while nothing is linked;
-`Triaged` while only a `FEAT-NNNNNN` is linked; `In progress` once at least
-one `REQ-NNNNNN` is linked and at least one of them isn't yet `done`;
-`Done` only once **every** linked `REQ-NNNNNN` is `done` — so a roadmap
-item's progress stays visible without becoming a second, competing source
-of truth for completion.
-
-A named roadmap itself is never hard-deleted once any of its rows carry a
-`Linked` value — see §4's retirement principle. `/roadmap-remove` retires
-it in place instead (marks it retired, keeps every row and ID resolvable)
-whenever removing it outright would break a `FEAT-`/`REQ-` cross-reference.
+`rr-META-000010-UVqkd7cL` — owned by the active module (`MODULE-SPECIFICATION.md`
+§6.1); never reused.
 
 ## 11. `rr-META-000011-UVqkd7cL` Users and roles are advisory, not access control
 
@@ -426,8 +361,8 @@ once unique. A `userid`, once assigned, never changes — the same
 "never retroactively changes" posture as `Signed-off-by` below.
 
 **`IAM/users/users.json` must contain at least one entry with `"active":
-true`.** This is a hard requirement, unlike `roadmaps.md`'s "empty is
-fine": a project with zero active users has nobody to sign work, so
+true`.** This is a hard requirement, unlike registries that may
+legitimately start empty: a project with zero active users has nobody to sign work, so
 deployment is not complete until `/user-add` has registered at least one
 person. `/user-remove` refuses if removing the last active user would
 leave zero — this specific case isn't advisory, since it would break
@@ -440,14 +375,14 @@ artifact-creating or status-changing command completes, the agent
 resolves who is signing it, checks their role(s) against `roles.json`,
 and — if the action isn't one their role covers, or they aren't
 registered at all — proceeds anyway (INV-25), noting the mismatch rather
-than pausing for confirmation or refusing outright. Every dev-artifact,
-feature entry, roadmap item, and work item carries a `Signed-off-by`
+than pausing for confirmation or refusing outright. Every entity of the
+active module's entity types, and every work item, carries a `Signed-off-by`
 field recording the outcome (`rules-of-development.md` §2); at the same
 moment, that resolved signer's `userid` is appended as the entity's own
 id suffix (INV-26, rr-META-000020-UVqkd7cL) — never resolved separately or later.
 
 `/user-remove` never deletes a user's entry, the same "never delete,
-retire in place" principle as §4 and §10: it sets `active` to `false` so
+retire in place" principle as §4: it sets `active` to `false` so
 every `Signed-off-by` reference already recorded against that name stays
 resolvable. A changed or removed role in `roles.json` likewise never
 retroactively changes a `Signed-off-by` value already recorded — that
@@ -463,24 +398,29 @@ just describable.
 
 ### Entry schema
 
+Shown for the fictional `example-process` module's `ITEM` entity
+(`MODULE-SPECIFICATION.md`); a real entry names the active module's own
+command, entity and files.
+
 ```json
 {
   "timestamp": "2026-08-23T19:00:00Z",
   "actor": "<name from IAM/users/users.json>",
-  "command": "/create-req",
+  "command": "/create-item",
   "action": "create | update | close | retire | status-change | sync",
-  "artifact": "REQ-000001",
+  "artifact": "ITEM-000001",
   "targets": ["fw-STRUCTURE-003"],
   "intent": ["one or more sentences — the goal driving this change, not a label"],
   "files": [
-    {"path": "requirements/REQ-000001-foo.md", "before": null, "after": "a1b2c3...(40 hex)"},
-    {"path": "requirements/requirements.md", "before": "d4e5f6...", "after": "g7h8i9..."}
+    {"path": "items/ITEM-000001-foo.md", "before": null, "after": "a1b2c3...(40 hex)"},
+    {"path": "items/items.md", "before": "d4e5f6...", "after": "g7h8i9..."}
   ]
 }
 ```
 
 - **`targets`** — the rule ID(s) this change relates to, when applicable;
-  `[]` for non-rule-linked artifacts (`FEAT-`, `RM-`, users, roles). This
+  `[]` for non-rule-linked artifacts (users, roles, and any
+  non-rule-linked entity type of the active module). This
   is the machine-readable half of the chain invariant (INV-5) — every
   entry either names the rule(s) it serves or explicitly carries none,
   never leaves it ambiguous.
@@ -522,7 +462,7 @@ already does — it does not replace any of a command's existing steps.
 
 The `catalyst-git` plugin continuously audits a *deployed project* for
 rule violations and writes pass/fail reports to `audits/` (INV-13: never
-catalyst's own repository). This journal is core framework
+catalyst's own repository). This journal is kernel
 infrastructure — it applies to catalyst's own self-deployment too — and
 it records history for reconstruction, not violations for alerting. A
 project may have both: the journal answers "what changed and why, and can
@@ -634,8 +574,8 @@ instead of `name`.**
 
 Existing artifacts are handled differently from the journal, deliberately:
 
-- **Artifacts** (`bugs/`, `requirements/`, `features/`, roadmap rows,
-  work items) are living documents, not a log. Every existing
+- **Artifacts** (the active module's entity instances, work items,
+  reconciliation cases) are living documents, not a log. Every existing
   `Signed-off-by` occurrence that currently names this user's old `name`
   is rewritten in place to their new `git_username` — this is what "the
   signature of everything done before is updated" means concretely.
@@ -710,8 +650,8 @@ carrying someone else's un-vetted change. An actor holding the `Admin`
 role (`IAM/roles/roles.json`) is exempt from this scoping and pushes
 everything, same as before this rule existed. The scoping applies only
 to individually-signed artifact files — shared registries/indexes
-(`rules.md`, `requirements.md`, `roadmaps.md`, `BACKLOG.md`,
-`IAM/users/users.json`, `IAM/roles/roles.json`) and the journal aren't
+(`rules.md`, the active module's instance catalogs and generated
+reports, `IAM/users/users.json`, `IAM/roles/roles.json`) and the journal aren't
 signed by one person and are never filtered on their own; they only
 ever carry entries the actor was already entitled to add through the
 command that wrote them. If scoping excludes anything, report exactly
@@ -781,29 +721,44 @@ that check.
 INV-6 (revised): the working copy — a directory always named
 `.criterion/` — is not built inside the target project's own tree. It
 builds in **agent-owned space**: a per-project data location the running
-agent already maintains, outside the project being governed. The target
-project tracks exactly one file for it, at its root: **`<app-name>.catalyst`**
-(JSON, from `templates/catalyst-pointer.template.json`), whose
-`agent-source` field names where the working copy actually is. This is
+agent already maintains, outside the project being governed. Its location
+is computed per machine by the running agent from its own conventions
+(`BOOTSTRAP.md` §1; each agent's shim says how) and is never written into
+a tracked file. The target project tracks exactly one file for it, at its
+root: **`<app-name>.catalyst`** (JSON, from
+`templates/catalyst-pointer.template.json`), which holds no path. This is
 the only catalyst artifact the target project's own repo ever carries —
-small, safe to commit, no rule/requirement/journal content in it.
+small, safe to commit, no rule/artifact/journal content in it, identical
+on every machine.
+
+**One access path.** `<project root>/.criterion` is how everything —
+agents, tools, the project's own `Taskfile.yml` — reaches the working
+copy: a **symlink** to the agent-owned `.criterion/`, always gitignored
+(`/.criterion` in the project's `.gitignore`). The agent creates or
+repairs it at install, at `/criterion get` and `/project import`, and at
+every session start (`BOOTSTRAP.md` §1.1). Every document path written
+`.criterion/...` therefore means the same thing on every machine and for
+every agent. Tools resolve the working copy in this order: (1)
+`<project root>/.criterion` (symlink followed, or a real directory); (2)
+legacy — a pointer's `agent-source` field, if present and an existing
+directory (pre-0.37.0 pointers may still carry `agent-source`; tools
+honor it until migrated); (3) any tool-specific extra fallback. The
+project root is the directory holding the `*.catalyst` pointer.
 
 `.criterion/DEPLOYMENT.md` (§13) keeps its existing role unchanged —
 the source of record for `repoed`, `catalyst_repo`, `catalyst_repo_url`,
-`created_by` — it just now lives inside the working copy wherever
-`agent-source` currently puts it. `<app-name>.catalyst` mirrors those same
-four fields at the project root so they're visible without resolving
-`agent-source` first; any command that writes them (`/criterion create`,
-`/criterion push --force`) updates both files in the same step. If they
-ever disagree, `.criterion/DEPLOYMENT.md` wins — it is the source of
-record.
+`created_by` — inside the working copy. `<app-name>.catalyst` mirrors those
+same four fields at the project root; any command that writes them
+(`/criterion create`, `/criterion push --force`) updates both files in
+the same step. If they ever disagree, `.criterion/DEPLOYMENT.md` wins —
+it is the source of record.
 
-**No agent owned-space concept available:** fall back to building
-`.criterion/` directly inside the target project, gitignored there,
-never committed. `<app-name>.catalyst` still gets written at the project
-root — its `agent-source` just names the in-project path instead. Every
-mechanism below (migration, export, import) treats this fallback as an
-ordinary `agent-source` value, not a special case.
+**No agent owned-space concept available, or no symlinks on this
+platform:** fall back to building `.criterion/` directly inside the
+target project as a real directory, gitignored there, never committed.
+`<app-name>.catalyst` still gets written at the project root, unchanged.
+Every mechanism below (migration, export, import) treats this fallback
+as just another shape of `<project root>/.criterion`, not a special case.
 
 ### Migration from the pre-pointer-file model
 
@@ -814,22 +769,20 @@ anywhere. Detect this (a `.criterion/` dir at the project root and no
 structural change, so confirm with the user before proceeding, the same
 courtesy as `/criterion create`:
 
-1. Resolve `agent-source` per `BOOTSTRAP.md` §1. If the running agent has
-   no owned-space concept, there is nothing to migrate — stop here; the
-   in-project fallback shape already **is** the target shape, it just
-   still needs its `<app-name>.catalyst` pointer written (step 3 below,
-   skipping step 2).
+1. Resolve the agent-owned location per `BOOTSTRAP.md` §1. If the
+   running agent has no owned-space concept, there is nothing to move —
+   stop here; the in-project fallback shape already **is** the target
+   shape, it just still needs its `<app-name>.catalyst` pointer written
+   (step 3 below, skipping step 2).
 2. **Move**, not copy, the entire existing `.criterion/` tree from
-   the project root to the resolved `agent-source` location.
-3. Write `<app-name>.catalyst` at the project root: `agent-source` set to
-   the (possibly unchanged, on the fallback) working-copy location;
+   the project root to the resolved agent-owned location, then create
+   the `.criterion` symlink at the project root pointing at it.
+3. Write `<app-name>.catalyst` at the project root (no path in it);
    `repoed`/`catalyst_repo`/`catalyst_repo_url`/`created_by` carried over
    from the existing `.criterion/DEPLOYMENT.md` if one exists, else
    left at their unset defaults.
-4. If the move actually relocated the tree (step 2 ran): delete the
-   now-empty `.criterion/` from the project root, and remove its line
-   from that project's `.gitignore` (leave the file itself in place, even
-   if now empty).
+4. Make sure `/.criterion` is in that project's `.gitignore` — the
+   symlink (or the fallback directory) is never committed.
 5. Append one journal entry, in the working copy's new location, for the
    migration itself (`action: "migrate"`, `intent` describing the move,
    `files` covering the old and new `DEPLOYMENT.md`/pointer locations by
@@ -844,11 +797,11 @@ courtesy as `/criterion create`:
 ### Agent switching procedure
 
 When a session starts or an agent assumes governance of a project previously managed by another agent (detected when the running agent's identity differs from the `agent` field in `<app-name>.catalyst`):
-1. Resolve the running agent's `agent-source` path per `BOOTSTRAP.md` §1 (agent-owned space for the running agent, or in-project fallback `.criterion/`).
-2. Update `<app-name>.catalyst`: set `agent` to the current agent's identifier, `agent-source` to the resolved path, and `updated` to the current date string (`YYYY-MM-DD`).
-3. If the `.criterion/` working copy existed in the previous `agent-source` location, mirror it into the new `agent-source` location: the new location ends up an exact copy of the old one — every file the old one had, none it didn't — overwriting anything already at the new location that conflicts, and removing anything at the new location the old one doesn't have. Never a partial merge.
-4. Update `Taskfile.yml` at the project root: set the `CRITERION_DIR` variable to match the new `agent-source` path.
-5. Update persistent framework memory (and deployment notes) with the current agent name, resolved `agent-source` directory, and update timestamp.
+1. Resolve the running agent's own owned location per `BOOTSTRAP.md` §1 (or the in-project fallback `.criterion/`).
+2. If the `.criterion/` working copy existed at a previous location (the current `.criterion` symlink's target, or a legacy pointer's `agent-source`), mirror it into the new location: the new location ends up an exact copy of the old one — every file the old one had, none it didn't — overwriting anything already at the new location that conflicts, and removing anything at the new location the old one doesn't have. Never a partial merge.
+3. Repoint the `.criterion` symlink at the project root to the new location (skip on the in-project fallback), keeping `/.criterion` in the project's `.gitignore`.
+4. Update `<app-name>.catalyst`: set `agent` to the current agent's identifier and `updated` to the current date string (`YYYY-MM-DD`) — nothing else; the pointer holds no path, and the project's `Taskfile.yml` needs no edit.
+5. Update persistent framework memory (and deployment notes) with the current agent name, resolved working-copy location, and update timestamp.
 
 `/switch-agent [agent-id]` runs this same procedure on demand, unconditionally
 (steps 1–5 above, without first checking whether identity actually differs)
@@ -863,19 +816,20 @@ The lifecycle commands for this model (full command spec:
 `CODE-OF-CONDUCT.md` §4).
 
 - **`create <name>`** is the explicit, named entry point for the
-  instantiation procedure (`INSTANTIATION-GUIDE.md`) — resolves
-  `agent-source`, builds a fresh working copy there, and writes
-  `<app-name>.catalyst`. Refuses if a pointer file or an in-project
+  instantiation procedure (`INSTANTIATION-GUIDE.md`) — resolves the
+  agent-owned location, builds a fresh working copy there, writes
+  `<app-name>.catalyst` (no path in it), creates the `.criterion`
+  symlink, and adds `/.criterion` to the project's `.gitignore`. Refuses if a pointer file or an in-project
   `.criterion/` already exists here — that's `/project import
   --force`'s job, not `create`'s.
 - **`remove <name>`** un-links locally only: deletes the project's
-  `<app-name>.catalyst` (and, on the fallback, stops treating the
-  in-project `.criterion/` as active). The working copy itself, this
+  `<app-name>.catalyst` and the `.criterion` symlink (on the fallback,
+  it stops treating the in-project `.criterion/` as active). The working copy itself, this
   agent's memory note, and any `criterion` repo are all left exactly as
   they are — never delete, retire in place (`rr-META-000004-UVqkd7cL`), same
-  principle as roadmap/user retirement.
-- **`remove <name> force`** additionally deletes the working copy at
-  `agent-source` and this agent's memory note for the project. This is
+  principle as user retirement (§11).
+- **`remove <name> force`** additionally deletes the working copy (agent-owned,
+  or the in-project fallback) and this agent's memory note for the project. This is
   the one genuinely destructive path here — confirm explicitly before
   proceeding, the same as `/criterion create`'s repo creation or
   `--force` push. It never touches a `criterion` repo: that's a
@@ -883,16 +837,17 @@ The lifecycle commands for this model (full command spec:
   outside the blast radius of a local removal.
 - **`export <name> [file]`** reads every file under the working copy and
   writes one JSON bundle — relative path → file content, plus the
-  pointer fields (minus `agent-source`, which is meaningless outside the
-  exporting machine). Default filename when omitted:
-  `<name>-catalyst-export-<UTC timestamp>.json`, written to the current
-  directory.
+  pointer fields (never a path, which is meaningless outside the
+  exporting machine — a legacy `agent-source` is dropped). Default
+  filename when omitted: `<name>-catalyst-export-<UTC timestamp>.json`,
+  written to the current directory.
 - **`import <file>`** installs a bundle into the current project — same
   refusal condition as `create` if a deployment already exists here.
-  Resolves a fresh `agent-source` (never the exporting machine's), writes
-  every bundled file there, writes `<app-name>.catalyst` with the
-  bundle's pointer fields carried over as-is, and appends one journal
-  entry for the import.
+  Resolves this agent's own owned location on this machine (never the
+  exporting machine's), writes every bundled file there, creates the
+  `.criterion` symlink (with `/.criterion` gitignored), writes
+  `<app-name>.catalyst` with the bundle's pointer fields carried over
+  as-is, and appends one journal entry for the import.
 - **`import <file> force`** is the one case allowed to proceed even when
   a deployment already exists here — it overwrites it. Warn what's about
   to be replaced and confirm explicitly first, same tier of
@@ -924,7 +879,7 @@ file (`TEMPLATE-<TYPE>-v2.md`, never an edit to `v1`), never a
 subdirectory. The artifact-type root above it accepts files *and*
 folders at arbitrary depth, precisely because different artifact types
 need different sub-organization (e.g. rule documents nested by domain,
-roadmap files one per named roadmap) — this rule fixes the *shape*
+one file per named instance of some module entity type) — this rule fixes the *shape*
 `templates/` + `README.md` + `<type>.md` provide, not how the actual
 artifacts underneath are arranged.
 
@@ -955,21 +910,18 @@ the same shape for its own `rules-of-work-items.md` (§8, INV-22).
   group rules, never as a top-level sibling), `README.md`,
   `Rules-of-Rules.md`, `rules.md`, free-form rule documents (`[...]`,
   typically nested by domain, e.g. `business/business-rules.md`).
-- `requirements/`, `features/` — unchanged position (top-level, siblings
-  of `rules/`), each gains the `templates/` treatment.
-- `reconciliations/` — new top-level folder, sibling of `requirements/`/
-  `features/`, not nested under `work-items/`: `RECON-NNNNNN` cases are
-  triggered by `/criterion push`'s own mechanism (§13), not agile
-  process (§8), and are never themselves work (§16).
+- The active module's artifact-type folders (`<folder>/`, one per entity
+  type, from each entity type's ETD `folder`) — top-level siblings of
+  `rules/` unless the module places them under `development/`, each with
+  the full `templates/` treatment. Where each one sits is the active
+  module's meta-rules (`MODULE-SPECIFICATION.md` §6.1).
+- `reconciliations/` — top-level folder, sibling of the module's
+  artifact-type folders, not nested under `work-items/`: `RECON-NNNNNN`
+  cases are triggered by `/criterion push`'s own mechanism (§13), not
+  agile process (§8), and are never themselves work (§16).
 - `workflows/` — top-level folder, sibling of `reconciliations/`:
   `WORKFLOW-NNNNNN` process-definition documents, core (not gated behind
   any plugin) and never themselves work (§19).
-- `steps/` — top-level folder, sibling of `requirements/`: `STEP-NNNNNN`
-  execution records, each naming exactly one parent `REQ-NNNNNN` (§21).
-- `tests/` — top-level folder, sibling of `requirements/`/`steps/`:
-  `TEST-NNNNNN` development artifacts, each carrying its own `Targets`/
-  `Domain` plus optional `(0,n)` links to the `REQ-`/`STEP-` it verifies
-  (§22).
 - `IAM/` — new top-level folder replacing bare
   `development/users.json`/`roles.json`; holds `users/` and `roles/`,
   each shaped exactly like any other artifact type (§11), including the
@@ -983,11 +935,12 @@ the same shape for its own `rules-of-work-items.md` (§8, INV-22).
   plugin's own install, sourced from its own repository. Not subject to
   the `templates/`+catalog shape — a plugin owns its own internal
   structure.
-- `development/` — `roadmaps/`, `bugs/`, `house-keeping/`, `meta-tags/`
-  each promoted to a full artifact-type folder (previously bugs/
-  house-keeping/meta-tags lived as loose files directly under
-  `development/`); `BACKLOG.md`, `README.md`, `journal.jsonl` stay flat,
-  cross-cutting, not artifact types themselves.
+- `development/` — `meta-tags/` promoted to a full artifact-type folder
+  (previously meta-tags lived as loose files directly under
+  `development/`), plus any module artifact-type folders the active
+  module places here; `README.md`, `journal.jsonl` (and any generated
+  report the module adds) stay flat, cross-cutting, not artifact types
+  themselves.
 - `work-items/` — **not part of the core layout** (§8, INV-22). Only
   exists once a project-management-type plugin extending
   `plugins/_prototyping/project-management/agile/`'s schema is
@@ -1010,9 +963,9 @@ of the resolution living only in an ephemeral sub-agent proposal.
 
 **Never itself work.** Like `WORKFLOW-` (§19), a `RECON-` carries no
 `Targets` rule field and is exempt from the chain invariant's
-epic→story→task→REQ/BUG/HK→rule requirement — its chain runs sideways,
-via an `Entity` field naming the artifact actually in dispute, not
-downward to a rule.
+epic→story→task→active-module artifact→rule path — its chain
+runs sideways, via an `Entity` field naming the artifact actually in
+dispute, not downward to a rule.
 
 **May optionally name a guiding workflow.** A `Workflow` field can cite
 a `WORKFLOW-NNNNNN` (§19) whose `## Steps`/`## Gates / exit criteria`
@@ -1034,8 +987,8 @@ entity stays unmerged; everything else proceeds.
 a clarifying question, a revised proposal) is a new row appended to the
 same file's `## Revisions` section — never a new file per round, unlike
 `templates/`'s own `TEMPLATE-<TYPE>-vN.md` versioning. The file is
-edited in place across its lifecycle the same way `BUG-`/`REQ-` already
-are, and every edit is journaled with its before/after content hash
+edited in place across its lifecycle the same way the active module's
+living artifacts already are, and every edit is journaled with its before/after content hash
 (INV-17) — that already gives the audit trail; no second versioning
 scheme is needed on top.
 
@@ -1066,7 +1019,7 @@ was actually allowed to decide*, not just who happened to type the
 command.
 
 **Layout and ID**: `reconciliations/`, top-level, sibling to
-`requirements/`/`features/` (§15's "Where every artifact type actually
+the active module's artifact-type folders (§15's "Where every artifact type actually
 sits"), full `templates/`+catalog treatment (INV-20). ID format
 `RECON-(NNNNNN)`, 6 digits, its own global sequence, never reused —
 same scheme as every other numbered type (§3).
@@ -1147,13 +1100,14 @@ clean.
 Spawned via the `Agent` tool with `isolation: "worktree"` — one agent,
 not a four-eyes pair (see "Why not four-eyes" below). Since
 `.criterion/` lives entirely outside this repository, in agent-owned
-space resolved through `catalyst.catalyst`'s `agent-source` field
-(INV-6), a worktree checkout has no path to it — except that
-`catalyst.catalyst` itself is a tracked file and will still be present
-in the checkout. The agent's prompt must therefore state explicit,
-forceful prohibitions, not rely on the worktree's isolation alone:
-never resolve any `*.catalyst` pointer's `agent-source` field or read
-anything under a path so resolved; never read anything named
+space reached only through the gitignored `.criterion` symlink at the
+repository root (INV-6), a worktree checkout has no path to it — the
+symlink is untracked, so absent there, though `catalyst.catalyst` itself
+is a tracked file and will still be present in the checkout. The agent's
+prompt must therefore state explicit, forceful prohibitions, not rely on
+the worktree's isolation alone: never compute the agent-owned location,
+never resolve any `*.catalyst` pointer's legacy `agent-source` field, and
+never read anything under a path so resolved; never read anything named
 `.criterion/` under any form it might be reached; never consult `git
 log` or commit messages, which narrate exactly what changed in the
 live deployment — current file content only.
@@ -1221,8 +1175,8 @@ access to.
 
 `WORKFLOW-NNNNNN` (`templates/workflow.template.md`) is a
 process-definition document, not a unit of work: it documents a
-repeatable multi-step procedure (e.g. "how a bug moves from triage to
-resolution," or how to work through a particular recurring kind of
+repeatable multi-step procedure (e.g. how one of the active module's
+artifacts moves from triage to resolution, or how to work through a particular recurring kind of
 reconciliation). It carries `Status` (`Active`/`Deprecated`) reflecting
 whether the process is currently in use, never a work-tracking
 lifecycle, and is never itself "done." Used to live inside
@@ -1251,9 +1205,8 @@ the same way any other artifact type's instance gets registered.
 ## 20. `rr-META-000020-UVqkd7cL` Entity IDs carry their signer's userid
 
 Once a registered user has a `userid` (§11, INV-26), every rule,
-`BUG-`/`REQ-`/`HK-`, `FEAT-`, `RM-`, `WORKFLOW-`, and `RECON-` ID
-carries that user's `userid` as a trailing `-XXXXXXXX` segment — always
-the final segment of the id, after any type-specific suffix a section
+`WORKFLOW-`, `RECON-`, and active-module `<PREFIX>-` ID carries that
+user's `userid` as a trailing `-XXXXXXXX` segment — always the final segment of the id, after any type-specific suffix a section
 above already defines (a rule's `[-parent-id]`, §3). Assigned once, at
 the same moment the entity's `Signed-off-by` (or, for a rule, the
 authorship resolved below) is determined; never reassigned, never
@@ -1280,7 +1233,7 @@ most recently registered. **This is a known, documented limitation**,
 not a permanent design choice — a deployment with real multi-author
 rule authorship will get an inaccurate attribution under this fallback,
 and should treat adding a real per-rule authorship field as its own
-future `HK-` item once that limitation actually bites.
+future tracked maintenance item once that limitation actually bites.
 
 **Domains are out of scope.** A domain has no numeric sequence — it's
 identified by its `CODE` alone (§7), embedded as a substring inside
@@ -1289,27 +1242,260 @@ every rule id that cites it. There is no id to suffix.
 **Cross-reference impact.** Renaming an id (retroactive migration, or
 the initial rollout of this rule) means updating every place that id is
 cited by exact string: its own heading/field, its type's index/catalog
-row, every structured cross-reference field (`Targets`, `Feature`,
-`Roadmap`, `Requirement(s)`, `Steps`, `Linked`, `Entity`, `Workflow`), and
+row, every structured cross-reference field (`Targets`, `Entity`,
+`Workflow`, and every `ref` field the active module's ETDs define), and
 every free-text citation in `## Related`/`## Notes`/prose — there is no
 dedicated cross-reference-checking script today (`/check-rules` and
 `/audit` are agent-judgment procedures), so this is the agent's
 responsibility to verify by direct search, not something CI catches
-automatically. Two things a rename must never touch:
-`development/journal.jsonl` (INV-17 — append-only; historical entries
-correctly keep citing the pre-rename form forever) and
-`development/BACKLOG.md` (INV-14 — machine-regenerated; run
-`/show-backlog` after the rename instead of hand-editing it).
+automatically. A rename must never touch `development/journal.jsonl`
+(INV-17 — append-only; historical entries correctly keep citing the
+pre-rename form forever), nor hand-edit any machine-regenerated report
+(INV-14) — regenerate it with its own command after the rename instead.
+
+## 21. `rr-META-000021-UVqkd7cL` — owned by the active module
+
+`rr-META-000021-UVqkd7cL` — owned by the active module (`MODULE-SPECIFICATION.md`
+§6.1); never reused.
+
+## 22. `rr-META-000022-UVqkd7cL` — owned by the active module
+
+`rr-META-000022-UVqkd7cL` — owned by the active module (`MODULE-SPECIFICATION.md`
+§6.1); never reused.
+
+## 23. `rr-META-000023-UVqkd7cL` Artifact updates happen atomically, as work happens
+
+Every catalyst artifact — an active-module artifact's own record, a
+`Status` field, a journal entry — is updated **as the work it describes
+actually happens**, at the smallest atomic unit practical, not
+reconstructed retroactively in one batch once work is already done. This
+applies to every artifact update, whether the agent or a user is
+narrating their own manual work: an artifact recording a unit of work is
+opened when that work starts and closed when it finishes, not
+backfilled after the fact (the active module's meta-rules may state
+this narrowly for its own entity types); a journal entry is appended as each
+qualifying action completes (§12), never accumulated and appended in
+bulk at session end; a `Status` field moves the moment the real-world
+state it tracks moves.
+
+**Delayed, batched updating is allowed — but only when explicitly
+stated before the work begins.** Whoever is about to do the work (agent
+or human) says so up front — "I'll batch these updates and record them
+afterward" — before starting, not as a retroactive justification once
+the work is already underway or finished. Absent that explicit
+statement, real-time, atomic updating is the default; silently
+batching bookkeeping for later convenience is not a judgment call left
+to the agent.
+
+**Added 2026-09-20**
+(`framework/kernel/migrations/0.32.0/atomic-artifact-updates.md`).
+Behavioural only — no existing artifact's shape or content changes;
+nothing here to retroactively backfill.
+
+---
+
+### From module software-engineering
+
+This module's development artifacts are bugs (`BUG-`), requirements
+(`REQ-`), house-keeping items (`HK-`) and tests (`TEST-`), all
+rule-linked; its non-rule-linked entity types are features (`FEAT-`),
+roadmap items (`RM-`) and steps (`STEP-`), plus the machine-generated
+backlog (`development/BACKLOG.md`). The module's grounding type is the
+kernel rule: a development artifact grounds to one or more rules, each
+of which belongs to a domain.
+
+---
+
+## Addendum to §6 (`rr-META-000006-UVqkd7cL`): the development-artifact ID scheme
+
+Format: **`(BUG|REQ|HK|TEST)-(NNNNNN)`** — see the deployed
+`CODE-OF-CONDUCT.md`. `NNNNNN` is a zero-padded 6-digit sequence number,
+global within its own type, assigned in creation order, never reused.
+`TEST-NNNNNN` joined this format at framework `0.30.0` (§22) — like
+every other member, it carries its own `Targets`/`Domain` and is
+subject to `CODE-OF-CONDUCT.md` §1 ("no development without a targeted
+rule"). See §9 for the separate, non-rule-linked `FEAT-` scheme used
+for feature entries — that one is not a member of this format.
+
+## Addendum to §7 (`rr-META-000007-UVqkd7cL`): domains proposed by development work
+
+A bug or requirement is not required to fit an existing domain — it may
+propose a new one, but only by following the kernel's §7 standard, in
+every rule document.
+
+## 9. `rr-META-000009-UVqkd7cL` Feature entries have their own, non-rule-linked scheme
+
+Format: **`FEAT-(NNNNNN)`** — zero-padded 6-digit sequence number, global,
+assigned in creation order, never reused. Same descriptive-naming
+requirement as every other artifact and work-item ID (`INSTANTIATION-GUIDE.md`
+§1): the name and filename are `FEAT-NNNNNN-<short-summary>` /
+`FEAT-NNNNNN-<short-summary>.md`, never the bare ID. Stored one file per
+entry under `features/`, indexed in `features/features.md`, using the
+module's `templates/features.template.md` → the current
+`features/templates/TEMPLATE-FEATURE-vN.md`.
+
+A feature entry documents a possible future capability — an idea or
+roadmap item, not a claim about current or required behavior. It is
+**not** one of the development artifacts in §6 and is exempt from:
+
+- §1 (`rr-META-000001-UVqkd7cL`)'s conflict check,
+- `CODE-OF-CONDUCT.md` §1 ("no development without a targeted
+  rule"), and
+- ever carrying a `Targets` or `Domain` field.
+
+It is never "done" against a rule and is never itself implemented. Once
+work on a feature actually starts, open a `REQ-NNNNNN` requirement (§6)
+that targets or proposes the rule(s) the feature requires — that
+requirement, not the feature entry, is what gets vetted against existing
+rules, assigned a domain, and measured for completion. The feature entry
+records which requirement(s) resulted from it, for traceability back to
+the original idea, but that link is informational, not a rule target.
+
+## 10. `rr-META-000010-UVqkd7cL` Roadmap items have their own, source-tracked scheme
+
+Format: **`RM-(NNNNNN)`** — zero-padded 6-digit sequence number, **global
+across every named roadmap**, assigned in the order `/roadmap-add`/
+`/roadmap-update`/`/roadmap-merge` first adds each item, never reused.
+Unlike a rule or a dev-artifact but like `FEAT-NNNNNN`, an `RM-` item is a
+table row, not its own file — but unlike `FEAT-NNNNNN` (one flat
+`features/features.md`), roadmap rows are partitioned across **one file
+per named roadmap**: `development/roadmaps/<name>.md`
+(the module's `templates/roadmap.template.md`), each registered in
+`development/roadmaps/roadmaps.md`. A project may hold several named
+roadmaps at once (e.g. a product roadmap and an infra roadmap, ingested
+and updated independently); an `RM-NNNNNN` ID stays unique and resolvable
+regardless of which named roadmap's file it lives in.
+
+A roadmap item records that an external source (a product roadmap, a
+planning doc, a stakeholder request) named this as a future direction —
+not a claim about current or required behavior, and not itself one of the
+development artifacts in §6. It is exempt from:
+
+- §1 (`rr-META-000001-UVqkd7cL`)'s conflict check,
+- `CODE-OF-CONDUCT.md` §1 ("no development without a targeted
+  rule"), and
+- ever carrying a `Targets` or `Domain` field.
+
+A roadmap item is never "done" against a rule and is never itself
+implemented. Once a human decides it's worth tracking inside catalyst,
+`/create-feature` opens a `FEAT-NNNNNN` for it (§9), citing the `RM-NNNNNN` ID
+in the feature's `Roadmap` field — that feature entry, and the one or more
+`REQ-NNNNNN` requirements it may later become (§21 formalizes the
+expectation that a roadmap item of real size decomposes into more than one
+requirement), are what actually get vetted, assigned a domain, and
+measured.
+
+**`Linked` is a list, not a single ID**: every `FEAT-`/`REQ-NNNNNN`
+currently associated with that row, comma-separated, in the order each was
+linked. Each roadmap file's `Status`/`Linked` columns mirror every one of
+those, refreshed by `/show-backlog`: `Not triaged` while nothing is linked;
+`Triaged` while only a `FEAT-NNNNNN` is linked; `In progress` once at least
+one `REQ-NNNNNN` is linked and at least one of them isn't yet `done`;
+`Done` only once **every** linked `REQ-NNNNNN` is `done` — so a roadmap
+item's progress stays visible without becoming a second, competing source
+of truth for completion.
+
+A named roadmap itself is never hard-deleted once any of its rows carry a
+`Linked` value — see §4's retirement principle. `/roadmap-remove` retires
+it in place instead (marks it retired, keeps every row and ID resolvable)
+whenever removing it outright would break a `FEAT-`/`REQ-` cross-reference.
+`development/roadmaps/roadmaps.md` may legitimately be empty — unlike the
+kernel's `IAM/users/users.json` (§11), a project with no roadmap yet is
+complete.
+
+## Addendum to §11 (`rr-META-000011-UVqkd7cL`): signed module entities
+
+Every development artifact (`BUG-`/`REQ-`/`HK-`/`TEST-`), feature entry,
+roadmap item and step carries a `Signed-off-by` field recording the
+outcome of the kernel's advisory signer check (§11), and its signer's
+`userid` as its id suffix (§20). A named roadmap is retired in place,
+never deleted (§10) — the same "never delete, retire in place" principle
+§11 applies to `/user-remove`.
+
+## Addendum to §12 (`rr-META-000012-UVqkd7cL`): journal entries for module entities
+
+A journal entry written by a module command names the module entity in
+`artifact` and its files in `files`, e.g.:
+
+```json
+{
+  "command": "/create-req",
+  "action": "create",
+  "artifact": "REQ-000001",
+  "targets": ["fw-STRUCTURE-003"],
+  "files": [
+    {"path": "requirements/REQ-000001-foo.md", "before": null, "after": "a1b2c3..."},
+    {"path": "requirements/requirements.md", "before": "d4e5f6...", "after": "g7h8i9..."}
+  ]
+}
+```
+
+`targets` is `[]` for this module's non-rule-linked entities (`FEAT-`,
+`RM-`, `STEP-`) — a step inherits its parent's rule target rather than
+naming its own (§21).
+
+## Addendum to §13 (`rr-META-000013-UVqkd7cL`): module artifacts in repoed sync
+
+- **Identity migration (`git_username`).** The artifacts whose
+  `Signed-off-by` is rewritten in place are this module's living
+  documents: `bugs/`, `requirements/`, `house-keeping/`, `tests/`,
+  `steps/`, `features/` and roadmap rows.
+- **Signed-object scoping.** This module's shared registries/indexes —
+  `requirements.md`, `bugs.md`, `house-keeping.md`, `tests.md`,
+  `steps.md`, `features.md`, `roadmaps.md` and `BACKLOG.md` — are not
+  signed by one person and are never filtered on their own.
+
+## Addendum to §15 (`rr-META-000015-UVqkd7cL`): where this module's artifact types sit
+
+- `requirements/`, `features/` — top-level, siblings of `rules/`, each
+  with the full `templates/` treatment.
+- `steps/` — top-level folder, sibling of `requirements/`: `STEP-NNNNNN`
+  execution records, each naming exactly one parent `REQ-NNNNNN` or
+  `BUG-NNNNNN` (§21).
+- `tests/` — top-level folder, sibling of `requirements/`/`steps/`:
+  `TEST-NNNNNN` development artifacts, each carrying its own `Targets`/
+  `Domain` plus optional `(0,n)` links to the `REQ-`/`STEP-` it verifies
+  (§22).
+- `development/` — `roadmaps/`, `bugs/`, `house-keeping/` each a full
+  artifact-type folder (previously bugs and house-keeping items lived as
+  loose files directly under `development/`); `BACKLOG.md` stays flat,
+  cross-cutting, not an artifact type itself. Roadmap files are one per
+  named roadmap (§10) — an example of the free-form `[...]` area.
+- `reconciliations/` and `workflows/` (kernel) sit as siblings of
+  `requirements/`/`features/`.
+
+## Addendum to §16 (`rr-META-000016-UVqkd7cL`): reconciliation and module artifacts
+
+A `RECON-` is exempt from the chain invariant's
+epic→story→task→`REQ`/`BUG`/`HK`→rule requirement. Its file is edited in
+place across its lifecycle the same way `BUG-`/`REQ-` files already are.
+
+## Addendum to §19 (`rr-META-000019-UVqkd7cL`): workflows for module processes
+
+A typical module workflow documents, for example, how a bug moves from
+triage to resolution.
+
+## Addendum to §20 (`rr-META-000020-UVqkd7cL`): module IDs carry their signer's userid
+
+- Every `BUG-`/`REQ-`/`HK-`/`TEST-`, `FEAT-`, `RM-` and `STEP-` ID
+  carries its signer's `userid` as the trailing segment, exactly like the
+  kernel's own entities; each has a resolvable signer.
+- The rule-authorship limitation §20 documents should be tracked as its
+  own future `HK-` item once it actually bites.
+- A rename also updates this module's structured cross-reference fields:
+  `Feature`, `Roadmap`, `Requirement(s)`, `Steps`, `Tests`, `Linked`.
+- A rename never hand-edits `development/BACKLOG.md` (INV-14 —
+  machine-regenerated); run `/show-backlog` after the rename instead.
 
 ## 21. `rr-META-000021-UVqkd7cL` Steps record a requirement's or bug's actual implementation work
 
-`STEP-NNNNNN` (`templates/step.template.md`) is the itemized record of one
-concrete unit of work performed toward a specific `REQ-NNNNNN` or
-`BUG-NNNNNN` — the files touched, commands run, and how it was verified.
-It exists so a requirement's or a bug's real implementation history is
-structured and independently referenceable, not only prose buried in a
-`## Design / implementation plan` / `## Fix plan` section or the
-journal's free-text `intent`.
+`STEP-NNNNNN` (the module's `templates/step.template.md`) is the itemized
+record of one concrete unit of work performed toward a specific
+`REQ-NNNNNN` or `BUG-NNNNNN` — the files touched, commands run, and how
+it was verified. It exists so a requirement's or a bug's real
+implementation history is structured and independently referenceable,
+not only prose buried in a `## Design / implementation plan` /
+`## Fix plan` section or the journal's free-text `intent`.
 
 Format: **`STEP-(NNNNNN)`** — zero-padded 6-digit sequence number, global
 across every requirement and bug, assigned in creation order, never
@@ -1324,12 +1510,13 @@ treatment (`templates/`, `README.md`, `steps.md` index).
 **Always names exactly one parent — a requirement or a bug** — the
 `Parent` field, required, never blank. A step with nothing to belong to
 isn't a step; open the requirement or bug first (`/create-req`/
-`/create-bug`), then steps under it.
+`/create-bug`), then steps under it. A step is opened as work on its
+parent actually starts, not in advance of it (§23).
 
 Exempt from:
 
 - §1 (`rr-META-000001-UVqkd7cL`)'s conflict check,
-- `rules-of-development.md` §1 ("no development without a targeted
+- `CODE-OF-CONDUCT.md` §1 ("no development without a targeted
   rule"), and
 - ever carrying a `Targets` or `Domain` field of its own —
 
@@ -1339,15 +1526,15 @@ own. A step's own `Status` (`planned`/`in-progress`/`done`/`abandoned`)
 tracks that one unit of work's completion, independent of the parent's
 own `Status` — a requirement or bug stays open/`in-progress` while its
 steps range across every status, and isn't closeable as `done`/`fixed`
-(`rules-of-development.md` §7) until every one of its steps is `done` or
+(`CODE-OF-CONDUCT.md` §7) until every one of its steps is `done` or
 explicitly `abandoned` with a reason.
 
 **A `Steps` field, on both the requirement and the bug template**
-(`rules-of-development.md`) lists every `STEP-NNNNNN` opened against
+(`CODE-OF-CONDUCT.md`) lists every `STEP-NNNNNN` opened against
 that instance, in creation order — populated as steps are opened, never
 guessed or backfilled from unrelated work. A requirement or bug with
 real implementation work underway and zero steps recorded is itself
-incomplete documentation, the same posture `rules-of-development.md`
+incomplete documentation, the same posture `CODE-OF-CONDUCT.md`
 §2's `Test plan` requirement already takes toward untested rules.
 
 **Roadmap items decompose the same way, one level up.** A roadmap row's
@@ -1374,13 +1561,14 @@ whichever bug opens first.
 
 ## 22. `rr-META-000022-UVqkd7cL` Tests are development artifacts that may verify requirements and/or steps
 
-`TEST-NNNNNN` (`templates/test.template.md`) joined the `(BUG|REQ|HK|TEST)`
-development-artifact format at framework `0.30.0` (§6) — unlike `STEP-`
-(§21), it is **not** exempt from `rules-of-development.md` §1: a test
-always carries its own `Targets` (one or more rule IDs) and `Domain`,
-vetted the same way a bug or requirement is. Stored one file per
-instance under `tests/`, top-level, sibling of `requirements/`/`steps/`,
-indexed in `tests/tests.md`, full INV-20 treatment.
+`TEST-NNNNNN` (the module's `templates/test.template.md`) joined the
+`(BUG|REQ|HK|TEST)` development-artifact format at framework `0.30.0`
+(§6) — unlike `STEP-` (§21), it is **not** exempt from
+`CODE-OF-CONDUCT.md` §1: a test always carries its own `Targets` (one or
+more rule IDs) and `Domain`, vetted the same way a bug or requirement
+is. Stored one file per instance under `tests/`, top-level, sibling of
+`requirements/`/`steps/`, indexed in `tests/tests.md`, full INV-20
+treatment.
 
 **Two additional, independent link fields, each `(0,n)`:**
 
@@ -1397,7 +1585,7 @@ other structured cross-reference — an id that doesn't resolve is
 flagged, no bespoke check needed.
 
 **Many-to-many, not ownership.** Unlike a step's single required
-`Requirement` (§21), a test's `Requirements`/`Steps` lists impose no
+`Parent` (§21), a test's `Requirements`/`Steps` lists impose no
 cardinality constraint on the other side — one requirement may be
 verified by several tests, and one test may verify several requirements
 and/or steps at once (e.g. one integration test exercising work spread
@@ -1406,10 +1594,18 @@ name requirements, steps, both, or neither.
 
 **Back-referenced, like a requirement's `Steps` list.** A requirement
 gains a `Tests` field, and a step gains a `Tests` field
-(`templates/requirements.template.md`, `templates/step.template.md`) —
-each the list of `TEST-NNNNNN` that name it, in creation order.
-`/create-test` populates both sides in one action: it fills the new
-test's own `Requirements`/`Steps` fields, and appends the new test's ID
-to the `Tests` field of every requirement/step it just named. Never
-hand-edited directly on the requirement/step side — always kept in sync
-by whichever command changes the test's own links.
+(the module's `templates/requirements.template.md`,
+`templates/step.template.md`) — each the list of `TEST-NNNNNN` that name
+it, in creation order. `/create-test` populates both sides in one
+action: it fills the new test's own `Requirements`/`Steps` fields, and
+appends the new test's ID to the `Tests` field of every requirement/step
+it just named. Never hand-edited directly on the requirement/step side —
+always kept in sync by whichever command changes the test's own links.
+
+## Addendum to §23 (`rr-META-000023-UVqkd7cL`): steps are recorded as work happens
+
+A step (§21) is opened when its unit of work starts and closed when it
+finishes, not backfilled after the fact — `STEP-NNNNNN`'s own definition
+states this narrowly ("opened as work on its parent actually starts, not
+in advance of it"); the kernel's §23 generalizes the same posture to
+every artifact update.

@@ -323,6 +323,6 @@ opens in the editor area beside the current view — the same surface
 generic bottom Terminal panel shared by every other tool. Targeted by
 `REQ-000009-UVqkd7cL`.
 
-## Known Bugs — Quick Index
+## Linked Artifacts — Quick Index
 
 *(none yet — no implementation exists to have found bugs in)*
