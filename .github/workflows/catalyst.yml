@@ -18,7 +18,11 @@ jobs:
         with:
           python-version: "3.11"
       - name: fetch the journal's pinned blobs
-        run: git fetch origin refs/catalyst/journal:refs/catalyst/journal || true
+        run: |
+          # a brand-new repository has no pins yet; any other failure fails
+          if git ls-remote --exit-code origin refs/catalyst/journal >/dev/null; then
+            git fetch origin refs/catalyst/journal:refs/catalyst/journal
+          fi
       - name: catalyst check
         run: python3 bin/catalyst.pyz --working-copy . check
       - name: nothing recorded was lost in the merge
