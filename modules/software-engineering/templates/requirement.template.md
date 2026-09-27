@@ -98,3 +98,34 @@ Capture any requirements that affect the interface in a specific UI area.
   specific screen or component based on user selections or state.
 - **Initialization Rules**: sets default values for a specific form or
   screen state.
+
+## Business rules
+
+Capture the domain or workflow constraints that govern the feature.
+
+- ...
+- ...
+
+## Non-functional requirements
+
+- **Accessibility**: ...
+- **Security**: ...
+- **Performance**: ...
+- **Observability**: ...
+
+## Design / implementation plan
+
+Brief — files touched, approach.
+
+## Test plan
+
+Per rule targeted or introduced, the specific test that will cover it. A
+rule with no test is not "done" regardless of whether the code exists.
+
+## Open questions
+
+- ...
+
+## Related
+
+Other `BUG-`/`REQ-`/`HK-`/`FEAT-`/`TEST-` IDs, or rule IDs.

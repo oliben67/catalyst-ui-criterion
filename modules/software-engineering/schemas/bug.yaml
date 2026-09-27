@@ -2,6 +2,7 @@ id_prefix: BUG
 name: Bug
 plural_name: Bugs
 folder: bugs
+location: development
 grounding: required
 grounding_field: Targets
 

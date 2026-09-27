@@ -151,6 +151,16 @@ A journal entry written by a module command names the module entity in
 `RM-`, `STEP-`) — a step inherits its parent's rule target rather than
 naming its own (§21).
 
+Each entry states its ceremony tier (`CODE-OF-CONDUCT.md` §3 "Ceremony
+tiers", INV-27) with `--tier`: `feature` for a requirement's work,
+`fix` for a bug's. A **chore** — no rule's behaviour changes — has no
+artifact at all: its one entry names the change in `artifact`, carries
+`"tier": "chore"` and `targets: []`, the explicit statement that it
+serves no rule (kernel §12: every entry names the rules it serves or
+explicitly carries none). If a chore turns out to change behaviour, it
+stops being one: open the bug or requirement then, and journal the rest
+under that tier.
+
 ## Addendum to §13 (`rr-META-013`): module artifacts in a shared deployment
 
 - **Union-merged indexes.** The indexes of this module's per-file types —
@@ -249,10 +259,16 @@ explicitly `abandoned` with a reason.
 **A `Steps` field, on both the requirement and the bug template**
 (`CODE-OF-CONDUCT.md`) lists every `STEP-NNNNNN` opened against
 that instance, in creation order — populated as steps are opened, never
-guessed or backfilled from unrelated work. A requirement or bug with
-real implementation work underway and zero steps recorded is itself
-incomplete documentation, the same posture `CODE-OF-CONDUCT.md`
-§2's `Test plan` requirement already takes toward untested rules.
+guessed or backfilled from unrelated work. **How many steps follows the tier** (`CODE-OF-CONDUCT.md` §3, INV-27).
+A requirement — feature-tier work — has its steps opened as the work
+happens and cannot close without at least one: its ETD marks `Steps`
+`required_when_closed`, and `catalyst validate` reports a closed
+requirement with none as `closed-incomplete`. A bug — fix-tier work — may
+record steps but need not. A chore has no parent, so no steps. A
+requirement with real implementation work underway and zero steps
+recorded is incomplete documentation, the same posture
+`CODE-OF-CONDUCT.md` §2's `Test plan` requirement already takes toward
+untested rules; never backfill steps to satisfy the check (§23).
 
 **Roadmap items decompose the same way, one level up.** A roadmap row's
 `Linked` field (§10) names one or more `FEAT-`/`REQ-NNNNNN` — a roadmap

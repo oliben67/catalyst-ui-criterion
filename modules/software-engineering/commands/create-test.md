@@ -3,9 +3,13 @@ description: Create a new test artifact and register it in tests/tests.md
 argument-hint: <description> [--targets <rule-id>...] [--domain <CODE>] [--requirements <REQ-id>...] [--steps <STEP-id>...]
 ---
 
-Create a new test artifact. Full spec:
+Create a new test artifact. Sources:
 `.criterion/CODE-OF-CONDUCT.md` §3/§4, `Rules-of-Rules.md` §22,
 template: the highest-versioned `.criterion/tests/templates/TEMPLATE-TEST-vN.md`.
+First run `catalyst spec create-test` and follow it: it prints this command's
+part of `CODE-OF-CONDUCT.md` §4, the canonical text. Open the sources
+above in full only when the spec points elsewhere or a judgment needs
+the Rules-of-Rules sections they cite.
 Input: $ARGUMENTS
 
 1. Must be vetted against every rule document (`Rules-of-Rules.md` §1) and

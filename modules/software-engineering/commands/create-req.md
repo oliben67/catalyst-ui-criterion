@@ -3,9 +3,13 @@ description: Create a new requirement artifact and register it in requirements/r
 argument-hint: <description> [--targets <rule-id>...] [--domain <CODE>]
 ---
 
-Create a new requirement artifact. Full spec:
+Create a new requirement artifact. Sources:
 `.criterion/CODE-OF-CONDUCT.md` §3/§4, template: the highest-versioned
 `.criterion/requirements/templates/TEMPLATE-REQUIREMENT-vN.md`.
+First run `catalyst spec create-req` and follow it: it prints this command's
+part of `CODE-OF-CONDUCT.md` §4, the canonical text. Open the sources
+above in full only when the spec points elsewhere or a judgment needs
+the Rules-of-Rules sections they cite.
 Input: $ARGUMENTS
 
 1. Must be vetted against every rule document (`Rules-of-Rules.md` §1) and

@@ -3,8 +3,12 @@ description: Summarize open work/blockers and regenerate development/BACKLOG.md 
 argument-hint: (no arguments)
 ---
 
-Refresh the backlog. Full spec: `.criterion/CODE-OF-CONDUCT.md` §4,
+Refresh the backlog. Sources: `.criterion/CODE-OF-CONDUCT.md` §4,
 template: `.criterion/development/BACKLOG.md`.
+First run `catalyst spec show-backlog` and follow it: it prints this command's
+part of `CODE-OF-CONDUCT.md` §4, the canonical text. Open the sources
+above in full only when the spec points elsewhere or a judgment needs
+the Rules-of-Rules sections they cite.
 Input: $ARGUMENTS
 
 1. Run `catalyst index regen` first, so every entity index reflects the

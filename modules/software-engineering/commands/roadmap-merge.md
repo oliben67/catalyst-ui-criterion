@@ -3,9 +3,13 @@ description: Fold a partial delta file into an existing named roadmap, without f
 argument-hint: <name> <update file>
 ---
 
-Fold a partial delta file into an existing named roadmap. Full spec:
+Fold a partial delta file into an existing named roadmap. Sources:
 `.criterion/CODE-OF-CONDUCT.md` §4, template: the highest-versioned
 `.criterion/development/roadmaps/templates/TEMPLATE-ROADMAP-vN.md`.
+First run `catalyst spec roadmap-merge` and follow it: it prints this command's
+part of `CODE-OF-CONDUCT.md` §4, the canonical text. Open the sources
+above in full only when the spec points elsewhere or a judgment needs
+the Rules-of-Rules sections they cite.
 Input: $ARGUMENTS
 
 1. Parse `$ARGUMENTS` as `<name> <update file>`. If either is missing, ask

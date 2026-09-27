@@ -22,18 +22,37 @@ related but exempt schemes, described after the table.
 
 | Type | Folder | Template | ID prefix |
 |---|---|---|---|
-| Bug | `bugs/` | `templates/bug.template.md` | `BUG-NNNNNN` |
-| Requirement | `requirements/` | `templates/requirements.template.md` | `REQ-NNNNNN` |
-| House-keeping | `house-keeping/` | `templates/house-keeping.template.md` | `HK-NNNNNN` |
+| Bug | `development/bugs/` | `templates/bug.template.md` | `BUG-NNNNNN` |
+| Requirement | `requirements/` | `templates/requirement.template.md` | `REQ-NNNNNN` |
+| House-keeping | `development/house-keeping/` | `templates/house-keeping.template.md` | `HK-NNNNNN` |
 | Test | `tests/` | `templates/test.template.md` | `TEST-NNNNNN` |
 
 House-keeping is this module's one category where "no rule applies" is a
 legitimate answer to `CODE-OF-CONDUCT.md` §1 (pure repo hygiene with no
 bearing on any documented behavior or process) — but it must be stated
-explicitly, not left blank.
+explicitly, not left blank. It stays available for housekeeping worth
+tracking, but a chore (below) no longer needs one.
+
+#### Ceremony tiers
+
+Every change is one of three tiers (`CODE-OF-CONDUCT.md` §9,
+`INVARIANTS.module.md` INV-27), and carries only that tier's ceremony:
+
+| Tier | When | What it needs | Journal |
+|---|---|---|---|
+| **chore** | No rule's behaviour changes: a typo, formatting, a comment, a dependency bump without behaviour change, a documentation fix. | No artifact. | One entry: `catalyst journal append --command chore --action update --tier chore --artifact "<short description>" --intent "<goal>" --file ...`, with no `--target` (`targets: []` — explicitly no rule, INV-5). |
+| **fix** | Restores the behaviour a documented rule already describes. | A `BUG-` targeting that rule; steps optional. | `--tier fix` on its entries. |
+| **feature** | New or changed behaviour. | A `REQ-`, vetted against every rule document and targeting or proposing rules (`rr-META-001`); `STEP-`s opened as the work happens, at least one before it closes; tests as §3's test entries and the rules' test plans require. | `--tier feature` on its entries. |
+
+The agent picks the tier, **states it to the user before starting**, and
+escalates (chore → fix → feature) as soon as the change turns out bigger —
+opening the artifact the new tier needs at that point, never
+retroactively (`INVARIANTS.md` INV-29). When unsure, the higher tier.
+A feature-tier change is a `REQ-`, not a feature entry: a `FEAT-` (below)
+records an idea before any work starts, and becomes a `REQ-` when it does.
 
 Feature entries (`FEAT-NNNNNN`, folder `features/`, template
-`templates/features.template.md` → `TEMPLATE-FEATURE.md`) are a related but
+`templates/feature.template.md` → `TEMPLATE-FEATURE-vN.md`) are a related but
 **separate, non-rule-linked** scheme — see `Rules-of-Rules.md` `rr-META-009`.
 They document possible future work, are not one of the four
 development-artifact types above, and are exempt from `CODE-OF-CONDUCT.md`'s
@@ -63,10 +82,10 @@ work performed toward it (files touched, commands run, how it was
 verified). Like feature entries and roadmap items, a step is exempt from
 `CODE-OF-CONDUCT.md`'s rules (no `Targets`, no `Domain` of its own — it
 inherits its parent's), but unlike them it's created *during* active
-implementation, not before it: a requirement or bug worth calling
-`in-progress` is expected to have at least one step opened against it,
-and isn't closeable as `done`/`fixed` until every one of its steps is
-`done` or `abandoned`. Opened and closed as the work itself happens, not
+implementation, not before it: a requirement (a feature, in tier terms)
+has steps opened as its work happens and cannot close without at least
+one; a bug's steps are optional. Either one isn't closeable as
+`done`/`fixed` until every one of its steps is `done` or `abandoned`. Opened and closed as the work itself happens, not
 batched afterward, per `INVARIANTS.md` INV-29.
 
 Tests (`TEST-NNNNNN`, folder `tests/`, template `templates/test.template.md`)
@@ -169,9 +188,11 @@ its individual file and is reflected in the relevant index file
   **and** every `STEP-NNNNNN` in its `Steps` field is `done` or
   `abandoned` (`Rules-of-Rules.md` `rr-META-021`).
 - **Requirement**: not closeable as "done" until the acceptance criteria and
-  rule targets are reflected in the implementation and tests, **and** every
-  `STEP-NNNNNN` in its `Steps` field is `done` or `abandoned`
-  (`Rules-of-Rules.md` `rr-META-021`).
+  rule targets are reflected in the implementation and tests, its `Steps`
+  field names at least one step (`catalyst validate` reports a closed
+  requirement without one as `closed-incomplete`), **and** every
+  `STEP-NNNNNN` in it is `done` or `abandoned` (`Rules-of-Rules.md`
+  `rr-META-021`).
 - **Step**: not closeable as "done" without its own Verification section
   filled in; `abandoned` requires a reason there instead.
 - **House-keeping**: closeable once its stated verification passes.
@@ -270,7 +291,7 @@ requirement/step file whose `Tests` field changed, and the regenerated
 indexes.
 
 When the user enters `/create-feature: ...`, create a new feature entry
-immediately using `templates/features.template.md` and the ID from
+immediately using `templates/feature.template.md` and the ID from
 `catalyst id next FEAT --as <signer>`, register it in
 `features/features.md` (`catalyst index regen`), and track it as idea/roadmap content, not
 rule-linked development work. Do not prompt for a domain or rule target —
