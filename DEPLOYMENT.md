@@ -38,8 +38,10 @@
   (2026-09-27) `.criterion` is a git submodule of the catalyst-ui
   repository and changes land through pull requests (`catalyst criterion
   push`); the repository's CI runs `catalyst check` and the integrity check.
-  Branch protection is not enabled: the private repository would need GitHub
-  Pro (`catalyst criterion protect --yes` once available).
+  Branch protection is enabled (2026-09-28, after the criterion repository
+  was made public): pull requests and the `catalyst` check are required on
+  `criterion`; force pushes and deletion are blocked. Admins are not forced
+  through it (enforce_admins off).
 
 Mirrored into `catalyst-ui.catalyst` at the project root
 (`Rules-of-Rules.md` §14) — this file is the source of record if the
