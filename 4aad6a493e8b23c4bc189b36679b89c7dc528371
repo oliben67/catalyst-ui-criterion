@@ -1,0 +1,10 @@
+# catalyst: append-only and regenerated files merge by union (catalyst criterion)
+development/bugs/bugs.md merge=union
+development/house-keeping/house-keeping.md merge=union
+development/journal.jsonl merge=union
+features/features.md merge=union
+reconciliations/reconciliations.md merge=union
+requirements/requirements.md merge=union
+steps/steps.md merge=union
+tests/tests.md merge=union
+workflows/workflows.md merge=union
