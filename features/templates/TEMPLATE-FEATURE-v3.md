@@ -1,7 +1,5 @@
 # `FEAT-NNNNNN` — short title
 
-> Copy this file to `{{FEATURES_DIR}}/templates/TEMPLATE-FEATURE-v1.md` and resolve every `{{PLACEHOLDER}}` (INV-20). See catalyst's `framework/kernel/INSTANTIATION-GUIDE.md`.
-
 A feature entry documents a new or future piece of functionality for the
 app — an idea, a roadmap item, a product direction. It is **not** a
 rule-linked, measured artifact: it is never "done" against a rule, it

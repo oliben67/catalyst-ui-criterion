@@ -38,8 +38,10 @@
   (2026-09-27) `.criterion` is a git submodule of the catalyst-ui
   repository and changes land through pull requests (`catalyst criterion
   push`); the repository's CI runs `catalyst check` and the integrity check.
-  Branch protection is not enabled: the private repository would need GitHub
-  Pro (`catalyst criterion protect --yes` once available).
+  Branch protection is enabled (2026-09-28, after the criterion repository
+  was made public): pull requests and the `catalyst` check are required on
+  `criterion`; force pushes and deletion are blocked. Admins are not forced
+  through it (enforce_admins off).
 
 Mirrored into `catalyst-ui.catalyst` at the project root
 (`Rules-of-Rules.md` §14) — this file is the source of record if the
@@ -55,3 +57,4 @@ two ever disagree. Initial commit `2e1941b` pushed 2026-09-05.
   Part of catalyst beta-readiness RM-000013.
 - 2026-09-27 — 0.39.0: kernel files synced; submodule conversion pending
   (`migrations/0.39.0/criterion-on-git.md`). Part of catalyst beta-readiness RM-000014.
+- 2026-09-28 — kernel 0.40.0, module software-engineering 2.2.0 (explicit install, ceremony tiers, `catalyst spec`): documents recomposed with `catalyst recompose` (no conflicts); CLI re-vendored; command files refreshed.

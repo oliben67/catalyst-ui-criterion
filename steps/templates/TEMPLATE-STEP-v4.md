@@ -1,11 +1,5 @@
 # `STEP-NNNNNN` — short title
 
-> One concrete unit of implementation work performed toward a specific
-> requirement or bug — never a rule-linked claim of its own
-> (`Rules-of-Rules.md` §21). Opened as work on its parent actually
-> starts, not in advance of it; a requirement or bug accumulates zero
-> (not yet started) to many steps over its lifecycle.
-
 | Field | Value |
 |---|---|
 | **ID** | `STEP-NNNNNN-<userid>` — the userid suffix is the resolved signer's (`Rules-of-Rules.md` §20) |

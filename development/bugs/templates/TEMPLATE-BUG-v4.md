@@ -9,7 +9,7 @@
 | **Severity** | exactly one of `Critical` / `High` / `Medium` / `Low` — a closed list, no other value; see scale below. **Required.** |
 | **Opened** | YYYY-MM-DD |
 | **Targets** | one or more rule IDs this bug violates — **required, never empty** (see `CODE-OF-CONDUCT.md` §1) |
-| **Domain** | the `DOMAIN` code(s) of the targeted rule(s), from `{{RULES_DIR}}/domains/` |
+| **Domain** | the `DOMAIN` code(s) of the targeted rule(s), from `rules/domains/` |
 | **Area** | short free-text area label |
 | **Steps** | `STEP-NNNNNN` list, in creation order, opened against this bug (`Rules-of-Rules.md` §21) — optional for a bug (fix tier, `CODE-OF-CONDUCT.md` §3); if any are listed, the bug does not move to a closed state (`Closed`/`WontFix`) until every listed step is `done` or `abandoned` (`Rules-of-Rules.md` §21) |
 | **Signed-off-by** | name of the registered user (`IAM/users/users.json`) who signed this bug — see `CODE-OF-CONDUCT.md` §2 |
