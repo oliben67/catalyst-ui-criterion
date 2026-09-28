@@ -58,3 +58,4 @@ two ever disagree. Initial commit `2e1941b` pushed 2026-09-05.
 - 2026-09-27 — 0.39.0: kernel files synced; submodule conversion pending
   (`migrations/0.39.0/criterion-on-git.md`). Part of catalyst beta-readiness RM-000014.
 - 2026-09-28 — kernel 0.40.0, module software-engineering 2.2.0 (explicit install, ceremony tiers, `catalyst spec`): documents recomposed with `catalyst recompose` (no conflicts); CLI re-vendored; command files refreshed.
+- 2026-09-28 — kernel 0.41.0 (traced commits, format 1.0-rc, catalyst report): documents recomposed; CLI re-vendored; CI runs catalyst trace; commit-msg hook installed.
