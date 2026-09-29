@@ -9,12 +9,12 @@ targets or proposes one or more rules.
 | **ID** | `REQ-000002-UVqkd7cL` |
 | **Name** | `vscode-chain-inspector-read-only` |
 | **Filename** | `REQ-000002-vscode-chain-inspector-read-only.md` |
-| **Status** | done |
+| **Status** | Completed |
 | **Opened** | 2026-09-05 |
 | **Targets** | `vscode-INSPECTOR-000001-UVqkd7cL` |
 | **Domain** | `INSPECTOR` |
 | **Feature** | `FEAT-000002-UVqkd7cL` |
-| **Steps** | *(none yet)* |
+| **Steps** | `STEP-000008-UVqkd7cL` |
 | **Tests** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 

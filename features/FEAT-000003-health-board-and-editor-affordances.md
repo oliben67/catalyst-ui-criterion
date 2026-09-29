@@ -11,7 +11,7 @@ feature requires — see `Requirement(s)` below.
 | **ID** | `FEAT-000003-UVqkd7cL` |
 | **Name** | `health-board-and-editor-affordances` |
 | **Filename** | `FEAT-000003-health-board-and-editor-affordances.md` |
-| **Status** | shipped |
+| **Status** | Completed |
 | **Opened** | 2026-09-05 |
 | **Area** | catalyst-host-vscode |
 | **Roadmap** | `RM-000003-UVqkd7cL` |

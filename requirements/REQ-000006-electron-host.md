@@ -9,12 +9,12 @@ targets or proposes one or more rules.
 | **ID** | `REQ-000006-UVqkd7cL` |
 | **Name** | `electron-host` |
 | **Filename** | `REQ-000006-electron-host.md` |
-| **Status** | done |
+| **Status** | Completed |
 | **Opened** | 2026-09-05 |
 | **Targets** | `electron-DESKTOP-000001-UVqkd7cL` |
 | **Domain** | `DESKTOP` |
 | **Feature** | `FEAT-000006-UVqkd7cL` |
-| **Steps** | *(none yet)* |
+| **Steps** | `STEP-000012-UVqkd7cL` |
 | **Tests** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 

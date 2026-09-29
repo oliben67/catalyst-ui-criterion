@@ -9,12 +9,12 @@ targets or proposes one or more rules.
 | **ID** | `REQ-000001-UVqkd7cL` |
 | **Name** | `catalyst-core-parser-model-validator-watcher` |
 | **Filename** | `REQ-000001-catalyst-core-parser-model-validator-watcher.md` |
-| **Status** | done |
+| **Status** | Completed |
 | **Opened** | 2026-09-05 |
 | **Targets** | `core-CONTRACT-000001-UVqkd7cL` |
 | **Domain** | `CONTRACT` |
 | **Feature** | `FEAT-000001-UVqkd7cL` |
-| **Steps** | *(none yet)* |
+| **Steps** | `STEP-000007-UVqkd7cL` |
 | **Tests** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 

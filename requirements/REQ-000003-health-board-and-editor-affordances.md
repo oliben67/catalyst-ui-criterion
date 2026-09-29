@@ -9,12 +9,12 @@ targets or proposes one or more rules.
 | **ID** | `REQ-000003-UVqkd7cL` |
 | **Name** | `health-board-and-editor-affordances` |
 | **Filename** | `REQ-000003-health-board-and-editor-affordances.md` |
-| **Status** | done |
+| **Status** | Completed |
 | **Opened** | 2026-09-05 |
 | **Targets** | `vscode-HEALTH-000001-UVqkd7cL` |
 | **Domain** | `HEALTH` |
 | **Feature** | `FEAT-000003-UVqkd7cL` |
-| **Steps** | *(none yet)* |
+| **Steps** | `STEP-000009-UVqkd7cL` |
 | **Tests** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 

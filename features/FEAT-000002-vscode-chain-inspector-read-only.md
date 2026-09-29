@@ -11,7 +11,7 @@ feature requires — see `Requirement(s)` below.
 | **ID** | `FEAT-000002-UVqkd7cL` |
 | **Name** | `vscode-chain-inspector-read-only` |
 | **Filename** | `FEAT-000002-vscode-chain-inspector-read-only.md` |
-| **Status** | shipped |
+| **Status** | Completed |
 | **Opened** | 2026-09-05 |
 | **Area** | catalyst-host-vscode, catalyst-ui |
 | **Roadmap** | `RM-000002-UVqkd7cL` |

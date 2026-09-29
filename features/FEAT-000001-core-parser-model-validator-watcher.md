@@ -11,7 +11,7 @@ feature requires — see `Requirement(s)` below.
 | **ID** | `FEAT-000001-UVqkd7cL` |
 | **Name** | `core-parser-model-validator-watcher` |
 | **Filename** | `FEAT-000001-core-parser-model-validator-watcher.md` |
-| **Status** | shipped |
+| **Status** | Completed |
 | **Opened** | 2026-09-05 |
 | **Area** | catalyst-core |
 | **Roadmap** | `RM-000001-UVqkd7cL` |

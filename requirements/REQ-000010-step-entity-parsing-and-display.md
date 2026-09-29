@@ -9,7 +9,7 @@ targets or proposes one or more rules.
 | **ID** | `REQ-000010-UVqkd7cL` |
 | **Name** | `step-entity-parsing-and-display` |
 | **Filename** | `REQ-000010-step-entity-parsing-and-display.md` |
-| **Status** | done |
+| **Status** | Completed |
 | **Opened** | 2026-09-19 |
 | **Targets** | `core-CONTRACT-000001-UVqkd7cL`, `vscode-INSPECTOR-000001-UVqkd7cL` |
 | **Domain** | `INSPECTOR` |

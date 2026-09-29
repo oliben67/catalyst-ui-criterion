@@ -11,7 +11,7 @@ feature requires — see `Requirement(s)` below.
 | **ID** | `FEAT-000006-UVqkd7cL` |
 | **Name** | `electron-host` |
 | **Filename** | `FEAT-000006-electron-host.md` |
-| **Status** | shipped |
+| **Status** | Completed |
 | **Opened** | 2026-09-05 |
 | **Area** | catalyst-host-electron |
 | **Roadmap** | `RM-000006-UVqkd7cL` |

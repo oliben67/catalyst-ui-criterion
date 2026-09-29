@@ -9,12 +9,12 @@ targets or proposes one or more rules.
 | **ID** | `REQ-000004-UVqkd7cL` |
 | **Name** | `proposal-loop-fix-only` |
 | **Filename** | `REQ-000004-proposal-loop-fix-only.md` |
-| **Status** | done |
+| **Status** | Completed |
 | **Opened** | 2026-09-05 |
 | **Targets** | `core-CONTRACT-000002-UVqkd7cL`, `vscode-PROPOSAL-000001-UVqkd7cL` |
 | **Domain** | `PROPOSAL` |
 | **Feature** | `FEAT-000004-UVqkd7cL` |
-| **Steps** | *(none yet)* |
+| **Steps** | `STEP-000010-UVqkd7cL` |
 | **Tests** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 

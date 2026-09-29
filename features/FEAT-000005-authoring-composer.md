@@ -11,7 +11,7 @@ feature requires — see `Requirement(s)` below.
 | **ID** | `FEAT-000005-UVqkd7cL` |
 | **Name** | `authoring-composer` |
 | **Filename** | `FEAT-000005-authoring-composer.md` |
-| **Status** | shipped |
+| **Status** | Completed |
 | **Opened** | 2026-09-05 |
 | **Area** | catalyst-host-vscode |
 | **Roadmap** | `RM-000005-UVqkd7cL` |

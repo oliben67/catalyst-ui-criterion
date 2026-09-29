@@ -9,12 +9,12 @@ targets or proposes one or more rules.
 | **ID** | `REQ-000007-UVqkd7cL` |
 | **Name** | `run-monitor` |
 | **Filename** | `REQ-000007-run-monitor.md` |
-| **Status** | done |
+| **Status** | Completed |
 | **Opened** | 2026-09-06 |
 | **Targets** | `core-CONTRACT-000003-UVqkd7cL`, `vscode-RUNMONITOR-000001-UVqkd7cL` |
 | **Domain** | `RUNMONITOR` |
 | **Feature** | `FEAT-000007-UVqkd7cL` |
-| **Steps** | *(none yet)* |
+| **Steps** | `STEP-000013-UVqkd7cL` |
 | **Tests** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 

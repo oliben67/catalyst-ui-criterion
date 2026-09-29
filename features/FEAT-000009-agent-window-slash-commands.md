@@ -11,7 +11,7 @@ feature requires — see `Requirement(s)` below.
 | **ID** | `FEAT-000009-UVqkd7cL` |
 | **Name** | `agent-window-slash-commands` |
 | **Filename** | `FEAT-000009-agent-window-slash-commands.md` |
-| **Status** | in-development |
+| **Status** | Active |
 | **Opened** | 2026-09-08 |
 | **Area** | catalyst-core, catalyst-host-vscode, catalyst-host-electron |
 | **Roadmap** | `RM-000009-UVqkd7cL` |
