@@ -11,7 +11,7 @@ feature requires — see `Requirement(s)` below.
 | **ID** | `FEAT-000008-UVqkd7cL` |
 | **Name** | `multi-root-and-install-offer` |
 | **Filename** | `FEAT-000008-multi-root-and-install-offer.md` |
-| **Status** | shipped |
+| **Status** | Completed |
 | **Opened** | 2026-09-06 |
 | **Area** | catalyst-host-vscode |
 | **Roadmap** | `RM-000008-UVqkd7cL` |

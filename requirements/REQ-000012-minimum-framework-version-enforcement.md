@@ -9,7 +9,7 @@ targets or proposes one or more rules.
 | **ID** | `REQ-000012-UVqkd7cL` |
 | **Name** | `minimum-framework-version-enforcement` |
 | **Filename** | `REQ-000012-minimum-framework-version-enforcement.md` |
-| **Status** | done |
+| **Status** | Completed |
 | **Opened** | 2026-09-20 |
 | **Targets** | `core-CONTRACT-000001-UVqkd7cL`, `vscode-ONBOARDING-000002-UVqkd7cL` |
 | **Domain** | `ONBOARDING` |

@@ -9,12 +9,12 @@ targets or proposes one or more rules.
 | **ID** | `REQ-000008-UVqkd7cL` |
 | **Name** | `multi-root-and-install-offer` |
 | **Filename** | `REQ-000008-multi-root-and-install-offer.md` |
-| **Status** | done |
+| **Status** | Completed |
 | **Opened** | 2026-09-06 |
 | **Targets** | `vscode-INSPECTOR-000001-UVqkd7cL`, `vscode-ONBOARDING-000001-UVqkd7cL` |
 | **Domain** | `ONBOARDING` |
 | **Feature** | `FEAT-000008-UVqkd7cL` |
-| **Steps** | *(none yet)* |
+| **Steps** | `STEP-000014-UVqkd7cL` |
 | **Tests** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 

@@ -11,7 +11,7 @@ feature requires — see `Requirement(s)` below.
 | **ID** | `FEAT-000004-UVqkd7cL` |
 | **Name** | `proposal-loop-fix-only` |
 | **Filename** | `FEAT-000004-proposal-loop-fix-only.md` |
-| **Status** | shipped |
+| **Status** | Completed |
 | **Opened** | 2026-09-05 |
 | **Area** | catalyst-core, catalyst-host-vscode |
 | **Roadmap** | `RM-000004-UVqkd7cL` |

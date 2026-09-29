@@ -9,12 +9,12 @@ targets or proposes one or more rules.
 | **ID** | `REQ-000005-UVqkd7cL` |
 | **Name** | `authoring-composer` |
 | **Filename** | `REQ-000005-authoring-composer.md` |
-| **Status** | done |
+| **Status** | Completed |
 | **Opened** | 2026-09-05 |
 | **Targets** | `vscode-PROPOSAL-000002-UVqkd7cL` |
 | **Domain** | `PROPOSAL` |
 | **Feature** | `FEAT-000005-UVqkd7cL` |
-| **Steps** | *(none yet)* |
+| **Steps** | `STEP-000011-UVqkd7cL` |
 | **Tests** | *(none yet)* |
 | **Signed-off-by** | Olivier Steck |
 

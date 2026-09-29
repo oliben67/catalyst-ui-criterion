@@ -11,7 +11,7 @@ feature requires — see `Requirement(s)` below.
 | **ID** | `FEAT-000007-UVqkd7cL` |
 | **Name** | `run-monitor` |
 | **Filename** | `FEAT-000007-run-monitor.md` |
-| **Status** | shipped |
+| **Status** | Completed |
 | **Opened** | 2026-09-06 |
 | **Area** | catalyst-core, catalyst-host-vscode |
 | **Roadmap** | `RM-000007-UVqkd7cL` |

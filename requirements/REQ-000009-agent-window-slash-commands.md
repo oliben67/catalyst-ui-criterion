@@ -9,7 +9,7 @@ targets or proposes one or more rules.
 | **ID** | `REQ-000009-UVqkd7cL` |
 | **Name** | `agent-window-slash-commands` |
 | **Filename** | `REQ-000009-agent-window-slash-commands.md` |
-| **Status** | in-progress |
+| **Status** | Active |
 | **Opened** | 2026-09-08 |
 | **Targets** | `core-CONTRACT-000004-UVqkd7cL`, `vscode-AGENT-000001-UVqkd7cL`, `electron-AGENTWINDOW-000001-UVqkd7cL` |
 | **Domain** | `AGENT` |
