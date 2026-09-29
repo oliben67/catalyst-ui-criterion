@@ -59,3 +59,4 @@ two ever disagree. Initial commit `2e1941b` pushed 2026-09-05.
   (`migrations/0.39.0/criterion-on-git.md`). Part of catalyst beta-readiness RM-000014.
 - 2026-09-28 — kernel 0.40.0, module software-engineering 2.2.0 (explicit install, ceremony tiers, `catalyst spec`): documents recomposed with `catalyst recompose` (no conflicts); CLI re-vendored; command files refreshed.
 - 2026-09-28 — kernel 0.41.0 (traced commits, format 1.0-rc, catalyst report): documents recomposed; CLI re-vendored; CI runs catalyst trace; commit-msg hook installed.
+- 2026-09-29 — kernel 0.42.1, module software-engineering 2.3.0 (changes made outside catalyst: `catalyst unrecorded`, `/adopt`, `journal adopt`; baseline `journal_since` at c4bda0cc09): documents recomposed with `catalyst recompose` (no conflicts); module refreshed from the 2.3.0 release; `TEMPLATE-RECONCILIATION-v3`; `/adopt` command file; CLI re-vendored.

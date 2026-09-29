@@ -557,6 +557,10 @@ the seven currently exist anywhere.
   stood at `<timestamp>` into a side directory with
   `catalyst journal restore` (`Rules-of-Rules.md` §12). Never overwrites
   the live working tree.
+- `/adopt [<commit>|<range>]` — list the product changes committed
+  outside catalyst (`catalyst unrecorded`) and resolve each with the user:
+  accept it into the journal (`catalyst journal adopt`) or reject it by
+  reverting the commit (§9, "Changes made outside catalyst").
 - `/help` — return help documentation for the framework or for a specific
   command when provided.
 
@@ -745,6 +749,23 @@ gitlink in the product repository, which pins the synced rules.
 
 When the user enters `/criterion status`: run
 `catalyst criterion status --fetch` and report it.
+
+When the user enters `/adopt [<commit>|<range>]`: run `catalyst
+unrecorded [<range>]` (every commit after the baseline by default) and
+list each commit with its author and files. For each one, ask the user
+whether to accept or reject it; never decide for them. To accept: read
+the commit (`git show`), state its tier (chore, fix or feature, §1), do
+what the active module requires for that tier (the artifact a fix or a
+feature needs), then run `catalyst journal adopt <commit> --intent "<why
+the change was made>" --tier <tier> [--target <ID>]` — oldest commit
+first when adopting several, so each file's chain stays unbroken — and
+`catalyst check`. To reject: propose `git revert <commit>` and run it only
+with the user's assent (INV-4); the revert is itself a change to journal.
+When the change is contested, or the actor may not decide it (their
+`reconciliation` rights in `IAM/roles/roles.json`), open a `RECON-` case
+instead (`Trigger: unrecorded-change`, `Entity` the commit and its files,
+`Baseline` the parent's version, `Proposed` the commit's —
+`Rules-of-Rules.md` §16) for a human to decide with `/reconcile`.
 
 When the user enters `/project create <project name>: ...`, refuse if a
 `<app-name>.catalyst` pointer or an in-project `.criterion/` already
@@ -1121,6 +1142,22 @@ file write is optional — a stale `BACKLOG.md`, or any roadmap file that
 doesn't match the last `/show-backlog` run, is itself a bug in the
 deployment.
 
+When `/adopt` accepts a product change committed outside catalyst, the
+tier decides what it becomes, as for any change (§3, "Ceremony tiers"):
+a **chore** is only the adopted journal entry (`catalyst journal adopt
+<commit> --tier chore`, no target); a **fix** needs the `BUG-` targeting
+the rule it restores (`/create-bug`), and a **feature** the `REQ-`
+targeting or proposing its rules (`/create-requirement`) with at least
+one `STEP-` recording the commit's work (`/create-step`), each adopted
+with `--tier fix`/`--tier feature --target <BUG-id|REQ-id>`. These
+artifacts are written after the work, which `INVARIANTS.md` INV-29
+otherwise forbids, so they say so rather than pretending otherwise: each
+records `Adopted from commit <sha>, written outside catalyst by <author>`
+in its body, a step starts `done` instead of `planned`, and the dates are
+the day of adoption, never back-dated. When the commit changes tested
+code and adds no test, say so to the user and propose a `/create-test`;
+never mark the gap closed on the commit's behalf.
+
 ## 5. Domain field
 
 Every item's `Domain` field is the `DOMAIN` code of the rule(s) it targets,
@@ -1221,6 +1258,24 @@ commit; `catalyst trace <range>` re-checks new commits in CI
 messages itself and never bypasses the hook (`--no-verify`) without the
 user's say-so. History from before the check was introduced is not
 checked.
+
+**Changes made outside catalyst.** A product change can also be written
+by hand, straight into git, with no journal entry. Every journaled file
+state is a git blob hash, so a product commit after the pointer's
+`journal_since` baseline that changes a file to a state the journal did
+not record as its latest state at that commit — a revert by hand to an
+older journaled state included — is an **unrecorded change**. `catalyst
+unrecorded` lists them; `catalyst check`, `catalyst trace` (CI) and the commit-msg hook (for
+staged files) report them. They are warnings while the deployment's
+format is a release candidate (the beta) and errors from format `1.0`, or
+earlier when the pointer sets `"strict_journal": true`. Merge commits and
+the working copy are not checked. An unrecorded change is resolved with
+`/adopt`: accepted into the journal (`catalyst journal adopt`, which
+records the commit with its git author as actor and `origin: manual`), or
+rejected by reverting it. The agent never adopts or reverts a change on
+its own: it lists them and asks. What an adopted fix or feature requires
+beyond the journal entry is the active module's, as for any change of its
+tier.
 
 Two read-only commands operate on the journal without writing to it
 themselves: `/journal [--since <date>] [--artifact <id>] [--actor <name>]
