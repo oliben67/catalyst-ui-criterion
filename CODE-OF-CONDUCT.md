@@ -461,16 +461,20 @@ the seven currently exist anywhere.
   behavior. Each plugin must live in its own repository, with no exceptions,
   and during framework deployment or synchronization plugins must be pulled
   directly from that plugin repository rather than from this repository.
-- `/criterion create <url> | get | push <message> | sync | status` —
+- `/criterion create [<url>] | get | push <message> | sync | status` —
   share this deployment's working copy through a criterion repository
   (`Rules-of-Rules.md` §13, `INVARIANTS.md` INV-18). Each subcommand is
   the matching `catalyst criterion` command (`CLI.md`); the agent adds
   only the judgment around it.
-  - `create <url>` — turn a local-only deployment into a shared one: the
+  - `create [<url>]` — turn a local-only deployment into a shared one: the
     working copy is pushed to `<url>` and `.criterion` becomes a
-    submodule of the product repository.
+    submodule of the product repository. Without a URL, the working copy
+    is versioned strictly locally (a git repository on the shared
+    branch), and the first `push`, `sync` or `get` asks for the URL, then
+    publishes before carrying on.
   - `get` — in a fresh clone of the product repository, check out the
-    shared working copy (`catalyst criterion join`).
+    shared working copy (`catalyst criterion join`); a product with no
+    `.criterion` submodule yet asks for the criterion repository's URL.
   - `push <message>` — land the working copy's changes as a pull request
     against the shared branch. A conflict stops it with nothing pushed.
   - `sync` — fast-forward to the shared branch; refuses while local work
@@ -536,9 +540,13 @@ the seven currently exist anywhere.
   checking the current repository state, the file's role in the framework,
   and the rules or artifacts that depend on it, then return a concise impact
   summary.
-- `/run-analysis` — open and execute the analysis playbook from
-  `ANALYSIS-PLAYBOOK.md` in the project root, following its steps and
-  returning the resulting analysis summary.
+- `/run-analysis [<path>...] [--bootstrap|--incremental]` — analyse
+  existing code to infer domains, rules and the defects where the code
+  breaks a rule, with a four-eyes process: two independent blind passes,
+  a reconciliation that accounts for every finding of both, and the
+  user's decision on each finding (`ANALYSIS-PLAYBOOK.md`, an `ANALYSIS-`
+  record, `catalyst analysis`). `--bootstrap` for a project with no rules
+  yet; `--incremental` (the default) finds what existing rules miss.
 - `/sync-framework [latest|<version>]` — synchronize the deployed framework
   with the requested kernel version. If the argument is `latest`, use the
   newest kernel version available from the framework source. If no argument
@@ -708,6 +716,20 @@ framework startup, the framework must scan the installed plugins and activate
 each one whose `active` metadata flag is true the same way `/catalyzer
 activate` loads a plugin into memory (see above). This is a hard rule.
 
+When the user enters `/criterion create` without a URL: run `catalyst
+criterion create` (`--branch <name>` only if the user wants a shared
+branch other than `criterion`). Nothing leaves the machine: report what
+it printed, offer to commit the staged pointer (INV-4), and say
+that the first `/criterion push`, `sync` or `get` will ask for the
+criterion repository's URL.
+
+Whenever `catalyst criterion push`, `sync` or `join` fails because the
+deployment has no criterion repository yet (its message names `--url`),
+ask the user for the repository's URL — with the same confirmations as
+`/criterion create <url>` below — and re-run the same command with
+`--url <url>`: it publishes the working copy first (as `create <url>`
+does), then carries on. Never invent or guess a URL.
+
 When the user enters `/criterion create <url>`: confirm the user wants
 this deployment shared, and that the criterion repository at `<url>`
 exists (empty, or holding this working copy's own history) — creating it
@@ -723,8 +745,11 @@ offer `catalyst criterion protect` (show its output, then `--yes` on
 assent).
 
 When the user enters `/criterion get`: in a clone of the product
-repository whose `.criterion` is a submodule, run
-`catalyst criterion join`. If the joining person is not yet in
+repository, run `catalyst criterion join`. When the product has no
+`.criterion` submodule yet it needs the criterion repository's URL (see
+above): with `--url` it adds that repository as the submodule and stages
+the product changes — offer to commit them (INV-4) — or, where this
+machine holds the local working copy, publishes it there. If the joining person is not yet in
 `IAM/users/users.json`, they register with `/user-add` (which draws their
 `userid`) before signing anything, and land that registration with
 `/criterion push` like any other change.
@@ -849,10 +874,22 @@ every reference mechanically); and return a concise summary of likely
 impact, affected areas, and any blocking concerns. If the file cannot be
 resolved, report that it was not found and do not invent a result.
 
-When the user enters `/run-analysis`, open and execute the analysis playbook
-from `ANALYSIS-PLAYBOOK.md` in the project root, following its steps and
-returning the resulting analysis summary. If the playbook is missing, report
-that it is unavailable and do not invent missing content.
+When the user enters `/run-analysis [<path>...] [--bootstrap|--incremental]`,
+follow `.criterion/ANALYSIS-PLAYBOOK.md` (the deployed playbook) phase by
+phase: `catalyst analysis start <path>... --mode <mode> --as <signer>`
+(the whole project when no path is given), two independent passes with the
+playbook's pass prompt recorded with `catalyst analysis record --pass A|B`,
+`catalyst analysis diff`, a reconciliation recorded with `catalyst analysis
+reconcile`, then each reconciled finding presented to the user — accept,
+edit then accept, or reject; never decided for them. Only after acceptance,
+write the domain, the rule (`catalyst id next-rule`) or the artifact a fix
+requires (§3) targeting its rule, and record the decision with `catalyst
+analysis decide --artifact <ID>`; research agents never write artifacts.
+Close with `catalyst analysis close` and `catalyst check`, and report the
+summary. Never skip a phase or hand-edit a report to get past the CLI: a
+refused pass goes back to its agent. If the playbook is missing, report that
+it is unavailable (`/sync-framework` restores it) and do not invent missing
+content.
 
 When the user enters `/sync-framework [latest|<version>] [--force <scope>]`,
 inspect the requested kernel version, compare it with the deployed
