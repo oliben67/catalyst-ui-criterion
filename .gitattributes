@@ -1,4 +1,5 @@
 # catalyst: append-only and regenerated files merge by union (catalyst criterion)
+analyses/analyses.md merge=union
 development/bugs/bugs.md merge=union
 development/house-keeping/house-keeping.md merge=union
 development/journal.jsonl merge=union
