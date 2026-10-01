@@ -16,3 +16,5 @@
 | [STEP-000012-UVqkd7cL](STEP-000012-build-the-electron-host.md) | Build the Electron host | REQ-000006-UVqkd7cL | done |
 | [STEP-000013-UVqkd7cL](STEP-000013-build-the-run-monitor.md) | Build the run monitor | REQ-000007-UVqkd7cL | done |
 | [STEP-000014-UVqkd7cL](STEP-000014-add-multi-root-support-and-the-install-offer.md) | Add multi-root workspace support and the install offer | REQ-000008-UVqkd7cL | done |
+| [STEP-000015-UVqkd7cL](STEP-000015-place-detail-panels-in-project-group.md) | Place detail panels in their project's group | REQ-000013-UVqkd7cL | done |
+| [STEP-000016-UVqkd7cL](STEP-000016-link-entity-references.md) | Link entity references in the webview | REQ-000014-UVqkd7cL | done |

@@ -56,9 +56,15 @@ carries which deployment the node came from, since node ids are only
 unique within one corpus. Read-only: no editing, no live-pushed webview
 updates (reopening the panel refreshes it). A folder with no resolvable
 catalyst deployment is handled by `vscode-ONBOARDING-000001-UVqkd7cL`
-instead of staying silent. Targeted by `REQ-000002-UVqkd7cL`, extended
+instead of staying silent. Detail panels open at most one editor group per project — a project's
+first panel beside the active editor, later ones as tabs in its group —
+or one group for every project (`catalyst.detailPanelGroups`), and every
+entity ID the rendered content cites is a link that opens that entity,
+with its name and a short description on hover (`<pre>` blocks left
+alone). Targeted by `REQ-000002-UVqkd7cL`, extended
 by `REQ-000008-UVqkd7cL` for multi-root, `REQ-000010-UVqkd7cL` for
-steps, and `REQ-000011-UVqkd7cL` for tests.
+steps, `REQ-000011-UVqkd7cL` for tests, `REQ-000013-UVqkd7cL` for panel
+groups and `REQ-000014-UVqkd7cL` for entity links.
 
 Implemented: `packages/catalyst-core/src/discover.ts` (corpus
 resolution) plus `watchCorpus`'s `{ model, report, proposals, runs }`

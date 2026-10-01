@@ -14,3 +14,5 @@
 | [REQ-000010-UVqkd7cL](REQ-000010-step-entity-parsing-and-display.md) | STEP- entity parsing and display | Completed |
 | [REQ-000011-UVqkd7cL](REQ-000011-test-entity-parsing-and-display.md) | TEST- entity parsing and display | Completed |
 | [REQ-000012-UVqkd7cL](REQ-000012-minimum-framework-version-enforcement.md) | Minimum framework version enforcement | Completed |
+| [REQ-000013-UVqkd7cL](REQ-000013-detail-panels-one-group-per-project.md) | Detail panels: at most one editor group per project | Completed |
+| [REQ-000014-UVqkd7cL](REQ-000014-entity-references-are-links.md) | Entity references are links, with a hover | Completed |
