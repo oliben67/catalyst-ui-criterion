@@ -17,3 +17,4 @@
 | [REQ-000013-UVqkd7cL](REQ-000013-detail-panels-one-group-per-project.md) | Detail panels: at most one editor group per project | Completed |
 | [REQ-000014-UVqkd7cL](REQ-000014-entity-references-are-links.md) | Entity references are links, with a hover | Completed |
 | [REQ-000015-UVqkd7cL](REQ-000015-workspace-aware-extension.md) | Workspace-aware extension | Completed |
+| [REQ-000016-UVqkd7cL](REQ-000016-remote-and-virtual-workspaces.md) | Remote, WSL, dev containers and virtual workspaces | Completed |
