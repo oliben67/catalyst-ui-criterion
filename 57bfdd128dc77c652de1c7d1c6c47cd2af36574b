@@ -1,0 +1,47 @@
+# `REQ-000015-UVqkd7cL` — Workspace-aware extension
+
+A requirement stands on its own: vetted against every existing rule
+document before being opened, always carries a `Domain`, and always
+targets or proposes one or more rules.
+
+| Field | Value |
+|---|---|
+| **ID** | `REQ-000015-UVqkd7cL` |
+| **Name** | `workspace-aware-extension` |
+| **Filename** | `REQ-000015-workspace-aware-extension.md` |
+| **Status** | Completed |
+| **Opened** | 2026-10-01 |
+| **Targets** | `vscode-INSPECTOR-000001-UVqkd7cL`, `vscode-ONBOARDING-000001-UVqkd7cL` |
+| **Domain** | `INSPECTOR` |
+| **Steps** | `STEP-000017-UVqkd7cL`, `STEP-000018-UVqkd7cL` |
+| **Tests** | *(none yet)* |
+| **Signed-off-by** | Olivier Steck |
+
+## Description
+
+The extension follows the kernel's scope rule (catalyst
+`fw-STRUCTURE-000017`, kernel 0.45.0): every deployment in a workspace
+folder — nested ones included — is its own, isolated deployment; a
+`.catalystignore` and the `catalyst.ignoredFolders` setting leave
+projects out. Roadmap `RM-000030-UVqkd7cL`.
+
+## Acceptance
+
+- Each `*.catalyst` pointer under a workspace folder (not under
+  `.git`, `node_modules`, `.criterion`, build folders, or anything opted
+  out) is a deployment of its own in the tree, named
+  `<folder>` or `<folder>/<relative path>`.
+- No install offer for an opted-out folder or one in
+  `catalyst.ignoredFolders`; the offer gains **Never offer here**
+  (writes an empty `.catalystignore`) and **Not in this workspace** (adds
+  the folder to `catalyst.ignoredFolders` in workspace settings).
+  Changing the setting re-resolves the folders.
+- Workspace Trust (`limited`): untrusted, the extension only reads — no
+  install or sync offer, no agent command; granting trust brings them.
+- A status bar item names the deployment owning the active editor's file
+  (none for an opted-out or ungoverned file).
+
+## Notes
+
+Pure discovery and ownership in `catalyst-core` (`workspace.ts`,
+unit-tested); `extension.ts` stays glue.
