@@ -1,0 +1,23 @@
+# Steps index
+
+| ID | Title | Parent | Status |
+|---|---|---|---|
+| [STEP-000001-UVqkd7cL](STEP-000001-parse-and-validate-steps-in-catalyst-core.md) | Parse and validate steps in catalyst-core | REQ-000010-UVqkd7cL | done |
+| [STEP-000002-UVqkd7cL](STEP-000002-display-steps-in-the-chain-inspector.md) | Display steps in the Chain Inspector | REQ-000010-UVqkd7cL | done |
+| [STEP-000003-UVqkd7cL](STEP-000003-parse-and-validate-tests-in-catalyst-core.md) | Parse and validate tests in catalyst-core | REQ-000011-UVqkd7cL | done |
+| [STEP-000004-UVqkd7cL](STEP-000004-display-tests-in-the-chain-inspector.md) | Display tests in the Chain Inspector | REQ-000011-UVqkd7cL | done |
+| [STEP-000005-UVqkd7cL](STEP-000005-declare-and-check-a-minimum-framework-version-in-catalyst-core.md) | Declare and check a minimum framework version in catalyst-core | REQ-000012-UVqkd7cL | done |
+| [STEP-000006-UVqkd7cL](STEP-000006-enforce-the-minimum-in-the-sync-offer-notification.md) | Enforce the minimum in the sync-offer notification | REQ-000012-UVqkd7cL | done |
+| [STEP-000007-UVqkd7cL](STEP-000007-implement-catalyst-core-parser-model-validator-watcher.md) | Implement catalyst-core: parser, model, validator, watcher | REQ-000001-UVqkd7cL | done |
+| [STEP-000008-UVqkd7cL](STEP-000008-build-the-read-only-vscode-chain-inspector.md) | Build the read-only VS Code chain inspector | REQ-000002-UVqkd7cL | done |
+| [STEP-000009-UVqkd7cL](STEP-000009-add-the-health-board-and-editor-affordances.md) | Add the health board and editor affordances | REQ-000003-UVqkd7cL | done |
+| [STEP-000010-UVqkd7cL](STEP-000010-implement-the-fix-only-proposal-loop.md) | Implement the fix-only proposal loop | REQ-000004-UVqkd7cL | done |
+| [STEP-000011-UVqkd7cL](STEP-000011-build-the-authoring-composer.md) | Build the authoring composer | REQ-000005-UVqkd7cL | done |
+| [STEP-000012-UVqkd7cL](STEP-000012-build-the-electron-host.md) | Build the Electron host | REQ-000006-UVqkd7cL | done |
+| [STEP-000013-UVqkd7cL](STEP-000013-build-the-run-monitor.md) | Build the run monitor | REQ-000007-UVqkd7cL | done |
+| [STEP-000014-UVqkd7cL](STEP-000014-add-multi-root-support-and-the-install-offer.md) | Add multi-root workspace support and the install offer | REQ-000008-UVqkd7cL | done |
+| [STEP-000015-UVqkd7cL](STEP-000015-place-detail-panels-in-project-group.md) | Place detail panels in their project's group | REQ-000013-UVqkd7cL | done |
+| [STEP-000016-UVqkd7cL](STEP-000016-link-entity-references.md) | Link entity references in the webview | REQ-000014-UVqkd7cL | done |
+| [STEP-000017-UVqkd7cL](STEP-000017-workspace-discovery-in-core.md) | Workspace discovery and the scope rule in catalyst-core | REQ-000015-UVqkd7cL | done |
+| [STEP-000018-UVqkd7cL](STEP-000018-workspace-aware-host.md) | Workspace-aware extension host | REQ-000015-UVqkd7cL | done |
+| [STEP-000019-UVqkd7cL](STEP-000019-remote-and-virtual-workspaces.md) | Remote and virtual workspaces | REQ-000016-UVqkd7cL | done |
