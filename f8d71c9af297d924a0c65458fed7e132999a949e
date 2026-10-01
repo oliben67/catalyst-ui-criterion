@@ -1,0 +1,51 @@
+# `REQ-000016-UVqkd7cL` — Remote, WSL, dev containers and virtual workspaces
+
+A requirement stands on its own: vetted against every existing rule
+document before being opened, always carries a `Domain`, and always
+targets or proposes one or more rules.
+
+| Field | Value |
+|---|---|
+| **ID** | `REQ-000016-UVqkd7cL` |
+| **Name** | `remote-and-virtual-workspaces` |
+| **Filename** | `REQ-000016-remote-and-virtual-workspaces.md` |
+| **Status** | Completed |
+| **Opened** | 2026-10-01 |
+| **Targets** | `vscode-INSPECTOR-000001-UVqkd7cL` |
+| **Domain** | `INSPECTOR` |
+| **Steps** | `STEP-000019-UVqkd7cL` |
+| **Tests** | *(none yet)* |
+| **Signed-off-by** | Olivier Steck |
+
+## Description
+
+The extension runs where the workspace's files are (`extensionKind`
+`workspace`): over SSH, in WSL, in a dev container or a codespace it
+reads the remote files, resolves the working copy on the remote machine
+(catalyst's computed, agent-owned location, INV-6) and runs agent
+commands in remote terminals. A local-only deployment's `.criterion` is
+a symlink into the agent-owned space of the machine that installed it,
+which a remote environment usually lacks: such a deployment is reported,
+with the fix that fits the environment, instead of silently skipped.
+Virtual workspaces (no file system) are not supported and disable the
+extension cleanly. Roadmap `RM-000031-UVqkd7cL`.
+
+## Acceptance
+
+- `package.json`: `extensionKind: ["workspace"]`,
+  `capabilities.virtualWorkspaces.supported: false` with a reason.
+- A workspace folder whose URI is not `file:` is skipped (no file-system
+  calls, no install offer).
+- A deployment whose `.criterion` is a dangling symlink is reported once
+  per deployment, naming the missing target and the environment
+  (`vscode.env.remoteName`): in a dev container, a `devcontainer.json`
+  bind mount of the target at the same path (copied to the clipboard);
+  elsewhere, sharing the working copy (`/criterion create`) or installing
+  on this machine. A missing `.criterion` with no symlink is reported the
+  same way.
+- The status bar tooltip names the remote environment.
+
+## Notes
+
+Pure pieces: `workingCopyState()` in catalyst-core, the advice text in
+the host (`remote.ts`); both unit-tested.
