@@ -63,8 +63,16 @@ entity ID the rendered content cites is a link that opens that entity,
 with its name and a short description on hover (`<pre>` blocks left
 alone). Targeted by `REQ-000002-UVqkd7cL`, extended
 by `REQ-000008-UVqkd7cL` for multi-root, `REQ-000010-UVqkd7cL` for
+Deployments follow catalyst's scope rule (kernel `fw-STRUCTURE-000017`):
+every `*.catalyst` pointer in a workspace folder, nested ones included, is a
+deployment of its own; folders opted out by a `.catalystignore` or listed in
+`catalyst.ignoredFolders` are left out; a status bar item names the
+deployment owning the active editor's file. Untrusted workspaces are
+read-only (no install or sync offer, no agent command). Targeted by `REQ-000002-UVqkd7cL`, extended
+by `REQ-000008-UVqkd7cL` for multi-root, `REQ-000010-UVqkd7cL` for
 steps, `REQ-000011-UVqkd7cL` for tests, `REQ-000013-UVqkd7cL` for panel
-groups and `REQ-000014-UVqkd7cL` for entity links.
+groups, `REQ-000014-UVqkd7cL` for entity links and `REQ-000015-UVqkd7cL`
+for workspaces.
 
 Implemented: `packages/catalyst-core/src/discover.ts` (corpus
 resolution) plus `watchCorpus`'s `{ model, report, proposals, runs }`
@@ -245,7 +253,12 @@ exit criterion.
 ✅ working. When a workspace folder has no resolvable
 `*.catalyst` pointer, the extension offers to help rather than staying
 silent: an information message with an "Install catalyst…" action (and
-a "Don't ask again" dismissal, remembered per folder). Since catalyst's
+a "Don't ask again" dismissal, remembered per folder). It never offers for
+a folder opted out of catalyst (a `.catalystignore`) or listed in
+`catalyst.ignoredFolders`, nor in an untrusted workspace; the offer itself
+can opt the folder out — "Never offer here" writes an empty
+`.catalystignore`, "Not in this workspace" adds it to
+`catalyst.ignoredFolders` (`REQ-000015-UVqkd7cL`). Since catalyst's
 own instantiation is an agent-driven procedure (`BOOTSTRAP.md` is
 written to be followed by a reasoning coding agent, not run as a
 deterministic script — per catalyst's own framework repository), this
