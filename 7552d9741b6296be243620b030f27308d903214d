@@ -1,0 +1,25 @@
+# `STEP-000017-UVqkd7cL` — Workspace discovery and the scope rule in catalyst-core
+
+| Field | Value |
+|---|---|
+| **ID** | `STEP-000017-UVqkd7cL` |
+| **Name** | `workspace-discovery-in-core` |
+| **Filename** | `STEP-000017-workspace-discovery-in-core.md` |
+| **Parent** | `REQ-000015-UVqkd7cL` |
+| **Status** | in-progress |
+| **Opened** | 2026-10-01 |
+| **Closed** | |
+| **Tests** | *(none yet)* |
+| **Signed-off-by** | Olivier Steck |
+
+## Description
+
+`catalyst-core` `workspace.ts`: deployments in a folder, the scope rule, ignored folders.
+
+## Actions performed
+
+*(in progress)*
+
+## Verification
+
+*(in progress)*

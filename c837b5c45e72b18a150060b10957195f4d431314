@@ -1,0 +1,25 @@
+# `STEP-000018-UVqkd7cL` — Workspace-aware extension host
+
+| Field | Value |
+|---|---|
+| **ID** | `STEP-000018-UVqkd7cL` |
+| **Name** | `workspace-aware-host` |
+| **Filename** | `STEP-000018-workspace-aware-host.md` |
+| **Parent** | `REQ-000015-UVqkd7cL` |
+| **Status** | planned |
+| **Opened** | 2026-10-01 |
+| **Closed** | |
+| **Tests** | *(none yet)* |
+| **Signed-off-by** | Olivier Steck |
+
+## Description
+
+`extension.ts`: a deployment per pointer, the install offer's opt-outs, `catalyst.ignoredFolders`, Workspace Trust, the status bar item.
+
+## Actions performed
+
+*(not started)*
+
+## Verification
+
+*(not started)*
