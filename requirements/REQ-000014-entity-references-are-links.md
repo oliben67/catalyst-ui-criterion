@@ -1,0 +1,42 @@
+# `REQ-000014-UVqkd7cL` — Entity references are links, with a hover
+
+A requirement stands on its own: vetted against every existing rule
+document before being opened, always carries a `Domain`, and always
+targets or proposes one or more rules.
+
+| Field | Value |
+|---|---|
+| **ID** | `REQ-000014-UVqkd7cL` |
+| **Name** | `entity-references-are-links` |
+| **Filename** | `REQ-000014-entity-references-are-links.md` |
+| **Status** | Completed |
+| **Opened** | 2026-10-01 |
+| **Targets** | `vscode-INSPECTOR-000001-UVqkd7cL` |
+| **Domain** | `INSPECTOR` |
+| **Steps** | `STEP-000016-UVqkd7cL` |
+| **Tests** | *(none yet)* |
+| **Signed-off-by** | Olivier Steck |
+
+## Description
+
+In a rendered entity (the node detail's Details, its upstream/downstream
+lists, and the backlog), every ID of an entity the deployment knows is a
+link: clicking it opens that entity's detail panel (in its project's
+group, `REQ-000013-UVqkd7cL`); hovering shows its name and a short description.
+Fenced code blocks are left alone; an ID the deployment does not know
+stays plain text. Roadmap `RM-000029-UVqkd7cL`.
+
+## Acceptance
+
+- The host sends, with each panel, a reference table of the IDs the
+  content cites (name, kind, short description).
+- `catalyst-ui` links those IDs in the rendered HTML — inline code
+  included, `<pre>` excluded — with the name and description as the
+  hover text; a click asks the host to open that entity.
+- The webview stays host-agnostic: the click is a callback; the VS Code
+  entry posts it to the extension, which opens the entity.
+
+## Notes
+
+Pure linking in `catalyst-ui` (`references.ts`, unit-tested); the
+optional text-editor links and hovers are left for later.
