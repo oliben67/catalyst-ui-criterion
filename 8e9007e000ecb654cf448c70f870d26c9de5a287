@@ -1,0 +1,25 @@
+# `STEP-000016-UVqkd7cL` — Link entity references in the webview
+
+| Field | Value |
+|---|---|
+| **ID** | `STEP-000016-UVqkd7cL` |
+| **Name** | `link-entity-references` |
+| **Filename** | `STEP-000016-link-entity-references.md` |
+| **Parent** | `REQ-000014-UVqkd7cL` |
+| **Status** | in-progress |
+| **Opened** | 2026-10-01 |
+| **Closed** | |
+| **Tests** | *(none yet)* |
+| **Signed-off-by** | Olivier Steck |
+
+## Description
+
+Implement `REQ-000014-UVqkd7cL`.
+
+## Actions performed
+
+*(in progress)*
+
+## Verification
+
+*(in progress)*

@@ -1,0 +1,25 @@
+# `STEP-000015-UVqkd7cL` — Place detail panels in their project's group
+
+| Field | Value |
+|---|---|
+| **ID** | `STEP-000015-UVqkd7cL` |
+| **Name** | `place-detail-panels-in-project-group` |
+| **Filename** | `STEP-000015-place-detail-panels-in-project-group.md` |
+| **Parent** | `REQ-000013-UVqkd7cL` |
+| **Status** | in-progress |
+| **Opened** | 2026-10-01 |
+| **Closed** | |
+| **Tests** | *(none yet)* |
+| **Signed-off-by** | Olivier Steck |
+
+## Description
+
+Implement `REQ-000013-UVqkd7cL`.
+
+## Actions performed
+
+*(in progress)*
+
+## Verification
+
+*(in progress)*
