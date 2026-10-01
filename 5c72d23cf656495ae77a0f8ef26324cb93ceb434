@@ -1,0 +1,20 @@
+# Requirements index
+
+| ID | Title | Status |
+|---|---|---|
+| [REQ-000001-UVqkd7cL](REQ-000001-catalyst-core-parser-model-validator-watcher.md) | catalyst-core: parser, model, validator, watcher | Completed |
+| [REQ-000002-UVqkd7cL](REQ-000002-vscode-chain-inspector-read-only.md) | VS Code chain inspector, read-only | Completed |
+| [REQ-000003-UVqkd7cL](REQ-000003-health-board-and-editor-affordances.md) | Health board and editor affordances | Completed |
+| [REQ-000004-UVqkd7cL](REQ-000004-proposal-loop-fix-only.md) | Proposal loop, fix-only | Completed |
+| [REQ-000005-UVqkd7cL](REQ-000005-authoring-composer.md) | Authoring composer | Completed |
+| [REQ-000006-UVqkd7cL](REQ-000006-electron-host.md) | Electron host | Completed |
+| [REQ-000007-UVqkd7cL](REQ-000007-run-monitor.md) | Run monitor | Completed |
+| [REQ-000008-UVqkd7cL](REQ-000008-multi-root-and-install-offer.md) | Multi-root workspace support + install-offer | Completed |
+| [REQ-000009-UVqkd7cL](REQ-000009-agent-window-slash-commands.md) | Agent window for running catalyst slash commands | Active |
+| [REQ-000010-UVqkd7cL](REQ-000010-step-entity-parsing-and-display.md) | STEP- entity parsing and display | Completed |
+| [REQ-000011-UVqkd7cL](REQ-000011-test-entity-parsing-and-display.md) | TEST- entity parsing and display | Completed |
+| [REQ-000012-UVqkd7cL](REQ-000012-minimum-framework-version-enforcement.md) | Minimum framework version enforcement | Completed |
+| [REQ-000013-UVqkd7cL](REQ-000013-detail-panels-one-group-per-project.md) | Detail panels: at most one editor group per project | Completed |
+| [REQ-000014-UVqkd7cL](REQ-000014-entity-references-are-links.md) | Entity references are links, with a hover | Completed |
+| [REQ-000015-UVqkd7cL](REQ-000015-workspace-aware-extension.md) | Workspace-aware extension | Completed |
+| [REQ-000016-UVqkd7cL](REQ-000016-remote-and-virtual-workspaces.md) | Remote, WSL, dev containers and virtual workspaces | Active |

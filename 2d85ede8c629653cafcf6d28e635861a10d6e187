@@ -1,0 +1,25 @@
+# `STEP-000019-UVqkd7cL` — Remote and virtual workspaces
+
+| Field | Value |
+|---|---|
+| **ID** | `STEP-000019-UVqkd7cL` |
+| **Name** | `remote-and-virtual-workspaces` |
+| **Filename** | `STEP-000019-remote-and-virtual-workspaces.md` |
+| **Parent** | `REQ-000016-UVqkd7cL` |
+| **Status** | in-progress |
+| **Opened** | 2026-10-01 |
+| **Closed** | |
+| **Tests** | *(none yet)* |
+| **Signed-off-by** | Olivier Steck |
+
+## Description
+
+Implement `REQ-000016-UVqkd7cL`.
+
+## Actions performed
+
+*(in progress)*
+
+## Verification
+
+*(in progress)*
