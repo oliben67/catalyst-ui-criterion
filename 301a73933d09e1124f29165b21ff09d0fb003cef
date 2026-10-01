@@ -1,0 +1,25 @@
+# `STEP-000020-UVqkd7cL` — Reveal the tracked entity in the tree
+
+| Field | Value |
+|---|---|
+| **ID** | `STEP-000020-UVqkd7cL` |
+| **Name** | `reveal-tracked-entity` |
+| **Filename** | `STEP-000020-reveal-tracked-entity.md` |
+| **Parent** | `REQ-000017-UVqkd7cL` |
+| **Status** | in-progress |
+| **Opened** | 2026-10-02 |
+| **Closed** | |
+| **Tests** | *(none yet)* |
+| **Signed-off-by** | Olivier Steck |
+
+## Description
+
+Implement `REQ-000017-UVqkd7cL`.
+
+## Actions performed
+
+*(in progress)*
+
+## Verification
+
+*(in progress)*
