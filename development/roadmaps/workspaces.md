@@ -11,7 +11,7 @@
 |---|---|---|---|---|---|---|
 | `RM-000028-UVqkd7cL` | Detail panels: at most one editor group per project | Entity detail panels open as tabs in their project's editor group instead of a new group per click; a setting can unite every project's panels in one single group. | Not triaged | `REQ-000013-UVqkd7cL` | Olivier Steck | |
 | `RM-000029-UVqkd7cL` | Entity references are links, with a hover | IDs in a rendered entity are links that open the referred entity (in its project's group); hovering shows its name and a short description. Optionally the same in the text editor. | Not triaged | `REQ-000014-UVqkd7cL` | Olivier Steck | |
-| `RM-000030-UVqkd7cL` | Workspace-aware extension | Discover nested deployments in a workspace folder; catalyst.ignoredFolders; 'never offer catalyst here' on the install prompt (writes the kernel opt-out marker); Workspace Trust; status bar and Problems panel per deployment. | Not triaged | *(none)* | Olivier Steck | |
+| `RM-000030-UVqkd7cL` | Workspace-aware extension | Discover nested deployments in a workspace folder; catalyst.ignoredFolders; 'never offer catalyst here' on the install prompt (writes the kernel opt-out marker); Workspace Trust; status bar and Problems panel per deployment. | Not triaged | `REQ-000015-UVqkd7cL` | Olivier Steck | |
 | `RM-000031-UVqkd7cL` | Remote, WSL and dev containers | Resolve the computed working-copy location and run the CLI on the remote side; disable cleanly in virtual workspaces. | Not triaged | *(none)* | Olivier Steck | |
 
 ## Status values
