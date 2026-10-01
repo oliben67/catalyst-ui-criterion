@@ -56,26 +56,35 @@ carries which deployment the node came from, since node ids are only
 unique within one corpus. Read-only: no editing, no live-pushed webview
 updates (reopening the panel refreshes it). A folder with no resolvable
 catalyst deployment is handled by `vscode-ONBOARDING-000001-UVqkd7cL`
-instead of staying silent. Detail panels open at most one editor group per project — a project's
+instead of staying silent.
+
+Detail panels open at most one editor group per project — a project's
 first panel beside the active editor, later ones as tabs in its group —
-or one group for every project (`catalyst.detailPanelGroups`), and every
+or one group for every project (`catalyst.detailPanelGroups`). Every
 entity ID the rendered content cites is a link that opens that entity,
 with its name and a short description on hover (`<pre>` blocks left
-alone). Targeted by `REQ-000002-UVqkd7cL`, extended
-by `REQ-000008-UVqkd7cL` for multi-root, `REQ-000010-UVqkd7cL` for
+alone), and the entity a detail panel shows — opened from a link, or
+brought to the front — is selected in the tree while the tree is visible
+(`catalyst.trackEntityInTree`).
+
 Deployments follow catalyst's scope rule (kernel `fw-STRUCTURE-000017`):
-every `*.catalyst` pointer in a workspace folder, nested ones included, is a
-deployment of its own; folders opted out by a `.catalystignore` or listed in
-`catalyst.ignoredFolders` are left out; a status bar item names the
-deployment owning the active editor's file. Untrusted workspaces are
-read-only (no install or sync offer, no agent command). The extension runs where the workspace's files are (SSH, WSL, dev
-containers, codespaces); a deployment whose working copy is not reachable
-there is reported with the fix for that environment, and virtual
-workspaces are not supported. Targeted by `REQ-000002-UVqkd7cL`, extended
-by `REQ-000008-UVqkd7cL` for multi-root, `REQ-000010-UVqkd7cL` for
-steps, `REQ-000011-UVqkd7cL` for tests, `REQ-000013-UVqkd7cL` for panel
-groups, `REQ-000014-UVqkd7cL` for entity links, `REQ-000015-UVqkd7cL`
-for workspaces and `REQ-000016-UVqkd7cL` for remote environments.
+every `*.catalyst` pointer in a workspace folder, nested ones included, is
+a deployment of its own; each deployment has a chain inspector panel of its
+own (up to eight; the deployment's name as the panel's description); folders opted out by a `.catalystignore` or
+listed in `catalyst.ignoredFolders` are left out; a status bar item names
+the deployment owning the active editor's file. Untrusted workspaces are
+read-only (no install or sync offer, no agent command). The extension
+runs where the workspace's files are (SSH, WSL, dev containers,
+codespaces); a deployment whose working copy is not reachable there is
+reported with the fix for that environment, and virtual workspaces are
+not supported.
+
+Targeted by `REQ-000002-UVqkd7cL`; extended by `REQ-000008-UVqkd7cL` for
+multi-root, `REQ-000010-UVqkd7cL` for steps, `REQ-000011-UVqkd7cL` for
+tests, `REQ-000013-UVqkd7cL` for panel groups, `REQ-000014-UVqkd7cL` for
+entity links, `REQ-000015-UVqkd7cL` for workspaces, `REQ-000016-UVqkd7cL`
+for remote environments and `REQ-000017-UVqkd7cL` for tracking the entity
+in the tree.
 
 Implemented: `packages/catalyst-core/src/discover.ts` (corpus
 resolution) plus `watchCorpus`'s `{ model, report, proposals, runs }`

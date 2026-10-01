@@ -21,3 +21,4 @@
 | [STEP-000017-UVqkd7cL](STEP-000017-workspace-discovery-in-core.md) | Workspace discovery and the scope rule in catalyst-core | REQ-000015-UVqkd7cL | done |
 | [STEP-000018-UVqkd7cL](STEP-000018-workspace-aware-host.md) | Workspace-aware extension host | REQ-000015-UVqkd7cL | done |
 | [STEP-000019-UVqkd7cL](STEP-000019-remote-and-virtual-workspaces.md) | Remote and virtual workspaces | REQ-000016-UVqkd7cL | done |
+| [STEP-000020-UVqkd7cL](STEP-000020-reveal-tracked-entity.md) | Reveal the tracked entity in the tree | REQ-000017-UVqkd7cL | done |
